@@ -14,13 +14,16 @@
     <form id="login">
         <div class="un">
             <label for="user" class="uname">Username:</label>
-            <input type="text" class="uname" name="user">
+            <input type="text" class="uname" id="username" required="required">
         </div>
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
-            <input type="password" class="pword" name="pass">
+            <input type="password" class="pword" id="password" required="required">
         </div>
+        <a href="register.html">Register</a>
         <button class="login" type="submit">Log In</button>
+        
     </form>
+    <script src="admin-class.js"></script>
 </body>
 </html>
