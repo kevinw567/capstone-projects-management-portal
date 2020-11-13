@@ -19,18 +19,27 @@ html {
 }
 
 body {
-    margin: 0;
-    position: absolute;
-    top: 40%;
-    left: 34%;
-    height: 29%;
-    width: 30%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--umb-light-blue);
+    /* margin: 25%; */
+    /* width: 10%;
+    position: center; */
+    /* top: 40%;
+    left: 30%;
+    right: 30%; */
+    /* height: auto;
+    width: auto;
+    text-align: center; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* background-color: var(--umb-light-blue);
+    border: 5px solid var(--umb-light-blue); */
+    border-radius: 15px; 
+    max-width: 600px;
+    margin: auto;
     border: 5px solid var(--umb-light-blue);
-    border-radius: 15px;
+    text-align: center;
+    margin-top: 200px;
+
+    /* width: auto; */
 }
 
 #login {
@@ -42,21 +51,43 @@ body {
     flex-flow: column wrap; */
 }
 
-.un, .pw {
+.un, .pw, .student-id, .confirm, .email {
     margin: 2% 0% 2% 0%;
     width: 100%;
+    float: left;
 }
 
 input {
     color: black;
+    width: 50%;
+    float: left;
 }
-
-.uname, .pword {
-    width: 75%;
+br {
+    clear: left;
 }
+label {
+    margin-right: 2em;
+    float:left;
+    margin-left: 2em;
+    width: 8em;
+}
+/* .uname, .pword{
+    width: 50%;
+} */
 
-.login {
+span {
+    display: ;
+}
+.login, .register {
     color: black;
-    width: 25%;
-    margin-left: 38%;
+    width: 15%;
+    /* margin-left: 38%;
+    margin-top: 10px; */
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+a {
+    float: left;
 }
