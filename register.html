@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Register</title>
+</head>
+<header>
+    <h1>Project Portal</h1>
+    <h2>UMass Boston - Computer Science Dept.</h2>
+</header>
+<body>
+    <form id="login">
+        <div class="un">
+            <label for="user" class="uname">Username:</label>
+            <input type="text" class="uname" id="username" required="required">
+        </div>
+        <div class="pw">
+            <label for="pass" class="pword"> Password:</label>
+            <input type="password" class="pword" id="password" required="required">
+        </div>
+        <div class="confirm">    
+            <label for="confirm-password" class="pword">Confirm: </label>
+            <input type="password" name="" id="confirm-password" required="required">
+        </div>
+        <span id="error-password" style="display: none;"><br></span>
+        <div class="email">
+            <label for="email" class="user-email">Email:</label>
+            <input type="email" name="" id="user-email" required="required">
+      
+        </div>
+        <div class="student-id">
+            <label for="studentID">Student ID:</label>
+            <input type="text" name="id" id="student_id" required="required">
+            <span id="error-id"></span>
+        </div>
+        <button class="register" type="submit">Register</button>
+        <script src="register.js"></script>
+    </form>
+    <script src="register.js"></script>
+</body>
+</html>
