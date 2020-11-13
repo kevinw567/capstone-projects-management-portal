@@ -28,10 +28,13 @@ function runEvent(e) {
         error.textContent = "Password does not match!";
         error.style.color = 'red';
         error.style.display = 'inline';
+        setTimeout(()=>error.remove(), 3000);
     } else if (isNaN(student_id)) {
         var error = document.getElementById('error-id');
         error.textContent = "Invalid Student ID";
         error.style.color = 'red';
+        error.style.display = 'inline';
+        setTimeout(()=>error.remove(), 3000);
     } else {
         var user = new User(username, password, email, student_id);
         user = JSON.stringify(user);
