@@ -89,5 +89,6 @@ span {
 }
 
 a {
-    float: left;
+    float: center;
+	margin-right: 10px;
 }
