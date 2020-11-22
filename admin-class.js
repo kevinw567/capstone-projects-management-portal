@@ -12,7 +12,8 @@ function runEvent(e) {
     console.log(e.type);
     var user_name = document.getElementById("username").value;
     var password = document.getElementById("password").value;
-	
+	let role = document.getElementById("role").value;
+	console.log(role);
 	if(isValidUser(user_name,password)){
 		//ajax call to varify user is student or instaractor
 		if(isStudent()){
@@ -21,7 +22,9 @@ function runEvent(e) {
 			//display all current students by default
 		}
 	}else{
-		document.getElementById("submit").insertAdjacentHTML("beforeBegin","<div style=\"color:red;\">User name or Password is incorrect</div>");
+		document.getElementById("login").insertAdjacentHTML("beforeBegin","<div id=error style=\"color:red;\">User name or Password is incorrect</div>");
+		let a = document.getElementById("error");
+		setTimeout(()=>a.remove(), 3000);
 	}
 	
     console.log(user_name);

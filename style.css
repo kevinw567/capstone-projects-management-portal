@@ -61,22 +61,41 @@ input {
     color: black;
     width: 50%;
     float: left;
+    border-radius: 15px;
+    text-align: center;
+}
+
+input:focus {
+    border-color: pink;
+    width: 50%;
 }
 br {
     clear: left;
+}
+/* .uname, .pword{
+    width: 50%;
+} */
+.role {
+    float: left;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 2%;
+}
+#role {
+    width: 50%;
+    float: left;
+    color: black;
+    border-radius: 15px;
+    height: 22px;
+    text-align: center;
+    
 }
 label {
     margin-right: 2em;
     float:left;
     margin-left: 2em;
     width: 8em;
-}
-/* .uname, .pword{
-    width: 50%;
-} */
-
-span {
-    display: ;
 }
 .login, .register {
     color: black;
@@ -86,8 +105,12 @@ span {
     margin: auto;
     margin-bottom: 10px;
     margin-top: 10px;
+    cursor: pointer;
 }
-
+option {
+    color:black;
+    border-radius: 15px;
+}
 a {
     float: center;
 	margin-right: 10px;
