@@ -30,12 +30,20 @@
             <input type="email" name="" id="user-email" required="required">
       
         </div>
-        <div class="student-id">
-            <label for="studentID">Student ID:</label>
-            <input type="text" name="id" id="student_id" required="required">
+        <div class="role">
+            <label for="role">Register as: </label>
+            <select name="role" id="role" required="required">
+                <option value=""></option>
+                <option value="student">Student</option>
+                <option value="professor">Professor</option>
+            </select>
         </div>
         <span id="error-id" style="display: none;"></span>
-        <button class="register" type="submit">Register</button>
+        <div id="submit">
+			<a href="index.html">Have an account?</a>
+			<button class="login" type="submit">Register</button>
+		</div>
+        <!-- <button class="register" type="submit">Register</button> -->
         <script src="register.js"></script>
     </form>
     <script src="register.js"></script>
