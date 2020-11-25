@@ -17,12 +17,12 @@ const db = mysql.createConnection({
 exports.register = (req, res) => {
     console.log(req.body);
     // get information from the form
-    const { name, password, confirmPassword, email, role } = req.body;
+    const {fname, lname, username, password, confirmPassword, email, role } = req.body;
     
 
     
     // query the database for the input email
-    db.query("SELECT email FROM students WHERE email = ?", [email], (error, results) => {
+    db.query("SELECT email FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
             console.log(error);
             return res.render('register', {
@@ -46,35 +46,39 @@ exports.register = (req, res) => {
         }
     });
     
-    // if role is student, insert into student table
-    if (role === "student") {
-        db.query("INSERT INTO students SET ?", { user_id: name, email: email, first_name: name, password: password }, (error, results) => {
-            if (error) {
-                console.log(error);
-            }
+    
+    // insert new user into the users table
+    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, authentication: password }, (error, results) => {
+        if (error) {
+            console.log(error);
+        }
 
-            else {
-                return res.render('index', {
-                    message: "Student registered"
-                })
-            }
+        // else {
+        //     return res.render('index', {
+        //         message: "Student registered"
+        //     })
+        // }
+    })
+
+    // insert new user and role into the roles table
+    db.query("SELECT id FROM users WHERE email = ?", [email], (error, results) => {
+        if (error) {
+            console.log(error);
+        }
+
+        // parse the JSON results
+        var str = JSON.stringify(results);
+        var json = JSON.parse(str);
+        Object.keys(results).forEach(function(key) {
+            console.log(results[key]);
+            db.query("INSERT INTO role SET ?", { role: role })
+            
+            return res.render('index', { 
+                message: "Account registered"
+            })
         })
-    }
-
-    // if role is professor, insert into professor table
-    else if (role === "professor") {
-        db.query("INSERT INTO professors SET ?", { sur_name: name, email: email, }, (error, results) => {
-            if (error) {
-                console.log(error);
-            }
-
-            else {
-                return res.render('index', {
-                    message: "Professor registered"
-                })
-            }
-        })
-    }
+        
+    })
 }
 
 exports.login = (req, res) => {
