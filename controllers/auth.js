@@ -52,39 +52,24 @@ exports.register = (req, res) => {
         if (error) {
             console.log(error);
         }
-
-        // else {
-        //     return res.render('index', {
-        //         message: "Student registered"
-        //     })
-        // }
     })
 
     // insert new user and role into the roles table
-    db.query("SELECT id FROM users WHERE email = ?", [email], (error, results) => {
+    db.query("INSERT INTO role SET ?", { role: role }, (error) => {
         if (error) {
             console.log(error);
         }
-
-        // parse the JSON results
-        var str = JSON.stringify(results);
-        var json = JSON.parse(str);
-        Object.keys(results).forEach(function(key) {
-            console.log(results[key]);
-            db.query("INSERT INTO role SET ?", { role: role })
-            
-            return res.render('index', { 
-                message: "Account registered"
-            })
-        })
+    })
         
+    return res.render('index', { 
+        message: "Account registered"
     })
 }
 
 exports.login = (req, res) => {
     console.log(req.body);
     const { name, password, role } = req.body;
-    db.query("SELECT * FROM students WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
+    db.query("SELECT * FROM users WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
         if (error) {
             console.log(error);
         }
