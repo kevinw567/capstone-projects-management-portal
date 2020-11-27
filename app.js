@@ -6,6 +6,13 @@ const path = require("path");
 
 const app = express();
 
+// Variables used to setup and register view engine
+const exphbs  = require('express-handlebars');
+const hbs = exphbs.create({ /* config */ });
+
+app.engine('handlebars', hbs.engine);
+app.engine('.hbs', exphbs({extname: '.hbs', defaultLayout:false }));
+
 dotenv.config({ path: './.env' });
 // create database connection
 const db = mysql.createConnection({

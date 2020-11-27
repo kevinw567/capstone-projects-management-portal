@@ -71,7 +71,7 @@ exports.register = (req, res) => {
         var json = JSON.parse(str);
         Object.keys(results).forEach(function(key) {
             console.log(results[key]);
-            db.query("INSERT INTO role SET ?", { role: role })
+            db.query("INSERT INTO roles SET ?", { role: role })
             
             return res.render('index', { 
                 message: "Account registered"

@@ -28,4 +28,3 @@ extra_details VARCHAR(255),
 user_id INT,
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
