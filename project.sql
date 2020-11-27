@@ -19,6 +19,14 @@ FOREIGN KEY (role_id) REFERENCES roles(id),
 UNIQUE KEY (email,passkey)
 );
 
+<<<<<<< HEAD
+=======
+CREATE TABLE roles(
+id INT NOT NULL PRIMARY KEY,
+role_name varchar(20) NOT NULL
+);
+
+>>>>>>> 4b48e5a85434730f790b301871b8da4a69becc54
 
 CREATE TABLE projects(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
