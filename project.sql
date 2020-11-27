@@ -1,20 +1,22 @@
 CREATE DATABASE project_db;
 USE project_db;
 
-#Table to store student information
+#Table to store student information (Password is keyword so i am using passkey)
 CREATE TABLE users(
 id INT NOT NULL PRIMARY KEY,
 first_name VARCHAR(100) NOT NULL,
 last_name VARCHAR(100) NOT NULL,
+role_id INT NOT NULL,
 extra_details VARCHAR(100),
 email VARCHAR(100) NOT NULL,
-authentication VARCHAR(100) NOT NULL 
+passkey VARCHAR(100) NOT NULL,
+FOREIGN KEY (role_id) REFERENCES roles(id),
+UNIQUE KEY (email,passkey)
 );
 
 CREATE TABLE roles(
-role varchar(20) NOT NULL PRIMARY KEY,
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES users(id)
+id INT NOT NULL PRIMARY KEY,
+role varchar(20) NOT NULL
 );
 
 
