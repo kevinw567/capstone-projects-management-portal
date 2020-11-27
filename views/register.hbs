@@ -13,10 +13,20 @@
 <body>
     {{!-- added action and method properties, these specify where to submit the form information --}}
     <form id="login" action="/auth/register" method="POST">
+        {{!-- added input fields for first and last names --}}
+        <div class="un">
+            <label for="fname" class="uname">First Name:</label>
+            <input type="text" class="uname" id="fname" required="required" name="fname">
+        </div>
+        <div class="un">
+            <label for="lname" class="uname">Last Name:</label>
+            {{!-- added name property --}}
+            <input type="text" class="uname" id="lname" required="required" name="lname">
+        </div>
         <div class="un">
             <label for="user" class="uname">Username:</label>
             {{!-- added name property --}}
-            <input type="text" class="uname" id="username" required="required" name="name">
+            <input type="text" class="uname" id="username" required="required" name="username">
         </div>
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
