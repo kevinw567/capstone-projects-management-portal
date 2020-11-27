@@ -16,7 +16,7 @@ UNIQUE KEY (email,passkey)
 
 CREATE TABLE roles(
 id INT NOT NULL PRIMARY KEY,
-role varchar(20) NOT NULL
+role_name varchar(20) NOT NULL
 );
 
 
