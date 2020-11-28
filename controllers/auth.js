@@ -3,6 +3,7 @@
  */
 
 const mysql = require("mysql");
+const md5 = require("md5");
 
 const db = mysql.createConnection({
     // host IP address
@@ -18,8 +19,15 @@ exports.register = (req, res) => {
     console.log(req.body);
     // get information from the form
     const {fname, lname, username, password, confirmPassword, email, role } = req.body;
-    
+    // determine role_id
+    var role_id;
+    if (role === "student") {
+        role_id = 1;
+    }
 
+    else {
+        role_id = 2;
+    }
     
     // query the database for the input email
     db.query("SELECT email FROM users WHERE email = ?", [email], (error, results) => {
@@ -48,14 +56,7 @@ exports.register = (req, res) => {
     
     
     // insert new user into the users table
-    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, passkey: password }, (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-    })
-
-    // insert new user and role into the roles table
-    db.query("INSERT INTO role SET ?", { role: role }, (error) => {
+    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, passkey: md5(password), role_id: role_id }, (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -67,9 +68,18 @@ exports.register = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    console.log(req.body);
-    const { name, password, role } = req.body;
-    db.query("SELECT * FROM users WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
+    const { email, password, role } = req.body;
+    // determine the role_id of the new user
+    var role_id;
+    if (role === "student") {
+        role_id = 1;
+    }
+
+    else {
+        role_id = 2;
+    }
+
+    db.query("SELECT * FROM users WHERE email = ? AND passkey = ? AND role_id = ?", [email, md5(password), role_id], (error, results) => {
         if (error) {
             console.log(error);
         }
