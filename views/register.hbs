@@ -12,22 +12,28 @@
 </header>
 <body>
     {{!-- added action and method properties, these specify where to submit the form information --}}
+    {{#if message }}
+        <p class="alert"> {{ message }} </p>
+    {{/if }}
     <form id="login" action="/auth/register" method="POST">
         {{!-- added input fields for first and last names --}}
         <div class="un">
-            <label for="fname" class="uname">First Name:</label>
+            <label for="fname" class="uname">Your Name:</label>
             <input type="text" class="uname" id="fname" required="required" name="fname">
         </div>
-        <div class="un">
-            <label for="lname" class="uname">Last Name:</label>
+        {{!-- <div class="un"> --}}
+            {{!-- <label for="lname" class="uname">Last Name:</label> --}}
             {{!-- added name property --}}
-            <input type="text" class="uname" id="lname" required="required" name="lname">
-        </div>
-        <div class="un">
-            <label for="user" class="uname">Username:</label>
+            {{!-- <input type="text" class="uname" id="lname" required="required" name="lname"> --}}
+        {{!-- </div> --}}
+        <span id="error-password" style="display: none;"><br></span>
+        <div class="email">
+            <label for="email" class="user-email">Email:</label>
             {{!-- added name property --}}
-            <input type="text" class="uname" id="username" required="required" name="username">
+            <input type="email" name="email" id="user-email" required="required" >
+      
         </div>
+        
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
             {{!-- added name property --}}
@@ -37,13 +43,6 @@
             <label for="confirm-password" class="pword">Confirm: </label>
             {{!-- added name property --}}
             <input type="password" id="confirm-password" required="required" name="confirmPassword">
-        </div>
-        <span id="error-password" style="display: none;"><br></span>
-        <div class="email">
-            <label for="email" class="user-email">Email:</label>
-            {{!-- added name property --}}
-            <input type="email" name="email" id="user-email" required="required" >
-      
         </div>
         <div class="role">
             <label for="role">Register as: </label>
@@ -62,9 +61,9 @@
         {{!-- <script src="register.js"></script> --}}
     </form>
 
-    {{#if message }}
+    {{!-- {{#if message }}
         <h4 class="alert"> {{ message }} </h4>
-    {{/if }}
+    {{/if }} --}}
     {{!-- <script src="register.js"></script> --}}
 </body>
 </html>

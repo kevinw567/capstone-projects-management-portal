@@ -11,11 +11,16 @@
     <h2>UMass Boston - Computer Science Dept.</h2>
 </header>
 <body>
+    {{#if message }}
+        <p class="alert"> {{ message }} </p>
+    {{/if }}
     <form id="login" action="/auth/login" method="POST">
-        <div class="un">
-            <label for="user" class="uname">Username:</label>
+
+        <div class="email">
+            <label for="email" class="user-email">Email:</label>
             {{!-- added name property --}}
-            <input type="text" class="uname" id="username" required="required" name="name">
+            <input type="email" name="email" id="user-email" required="required" >
+      
         </div>
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
@@ -36,9 +41,9 @@
 			<button class="login" type="submit">Log In</button>
 		</div>    
     </form>
-    {{#if message }}
+    {{!-- {{#if message }}
         <h4 class="alert"> {{ message }} </h4>
-    {{/if }}
+    {{/if }} --}}
     {{!-- <script src="admin-class.js"></script> --}}
 </body>
 </html>
