@@ -48,7 +48,7 @@ exports.register = (req, res) => {
     
     
     // insert new user into the users table
-    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, authentication: password }, (error, results) => {
+    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, passkey: password }, (error, results) => {
         if (error) {
             console.log(error);
         }
