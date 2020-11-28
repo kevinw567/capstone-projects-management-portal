@@ -8,16 +8,19 @@ rolename varchar(20) NOT NULL
 
 #Table to store student information (Password is keyword so i am using passkey)
 CREATE TABLE users(
-id INT NOT NULL PRIMARY KEY,
-first_name VARCHAR(100) NOT NULL,
-last_name VARCHAR(100) NOT NULL,
-role_id INT DEFAULT 2,
-extra_details VARCHAR(100),
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(100) NOT NULL,
+-- extra_details VARCHAR(100),
 email VARCHAR(100) NOT NULL,
-passkey VARCHAR(100) NOT NULL,
-FOREIGN KEY (role_id) REFERENCES roles(id),
-UNIQUE KEY (email,passkey)
+authentication VARCHAR(100) NOT NULL,
+role varchar(20) not NULL 
 );
+
+-- CREATE TABLE roles(
+-- role varchar(20) NOT NULL,
+-- user_id INT,
+-- FOREIGN KEY (user_id) REFERENCES users(id)
+-- );
 
 
 CREATE TABLE projects(
@@ -31,9 +34,19 @@ user_id INT,
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-
-
-
-# Trial data
-INSERT INTO roles(id,rolename) VALUES (1,'professor'),(2,'student'),(3,'client');
-INSERT INTO users(id,first_name,last_name,role_id,email,passkey) VALUES (01935138,'Goutham','Nerella',2,'nerellagouthamsiv001@umb.edu','qwertyuiop');
+-- table for the course that professor created
+CREATE TABLE courses(
+    id VARCHAR(20) PRIMARY KEY,
+    course_number VARCHAR(20),
+    course_description VARCHAR(100),
+    professor VARCHAR(100)
+);
+-- table to store the projects, students in that course
+CREATE TABLE courses_info(
+    id VARCHAR(20),
+    student_id INT,
+    projects_id INT,
+    FOREIGN KEY (id) REFERENCES courses(id),
+    FOREIGN KEY (student_id) REFERENCES users(id),
+    FOREIGN KEY (projects_id) REFERENCES projects(id)
+)

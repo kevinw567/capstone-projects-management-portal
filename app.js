@@ -51,6 +51,7 @@ db.connect((error) => {
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
+app.use("/courses", require("./routes/courses"));
 
 // tell express which port to listen to
 app.listen("3000", () => {

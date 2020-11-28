@@ -17,83 +17,127 @@ const db = mysql.createConnection({
 // register a new user
 exports.register = (req, res) => {
     console.log(req.body);
-    // get information from the form
-    const {fname, lname, username, password, confirmPassword, email, role } = req.body;
+    let e = false;
     // determine role_id
-    var role_id;
-    if (role === "student") {
-        role_id = 1;
-    }
+    // var role_id;
+    // if (role === "student") {
+    //     role_id = 1;
+    // }
 
-    else {
-        role_id = 2;
+    // else {
+    //     role_id = 2;
+    // }
+
+    // get information from HTML form
+    const {username, password, confirmPassword, email, role } = req.body;    
+    // check password
+    if (password != confirmPassword) {
+        res.render('register', {
+            message: "Passwords do not match!"
+        })
+        e = true;
     }
     
     // query the database for the input email
-    db.query("SELECT email FROM users WHERE email = ?", [email], (error, results) => {
+    else{
+        db.query("SELECT email FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
             console.log(error);
-            return res.render('register', {
-                message: "An error occured"
+            res.render('register', {
+                message: "An error occured1"
             });
+            e = true;
         }
+
 
         // if the email is already registered send a message and go back to register page
         else if (results.length > 0) {
             console.log(results);
-            return res.render('register', {
+            res.render('register', {
                 message: "That email is already registered"
             });
+            e = true;
         }
 
-        // if passwords do not match send error message
-        else if (password !== confirmPassword) {
-            return res.render('register', {
-                message: "Passwords do not match"
-            });
-        }
-    });
+        // insert new user into the users table
+        if (e === false) {
+            db.query("INSERT INTO users SET ?", { username:username, email: email, authentication: md5(password), role:role }, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    res.render('register', { 
+                        message: "An error occured2"
+                    })
+                }
     
+                else {
+                    res.render('index', {
+                        message: "Account registered"
+                    })
+                }
+            })
     
-    // insert new user into the users table
-    db.query("INSERT INTO users SET ?", { first_name: fname, last_name: lname, email: email, passkey: md5(password), role_id: role_id }, (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-    })
-        
-    return res.render('index', { 
-        message: "Account registered"
-    })
+        };    
+    })}
 }
+
 
 exports.login = (req, res) => {
     const { email, password, role } = req.body;
+    this.profile_email = email;
+    console.log(this.profile_email);
     // determine the role_id of the new user
-    var role_id;
-    if (role === "student") {
-        role_id = 1;
-    }
+    // var role_id;
+    // if (role === "student") {
+    //     role_id = 1;
+    // }
 
-    else {
-        role_id = 2;
-    }
+    // else {
+    //     role_id = 2;
+    // }
 
-    db.query("SELECT * FROM users WHERE email = ? AND passkey = ? AND role_id = ?", [email, md5(password), role_id], (error, results) => {
+    // db.query("SELECT * FROM users WHERE email = ? AND passkey = ? AND role_id = ?", [email, md5(password), role_id], (error, results) => {
+    //     if (error) {
+    //         console.log(error);
+    //     }
+    console.log(req.body);
+        // const { email, password, role } = req.body;
+        // db.query("SELECT * FROM students WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
+        //     if (error) {
+        //         console.log(error);
+        //     }
+
+        //     // if query returns no matches, cannot log in
+        //     else if (results.length === 0) {                
+        //         return res.render('index', {
+        //             message: "Could not log in, try again"
+        //         })
+        //     }
+
+        //     else {
+        //         console.log(results); 
+        //         return res.render('home');
+        //     }
+        // })
+    
+    db.query("SELECT * FROM users WHERE email = ? AND authentication = ? AND role = ?", [email, md5(password), role], (error, results) => {
         if (error) {
             console.log(error);
-        }
-
-        // if query returns no matches, cannot log in
-        else if (results.length === 0) {                
-            return res.render('index', {
+            res.render('index', {
                 message: "Could not log in, try again"
             })
-        }
-
-        else {
-            console.log(results); 
-            return res.render('home');
+        } else if (results.length === 0) {
+            res.render('index', {
+                message: "Wrong email or password2"
+            })
+        } else {
+            if (role === 'student'){
+                res.render('student');
+                
+            } else {
+                res.render('professor');
+            }
         }
     })
 }
+
+exports.profile_email;
