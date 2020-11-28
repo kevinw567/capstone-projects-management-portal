@@ -7,12 +7,13 @@
 }
 * {
     font-family: 'Roboto', sans-serif;
-    color: var(--umb-light-gray);
+    /* color: var(--umb-light-gray); */
     box-sizing: border-box;
 }
 
 html {
-    background-color: var(--umb-blue);
+    /* background-color: var(--umb-blue); */
+    background-color: white;
     /* border: 3px solid red; */
     height: 100vh;
     position: relative;
@@ -118,5 +119,10 @@ a {
 
 .alert {
     margin-top: 25px;
-    font-size: 25px;
+    font-size: 20px;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    background-color: yellow;
+    
 }
