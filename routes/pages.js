@@ -18,5 +18,13 @@ router.get("/login", (req, res) => {
     res.render("home");
 });
 
+router.get("/projects", (req, res) => {
+    res.render("projects");
+})
+
+router.get("/addcourse", (req, res) => {
+    res.render("addcourse");
+});
+
 // export the router for other files to use
 module.exports = router;

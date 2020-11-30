@@ -51,6 +51,7 @@ db.connect((error) => {
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
+app.use("/courses", require("./routes/courses"));
 
 app.get("/addcourse",(req, res) => res.render('addcourse'));
 

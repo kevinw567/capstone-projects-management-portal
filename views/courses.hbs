@@ -20,17 +20,14 @@
                 <li class="list-item"><a href="/setting">Settings</a></li>
             </ul>
         </div>
-        <div class="courses">
-            {{!-- add course --}}
-            <form action="/addcourse" method="POST" class="add-course">
-                <div class="add">
-                    <label for="">Enter Course Code: </label>
-                    <input type="text" class="input-box">
-                </div>
-                    <input type="submit" value="Enter">
-            </form>
+        
+        <div class="main">
+            <h1> {{ course1_title }} </h1>
+            <div>
+                {{ course1_description }}
+            </div>
         </div>
-        </div>
+
     </div>
 </body>
 </html>
