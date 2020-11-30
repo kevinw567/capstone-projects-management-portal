@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/user.css">
-    <title>Add a course</title>
+    <title>Add a Course</title>
 </head>
 <body>
     <h1>Project Portal</h1>
@@ -21,17 +21,19 @@
             </ul>
         </div>
         <div class="courses">
+            <div>
+                {{#if message }}
+                    <p class="alert"> {{ message }} </p>
+                {{/if }}
+            </div>
             {{!-- add course --}}
             <form action="/courses/addcourse/{{userID}}" method="POST" id="add-course" class="add-course">
                 <div class="add">
                     <label for="course" class="add-form">Enter Course Code: </label>
                     <input type="text" name="course_code" id="course-code" class="input-box">    
                 </div>
-                    <input type="submit" value="Enter">
+                    <input type="submit" value="Add Course">
             </form>
-            {{#if message }}
-                <p class="alert"> {{ message }} </p>
-            {{/if }}
         </div>
     </div>
 </body>

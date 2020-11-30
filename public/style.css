@@ -58,24 +58,29 @@ body {
     float: left;
 }
 
-input {
+input, textarea {
     color: black;
     width: 50%;
     float: left;
     border-radius: 15px;
     text-align: center;
+    margin: 5px 0px;
 }
 
-input:focus {
+textarea {
+    border-radius: 7.5px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
     border-color: pink;
     width: 50%;
+    outline: none;
 }
 br {
     clear: left;
 }
-/* .uname, .pword{
-    width: 50%;
-} */
 .role {
     float: left;
     text-align: center;
@@ -124,4 +129,14 @@ a {
     margin: auto;
     text-align: center;
     background-color: yellow;
+}
+
+.add-project > input,
+.add-project > textarea {
+    text-align: left;
+}
+
+.add-project {
+    border: 3px solid green;
+    height: 200px;
 }

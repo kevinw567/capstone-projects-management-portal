@@ -18,16 +18,6 @@ const db = mysql.createConnection({
 exports.register = (req, res) => {
     console.log(req.body);
     let e = false;
-    // determine role_id
-    // var role_id;
-    // if (role === "student") {
-    //     role_id = 1;
-    // }
-
-    // else {
-    //     role_id = 2;
-    // }
-
     // get information from HTML form
     const {username, password, confirmPassword, email, role } = req.body;    
     // check password
@@ -104,9 +94,14 @@ exports.login = (req, res) => {
                 });
                 
             } else {
+                req.session.email = email;
                 req.params.userID = results[0].id;
-                res.render('professor');
-            }
+
+                res.render('professor', {
+                    userID: req.params.userID
+                });
+                
+            } 
         }
     })
 }
