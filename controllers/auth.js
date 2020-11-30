@@ -44,7 +44,7 @@ exports.register = (req, res) => {
         if (error) {
             console.log(error);
             res.render('register', {
-                message: "An error occured1"
+                message: "An error occured"
             });
             e = true;
         }
@@ -65,7 +65,7 @@ exports.register = (req, res) => {
                 if (error) {
                     console.log(error);
                     res.render('register', { 
-                        message: "An error occured2"
+                        message: "An error occured"
                     })
                 }
     
@@ -83,43 +83,7 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     const { email, password, role } = req.body;
-    this.profile_email = email;
-    console.log(this.profile_email);
-    // determine the role_id of the new user
-    // var role_id;
-    // if (role === "student") {
-    //     role_id = 1;
-    // }
-
-    // else {
-    //     role_id = 2;
-    // }
-
-    // db.query("SELECT * FROM users WHERE email = ? AND passkey = ? AND role_id = ?", [email, md5(password), role_id], (error, results) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    console.log(req.body);
-        // const { email, password, role } = req.body;
-        // db.query("SELECT * FROM students WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
-        //     if (error) {
-        //         console.log(error);
-        //     }
-
-        //     // if query returns no matches, cannot log in
-        //     else if (results.length === 0) {                
-        //         return res.render('index', {
-        //             message: "Could not log in, try again"
-        //         })
-        //     }
-
-        //     else {
-        //         console.log(results); 
-        //         return res.render('home');
-        //     }
-        // })
-    
-    db.query("SELECT * FROM users WHERE email = ? AND authentication = ? AND role = ?", [email, md5(password), role], (error, results) => {
+    db.query("SELECT id FROM users WHERE email = ? AND authentication = ? AND role = ?", [email, md5(password), role], (error, results) => {
         if (error) {
             console.log(error);
             res.render('index', {
@@ -127,17 +91,22 @@ exports.login = (req, res) => {
             })
         } else if (results.length === 0) {
             res.render('index', {
-                message: "Wrong email or password2"
+                message: "Wrong email or password"
             })
         } else {
             if (role === 'student'){
-                res.render('student');
+                req.params.userID = results[0].id;
+
+                console.log("Logged in as student User ID: " + req.params.userID);
+                
+                res.render("student", {
+                    userID: req.params.userID
+                });
                 
             } else {
+                req.params.userID = results[0].id;
                 res.render('professor');
             }
         }
     })
 }
-
-exports.profile_email;
