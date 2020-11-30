@@ -12,11 +12,19 @@ router.get('/addcourse/:userID', (req, res) => {
         userID: req.params.userID
     });
 })
-
+/**
+ * POST the course the user wants to register for
+ */
 router.post("/addcourse/:userID", courseController.addcourse);
 
-router.get("/courses", (req, res) => {
-    res.render("courses");
+/**
+ * GET the user's enrolled courses by calling getEnrolledCourses() in controllers/courses.js
+ */
+router.get("/enrolled/:userID", (req, res) => {
+    console.log("GET /enrolled/" + req.params.userID);
+    req.userID = req.params.userID;
+    console.log("req.userID = " + req.userID)
+    courseController.getEnrolledCourses(req, res);
 })
 
 router.get("/addcourse", (req, res) => {
