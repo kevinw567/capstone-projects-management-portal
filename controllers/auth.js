@@ -137,5 +137,4 @@ exports.login = (req, res) => {
             }
         }
     })
-
 }
