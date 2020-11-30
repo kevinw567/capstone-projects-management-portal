@@ -64,7 +64,7 @@ a {
     height: 100vh;
 }
 
-.add-course {
+#add-course {
     width: 30%;
     margin: auto;
     margin-top: 30%;

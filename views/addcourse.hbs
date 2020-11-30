@@ -21,10 +21,20 @@
             </ul>
         </div>
         <div class="courses">
+            <div>
+                {{#if message }}
+                    <p class="alert"> {{ message }} </p>
+                {{/if }}
+            </div>
             {{!-- add course --}}
-            <form action="" method="POST" id="add-course">
-                <label for="course" class="add-form">Enter course code: </label>
-                <input type="text" name="course-code" id="course-code">
+            <form action="/courses/addcourse" method="POST" id="add-course">
+                <div class="add">
+                    <label for="course" class="add-form">Enter Course Code: </label>
+                    <input type="text" name="course_code" class="input-box">
+                </div>
+                <div>
+                    <input type="submit" value="Add Course">
+                </div>
             </form>
         </div>
     </div>

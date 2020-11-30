@@ -3,6 +3,8 @@ const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 const path = require("path");
+// add session to track user's info
+const session = require("express-session");
 
 const app = express();
 
@@ -48,11 +50,21 @@ db.connect((error) => {
     }
 })
 
+app.use(session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+}));
+
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
 //app.get("/addcourse", (req, res) => res.render('addcourse'));
 app.get("/addproj", (req, res) => res.render('addproj'));
+app.use("/courses", require("./routes/courses"));
+
+
+
 // tell express which port to listen to
 app.listen("3000", () => {
     console.log("Server started on port 3000");
