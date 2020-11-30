@@ -44,7 +44,7 @@ exports.register = (req, res) => {
         if (error) {
             console.log(error);
             res.render('register', {
-                message: "An error occured1"
+                message: "An error occured"
             });
             e = true;
         }
@@ -65,7 +65,7 @@ exports.register = (req, res) => {
                 if (error) {
                     console.log(error);
                     res.render('register', { 
-                        message: "An error occured2"
+                        message: "An error occured"
                     })
                 }
     
@@ -99,7 +99,7 @@ exports.login = (req, res) => {
     //     if (error) {
     //         console.log(error);
     //     }
-    console.log(req.body);
+    // console.log(req.body);
         // const { email, password, role } = req.body;
         // db.query("SELECT * FROM students WHERE user_id = ? AND password = ?", [name, password], (error, results) => {
         //     if (error) {
@@ -127,13 +127,15 @@ exports.login = (req, res) => {
             })
         } else if (results.length === 0) {
             res.render('index', {
-                message: "Wrong email or password2"
+                message: "Wrong email or password"
             })
         } else {
             if (role === 'student'){
+                req.session.email = email;
                 res.render('student');
                 
             } else {
+                req.session.email = email;
                 res.render('professor');
             }
         }

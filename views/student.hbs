@@ -22,14 +22,15 @@
         </div>
         <div class="courses">
             {{!-- add course --}}
-            <form action="/addcourse" method="POST" class="add-course">
+            <form action="/courses/addcourse" method="POST" id="add-course">
                 <div class="add">
                     <label for="">Enter Course Code: </label>
                     <input type="text" class="input-box">
                 </div>
-                    <input type="submit" value="Enter">
+                <div>
+                    <input type="submit" value="Add Course">
+                </div>
             </form>
-        </div>
         </div>
     </div>
 </body>
