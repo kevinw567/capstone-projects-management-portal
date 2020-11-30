@@ -51,7 +51,8 @@ db.connect((error) => {
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
-
+//app.get("/addcourse", (req, res) => res.render('addcourse'));
+app.get("/addproj", (req, res) => res.render('addproj'));
 // tell express which port to listen to
 app.listen("3000", () => {
     console.log("Server started on port 3000");
