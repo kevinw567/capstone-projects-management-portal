@@ -22,7 +22,7 @@ exports.addproject = (req, res) => {
                 message: "An error occured!"
             })
         } else {
-            db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:result[0]['username'] }, (error, result) => {
+            db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
                 if(error) {
                     res.render('addproject', {
                         message: "An error occured. Please try again!"
