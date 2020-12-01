@@ -4,6 +4,7 @@
  */
 const express = require("express");
 const courseController = require("../controllers/courses");
+const projectController = require("../controllers/projects");
 
 const router = express.Router();
 
@@ -15,16 +16,8 @@ router.get('/addcourse/:userID', (req, res) => {
 /**
  * POST the course the user wants to register for
  */
-router.post("/addcourse/:userID", courseController.addcourse);
-
-/**
- * GET the user's enrolled courses by calling getEnrolledCourses() in controllers/courses.js
- */
-router.get("/enrolled/:userID", (req, res) => {
-    console.log("GET /enrolled/" + req.params.userID);
-    req.userID = req.params.userID;
-    console.log("req.userID = " + req.userID)
-    courseController.getEnrolledCourses(req, res);
+router.get("/professor", (req, res) => {
+    res.render("professor");
 })
 
 router.get("/createcourse/:userID", (req, res) => {
@@ -32,6 +25,25 @@ router.get("/createcourse/:userID", (req, res) => {
     res.render("/createcourse", {
         userID: req.params.userID
     })
+})
+
+router.get("/student", (req, res) => {
+    res.render("student");
+})
+router.get("/createcourse", (req, res) => {res.render("createcourse")});
+router.post("/createcourse", courseController.createcourse);
+router.get("/enrolled", courseController.getEnrolledCourses);
+router.get("/addcourse", (req, res) => {
+    res.render("addcourse");
+})
+router.post("/addcourse", courseController.addcourse);
+
+router.get("/setting", (req, res) => {res.render("setting")});
+router.post("/setting", courseController.setting);
+
+router.post("/addproject", projectController.addproject);
+router.get("/addproject", (req, res) => {
+    res.render("addproject");
 })
 
 // export the router for other files to use

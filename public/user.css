@@ -109,3 +109,160 @@ a {
     text-align: center;
     background-color: yellow;
 }
+
+.create-course,
+.add-project {
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    height: 50%;
+    border: 2px lightgray solid;
+}
+
+h2 {
+    margin-top: 15%;
+}
+
+
+.course-info {
+    float: left;
+    text-align: left;
+    /* border: 5px black solid; */
+    width: 50%;
+    font-size: large;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.course-number {
+    width: 80%;
+    margin-top: 5px;
+    height: 25px;
+}
+
+#description {
+    width: 80%;
+    height: 70px;
+}
+
+.btn {
+    width: 80%;
+    margin-top: 10px;
+}
+
+.add-proj-h2 {
+    margin-top: 5%;
+}
+
+.add-project {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.proj-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
+    width: 50%;
+    margin-left: 22%;
+    text-align: right;
+}
+
+.form-one-line-input,
+.form-multi-line-input {
+    width: 100%;
+}
+
+.form-one-line-input > label,
+.form-multi-line-input > label {
+    position: relative;
+}
+
+.form-one-line-input > input,
+.form-multi-line-input > textarea {
+    width: 71%;
+}
+
+.form-one-line-input {
+    float: left;
+}
+
+.form-multi-line-input > label {
+    position: relative;
+    bottom: 20px;
+    margin-bottom: 50px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-multi-line-input {
+    margin: 0px;
+}
+
+.add-proj-btn {
+    width: 25%;
+    margin: 1% 0% 2% 40%;
+.course-table {
+    width: 70%;
+    margin: auto;
+    margin-top: 20%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+th, td {
+padding: 15px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+tr:nth-child(even) {
+    background-color:#f2f2f2;
+}
+
+.profile {
+    background-color: white;
+    color: black;
+}
+
+.personal-profile {
+    width: 50%;
+    margin: auto;
+}
+
+.user-info {
+    width: 100%;
+    /* border: 2px black solid; */
+}
+
+.fname {
+    float: left;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+br {
+    clear: both;
+}
+.username {
+    width: 100%;
+    height: 30px;
+    float: left;
+    text-align: center;
+}
+
+.btn-update {
+    width: 101%;
+    height: 30px;
+    margin-top: 10px;
+}

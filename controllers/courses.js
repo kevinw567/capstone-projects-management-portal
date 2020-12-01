@@ -3,6 +3,7 @@
  */
 const { profile_email } = require("./auth");
 const mysql = require("mysql");
+const e = require("express");
 
 const db = mysql.createConnection({
     // host IP address
@@ -14,48 +15,91 @@ const db = mysql.createConnection({
 })
 
 exports.addcourse = (req, res) => {
-    let course_id = 0;
-    courseCode = req.body.course_code;
-    // query the database for the course number to enroll in
-    db.query("SELECT id FROM courses WHERE course_number = ?", [courseCode], (error, result) => {
-        if (error) {
-            console.log(error);
+    // let course_id = 0;
+    // courseCode = req.body.course_code;
+    // // query the database for the course number to enroll in
+    // db.query("SELECT id FROM courses WHERE course_number = ?", [courseCode], (error, result) => {
+    //     if (error) {
+    //         console.log(error);
+    //     }
+
+    //     course_id = result[0].id;
+    //     console.log(course_id);
+    //     // insert the course id and student id into the course info table
+    //     db.query("INSERT INTO courses_info SET ?", {student_id: req.params.userID, id: course_id }, (error, results) => {
+    //         if (error) {
+    //             console.log(error);
+    //             if (error.code === "ER_DUP_ENTRY") {
+    //                 res.render("addcourse", {
+    //                     message: "You are already enrolled in this course",
+    //                     userID: req.params.userID
+    //                 })
+    //             }
+
+    //             else {
+    //                 res.render("addcourse", {
+    //                     message: "An unexpected error occured",
+    //                     userID: req.params.userID
+    //                 })
+    //             }
+    //         }
+
+    //         else {
+    //             res.render("addcourse", {
+    //                 message: "Sucessfully Enrolled in Course",
+    //                 userID: req.params.userID
+    //             })
+    //         }
+    //     })
+    // })
+    const course_code = req.body.coursecode;
+    db.query("SELECT * FROM courses WHERE id=?", [course_code], (error, result) => {
+        if(error) {
+            res.render('addcourse', {
+                message: "An error occured, Please try again!"
+            })
+        } else if (result.length == 0) {
+            res.render('addcourse', {
+                message: "No course found with the course code!"
+            })
+        } else {
+            db.query("SELECT * FROM courses_info WHERE student_id = ?", [req.session.userid], (error, result) => {
+                // console.log(req.session.userid);
+                // console.log(result);
+                if (error) {
+                    res.render('addcourse', {
+                        message: "An error occured, Please try again!1"
+                    })
+                } else if(result.length != 0) {
+                    res.render('addcourse', {
+                        message: "You already enrolled this course!"
+                    })
+                } else {
+                    db.query("INSERT INTO courses_info SET ? ", {id:course_code, student_id: req.session.userid}, (error, result) => {
+                        console.log(result);
+                        if (error) {
+                            res.render('addcourse', {
+                                message: "An error occured, Please try again!2"
+                            })
+                        } else {
+                            res.render('addcourse', {
+                                message: "You have successfully enrolled!"
+                            })
+                        }
+                    })
+                }
+            })
+            
         }
-
-        course_id = result[0].id;
-        // insert the course id and student id into the course info table
-        db.query("INSERT INTO courses_info SET ?", {student_id: req.params.userID, id: course_id }, (error, results) => {
-            if (error) {
-                console.log(error);
-                if (error.code === "ER_DUP_ENTRY") {
-                    res.render("addcourse", {
-                        message: "You are already enrolled in this course",
-                        userID: req.params.userID
-                    })
-                }
-
-                else {
-                    res.render("addcourse", {
-                        message: "An unexpected error occured",
-                        userID: req.params.userID
-                    })
-                }
-            }
-
-            else {
-                res.render("addcourse", {
-                    message: "Sucessfully Enrolled in Course",
-                    userID: req.params.userID
-                })
-            }
-        })
     })
 }
+
+
 
 exports.getEnrolledCourses = (req, res) => {
     
     // query the database for all of the courses the user is enrolled in
-    db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.userID], (error, results) => {
+    db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
             res.render("courses", {
@@ -63,7 +107,7 @@ exports.getEnrolledCourses = (req, res) => {
                 message: "An unexpected error occured"
             })
         }
-
+        
         // enter if statement if the user is not enrolled in any courses
         else if (results.length <= 0) {
             res.render("courses", {
@@ -71,7 +115,7 @@ exports.getEnrolledCourses = (req, res) => {
                 message: "You are not enrolled in any classes",
             })
         }
-
+        
         // 
         else {
             req.results = results;
@@ -83,4 +127,35 @@ exports.getEnrolledCourses = (req, res) => {
             })
         }
     })
+
+
 }
+
+exports.setting = (req, res) => {
+    
+}
+
+
+// Professor's page
+exports.createcourse = (req, res) => {
+    const { coursenumber, description } = req.body;
+    // generate a random code for the course
+    course_id = Math.random().toString(36).substring(2, 10);
+    let email = req.session.email;
+    db.query("SELECT username FROM users WHERE email=?", [email], (error, result)=>{
+        if (error) {
+            res.render("createcourse", {
+                message: "An error occured!"
+            })
+        } else {
+            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username']}, (error, result) => {
+                if(error) {
+                    res.render('createcourse', {
+                        message: "An error occured. Please try again!"
+                    })
+                } else {
+                    res.render('createcourse', {
+                        message: "Course created!"
+                    })}
+                })}
+            })};

@@ -60,7 +60,7 @@ app.use(session({
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
 //app.get("/addcourse", (req, res) => res.render('addcourse'));
-app.get("/addproj", (req, res) => res.render('addproj'));
+app.use("/addproject", (req, res) => res.render('addproject'));
 app.use("/courses", require("./routes/courses"));
 
 
