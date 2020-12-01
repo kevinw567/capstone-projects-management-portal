@@ -27,9 +27,10 @@ router.get("/enrolled/:userID", (req, res) => {
     courseController.getEnrolledCourses(req, res);
 })
 
-router.get("/addcourse", (req, res) => {
-    res.render("addcourse", {
-        message: "Unable to addcourse. Please log out and log back in to try again."
+router.get("/createcourse/:userID", (req, res) => {
+    console.log("GET /createcourse/" + req.params.userID);
+    res.render("/createcourse", {
+        userID: req.params.userID
     })
 })
 

@@ -19,7 +19,7 @@ exports.register = (req, res) => {
     console.log(req.body);
     let e = false;
     // get information from HTML form
-    const {username, password, confirmPassword, email, role } = req.body;    
+    const { username, password, confirmPassword, email, role } = req.body;    
     // check password
     if (password != confirmPassword) {
         res.render('register', {
@@ -70,7 +70,7 @@ exports.register = (req, res) => {
     })}
 }
 
-
+// authenticate and login a new user
 exports.login = (req, res) => {
     const { email, password, role } = req.body;
     db.query("SELECT id FROM users WHERE email = ? AND authentication = ? AND role = ?", [email, md5(password), role], (error, results) => {
