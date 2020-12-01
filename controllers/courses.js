@@ -127,26 +127,12 @@ exports.getEnrolledCourses = (req, res) => {
             })
         }
     })
-    // db.query("SELECT id FROM courses_info WHERE student_id = ?",[req.session.userid], (error, result) => {
-    //     console.log(result);
-    //     if(error) {
-    //         res.render('courses', {
-    //             message: "An error occured!"
-    //         })
-    //     } else if(result.length == 0) {
-    //         res.render('courses', {
-    //             message: "You have not enrolled any courses!"
-    //         })
-    //     } else {
-    //         let results = [];
-    //         for (let i = 0; i < result.length; i++) {
-    //             results.push(result[i]['id']);
-    //         }
-    //         db.query("SELECT * FROM courses WHERE id IN 
-                
-    //     }
-    // })
 
+
+}
+
+exports.setting = (req, res) => {
+    
 }
 
 

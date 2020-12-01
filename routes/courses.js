@@ -29,5 +29,8 @@ router.get("/addcourse", (req, res) => {
 })
 router.post("/addcourse", courseController.addcourse);
 
+router.get("/setting", (req, res) => {res.render("setting")});
+router.post("/setting", courseController.setting);
+
 // export the router for other files to use
 module.exports = router;
