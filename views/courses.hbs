@@ -20,29 +20,27 @@
                 <li class="list-item"><a href="/setting">Settings</a></li>
             </ul>
         </div>
-        
-<<<<<<< HEAD
-        
-=======
-        <div>
-            <div>
-                {{#if message }}
-                    <p class="alert"> {{ message }} </p>
-                {{/if }}
-            </div>
-            {{!-- for each enrolled class, display it's information on the screen --}}
-            {{#each results}}
-                <h2 class="enrolled-title">
-                    {{course_number}}
-                    <br>
-                    {{professor}}
-                </h2>
-                <div class="enrolled-description">
-                    {{course_description}}
-                </div>
-            {{/each}}
+        <div class="courses">
+            {{#if message }}
+                <p class="alert">{{ message }}</p>
+            {{else}}
+                <table class="course-table">
+                    <tr>
+                        <th>Course</th>
+                        <th>Professor</th>
+                        <th>Description</th>
+                    </tr>
+                    {{#each results}}
+                    <tr>
+                        <td>{{course_number}}</td>
+                        <td>{{professor}}</td>
+                        <td>{{course_description}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+            {{/if}}
+
         </div>
->>>>>>> 964fd351ad05e2fd04a8eaefbe59333f0e80904d
     </div>
 </body>
 </html>

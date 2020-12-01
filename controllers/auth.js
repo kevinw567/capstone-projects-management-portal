@@ -88,9 +88,11 @@ exports.login = (req, res) => {
             let role = results[0]['role'];
             if (role === 'student'){
                 req.session.email = email;
+                req.session.role = role;
+                req.session.userid = results[0]['id'];
                 req.params.userID = results[0].id;
-                console.log(req.params);
-                console.log("Logged in as student User ID: " + req.params.userID);
+                // console.log(req.params);
+                // console.log("Logged in as student User ID: " + req.params.userID);
                 
                 // res.render("student", {
                 //     userID: req.params.userID
@@ -98,6 +100,8 @@ exports.login = (req, res) => {
                 res.redirect("/courses/student");
             } else {
                 req.session.email = email;
+                req.session.role = role;
+                req.session.userid = results[0]['id'];
                 req.params.userID = results[0].id;
 
                 // res.render('professor', {
