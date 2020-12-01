@@ -15,21 +15,33 @@
             </svg>
             <ul class="nav-bar">
                 <li class="list-item"><a href="/courses/createcourse">Create a course</a></li>
-                <li class="list-item"><a href="/courses">View Courses</a></li>
+                <li class="list-item"><a href="/courses/courses">View Courses</a></li>
                 <li class="list-item"><a href="/projects">View Projects</a></li>
                 <li class="list-item"><a href="/setting">Settings</a></li>
             </ul>
         </div>
         <div class="courses">
+            {{#if message }}
+                <p class="alert"> {{ message }} </p>
+            {{/if }}
             {{!-- add course --}}
-            <form action="/courses/createcourse" method="POST" class="add-course">
-                <div class="add">
-                    <label for="">Enter Course Code: </label>
-                    <input type="text" class="input-box">
+            <form action="/courses/createcourse" method="POST" class="create-course">
+            <h2>Create Course</h2>
+                <div class="course">
+                    <div>
+                        <label for="course-number" class="course-info">Course Number: </label>
+                        {{!-- <br> --}}
+                        <input type="text" name="coursenumber" class="course-number" placeholder="Enter Course Number" required="required">
+                    </div>
+                    <div class="course-description">
+                        <label for="course-description" class="course-info">Description: </label>
+                        <textarea name="description" id="description" placeholder="Enter detail about the course"></textarea>
+                    </div>
+                    <div>
+                        <input type="submit" value="Create" class='btn'>
+                    </div>
                 </div>
-                    <input type="submit" value="Enter">
             </form>
-        </div>
         </div>
     </div>
 </body>

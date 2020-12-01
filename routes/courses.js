@@ -14,7 +14,14 @@ router.get('/addcourse/:userID', (req, res) => {
 })
 
 router.post("/addcourse/:userID", courseController.addcourse);
-
+router.get("/professor", (req, res) => {
+    res.render("professor");
+})
+router.get("/student", (req, res) => {
+    res.render("student");
+})
+router.get("/createcourse", (req, res) => {res.render("createcourse")});
+router.post("/createcourse", courseController.createcourse);
 router.get("/courses", (req, res) => {
     res.render("courses");
 })
