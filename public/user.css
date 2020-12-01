@@ -110,7 +110,8 @@ a {
     background-color: yellow;
 }
 
-.create-course {
+.create-course,
+.add-project {
     width: 50%;
     margin: auto;
     margin-top: 5%;
@@ -147,4 +148,63 @@ h2 {
 .btn {
     width: 80%;
     margin-top: 10px;
+}
+
+.add-proj-h2 {
+    margin-top: 5%;
+}
+
+.add-project {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.proj-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 100%;
+    width: 50%;
+    margin-left: 22%;
+    text-align: right;
+}
+
+.form-one-line-input,
+.form-multi-line-input {
+    width: 100%;
+}
+
+.form-one-line-input > label,
+.form-multi-line-input > label {
+    position: relative;
+}
+
+.form-one-line-input > input,
+.form-multi-line-input > textarea {
+    width: 71%;
+}
+
+.form-one-line-input {
+    float: left;
+}
+
+.form-multi-line-input > label {
+    position: relative;
+    bottom: 20px;
+    margin-bottom: 50px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-multi-line-input {
+    margin: 0px;
+}
+
+.add-proj-btn {
+    width: 25%;
+    margin: 1% 0% 2% 40%;
 }

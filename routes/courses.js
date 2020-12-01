@@ -4,6 +4,7 @@
  */
 const express = require("express");
 const courseController = require("../controllers/courses");
+const projectController = require("../controllers/projects");
 
 const router = express.Router();
 
@@ -30,8 +31,13 @@ router.get("/courses", (req, res) => {
 
 router.get("/addcourse", (req, res) => {
     res.render("addcourse", {
-        message: "Unable to addcourse. Please log out and log back in to try again."
+        message: "Unable to add course. Please log out and log back in to try again."
     })
+})
+
+router.post("/addproject", projectController.addproject);
+router.get("/addproject", (req, res) => {
+    res.render("addproject");
 })
 
 // export the router for other files to use
