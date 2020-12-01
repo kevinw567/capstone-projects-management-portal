@@ -3,6 +3,8 @@ const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 const path = require("path");
+// const projectController = require("./controllers/projects");
+
 // add session to track user's info
 const session = require("express-session");
 
@@ -60,7 +62,9 @@ app.use(session({
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
 //app.get("/addcourse", (req, res) => res.render('addcourse'));
-app.use("/addproject", (req, res) => res.render('addproject'));
+// app.get("addproject", require("./routes/courses.js"));
+app.use("addproject", require("./routes/courses.js"));
+
 app.use("/courses", require("./routes/courses"));
 
 
