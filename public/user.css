@@ -81,17 +81,24 @@ a {
     border-right: 2px lightgrey solid;
     border-bottom: 2px lightgrey solid;
     margin-left: 20.5%;
-    width: 80%;
+    width: 85%;
     padding-top: 20px;
-    
+    padding-left: 10px;
+    position: relative;
+    top: -19px;
+    left:-7px
 }
 
 .enrolled-description {
     border-right: 2px lightgrey solid;
     border-bottom: 2px lightgrey solid;
     margin-left: 20.5%;
-    width: 80%;
+    width: 85%;
     padding-top: 0px;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    position: relative;
+    left:-7px
 }
 
 .alert {
@@ -101,4 +108,43 @@ a {
     margin: auto;
     text-align: center;
     background-color: yellow;
+}
+
+.create-course {
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    height: 50%;
+    border: 2px lightgray solid;
+}
+
+h2 {
+    margin-top: 15%;
+}
+
+
+.course-info {
+    float: left;
+    text-align: left;
+    /* border: 5px black solid; */
+    width: 50%;
+    font-size: large;
+    margin-left: 10%;
+    margin-top: 10px;
+}
+
+.course-number {
+    width: 80%;
+    margin-top: 5px;
+    height: 25px;
+}
+
+#description {
+    width: 80%;
+    height: 70px;
+}
+
+.btn {
+    width: 80%;
+    margin-top: 10px;
 }

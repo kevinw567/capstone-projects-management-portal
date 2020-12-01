@@ -23,6 +23,8 @@ const router = express.Router();
 // router.get("/auth/login/:userID", (req, res, next) => {
 //     db.query("SELECT ")
 // })
+
+
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 

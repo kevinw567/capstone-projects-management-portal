@@ -27,14 +27,14 @@ router.get("/addcourse", (req, res) => {
     res.render("addcourse");
 });
 
-router.get("/courses", (req, res, next) => {
-    courseController.getEnrolledCourses();
-    next();
-})
+// router.get("/courses", (req, res, next) => {
+//     courseController.getEnrolledCourses();
+//     next();
+// })
 
-router.get("/courses", (req, res) => {
-    res.render("courses");
-});
+// router.get("/courses", (req, res) => {
+//     res.render("courses");
+// });
 
 
 

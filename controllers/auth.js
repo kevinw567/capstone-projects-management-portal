@@ -72,8 +72,9 @@ exports.register = (req, res) => {
 
 
 exports.login = (req, res) => {
-    const { email, password, role } = req.body;
-    db.query("SELECT id FROM users WHERE email = ? AND authentication = ? AND role = ?", [email, md5(password), role], (error, results) => {
+    const { email, password } = req.body;
+    db.query("SELECT role, id FROM users WHERE email = ? AND authentication = ?", [email, md5(password)], (error, results) => {
+        console.log(results);
         if (error) {
             console.log(error);
             res.render('index', {
@@ -84,23 +85,25 @@ exports.login = (req, res) => {
                 message: "Wrong email or password"
             })
         } else {
+            let role = results[0]['role'];
             if (role === 'student'){
+                req.session.email = email;
                 req.params.userID = results[0].id;
-
+                console.log(req.params);
                 console.log("Logged in as student User ID: " + req.params.userID);
                 
-                res.render("student", {
-                    userID: req.params.userID
-                });
-                
+                // res.render("student", {
+                //     userID: req.params.userID
+                // });
+                res.redirect("/courses/student");
             } else {
                 req.session.email = email;
                 req.params.userID = results[0].id;
 
-                res.render('professor', {
-                    userID: req.params.userID
-                });
-                
+                // res.render('professor', {
+                //     userID: req.params.userID
+                // });
+                res.redirect("/courses/professor");
             } 
         }
     })
