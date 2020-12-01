@@ -12,7 +12,9 @@ router.get('/addcourse/:userID', (req, res) => {
         userID: req.params.userID
     });
 })
-
+/**
+ * POST the course the user wants to register for
+ */
 router.post("/addcourse/:userID", courseController.addcourse);
 router.get("/professor", (req, res) => {
     res.render("professor");

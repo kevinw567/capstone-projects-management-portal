@@ -87,6 +87,7 @@ exports.login = (req, res) => {
         } else {
             let role = results[0]['role'];
             if (role === 'student'){
+                req.session.email = email;
                 req.params.userID = results[0].id;
                 console.log(req.params);
                 console.log("Logged in as student User ID: " + req.params.userID);

@@ -45,10 +45,8 @@ exports.addcourse = (req, res) => {
             }
 
             else {
-                console.log(results)
-
                 res.render("addcourse", {
-                    message: "Course registered",
+                    message: "Sucessfully Enrolled in Course",
                     userID: req.params.userID
                 })
             }
@@ -98,12 +96,41 @@ exports.createcourse = (req, res) => {
                 } else {
                     res.render('createcourse', {
                         message: "Course created!"
-                    })
-                }
+                    })}
+                })}
+            })};
+            
+exports.getEnrolledCourses = (req, res) => {
+    
+    // query the database for all of the courses the user is enrolled in
+    db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.userID], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.render("courses", {
+                userID: req.userID,
+                message: "An unexpected error occured"
+            })
+        }
+
+        // enter if statement if the user is not enrolled in any courses
+        else if (results.length <= 0) {
+            res.render("courses", {
+                userID: req.userID,
+                message: "You are not enrolled in any classes",
+            })
+        }
+
+        // 
+        else {
+            req.results = results;
+            console.log("req.results: " + req.results);
+            console.log(results);
+            res.render("courses", {
+                userID: req.userID,
+                results: results
             })
         }
     })
 
-    console.log(req.session.email + "0-----");
 
 }
