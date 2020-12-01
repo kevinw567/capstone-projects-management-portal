@@ -16,7 +16,6 @@ router.get('/addcourse/:userID', (req, res) => {
 /**
  * POST the course the user wants to register for
  */
-router.post("/addcourse/:userID", courseController.addcourse);
 router.get("/professor", (req, res) => {
     res.render("professor");
 })
@@ -25,15 +24,14 @@ router.get("/student", (req, res) => {
 })
 router.get("/createcourse", (req, res) => {res.render("createcourse")});
 router.post("/createcourse", courseController.createcourse);
-router.get("/courses", (req, res) => {
-    res.render("courses");
-})
-
+router.get("/enrolled", courseController.getEnrolledCourses);
 router.get("/addcourse", (req, res) => {
-    res.render("addcourse", {
-        message: "Unable to add course. Please log out and log back in to try again."
-    })
+    res.render("addcourse");
 })
+router.post("/addcourse", courseController.addcourse);
+
+router.get("/setting", (req, res) => {res.render("setting")});
+router.post("/setting", courseController.setting);
 
 router.post("/addproject", projectController.addproject);
 router.get("/addproject", (req, res) => {
