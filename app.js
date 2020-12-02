@@ -61,11 +61,9 @@ app.use(session({
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
-//app.get("/addcourse", (req, res) => res.render('addcourse'));
-// app.get("addproject", require("./routes/courses.js"));
 app.use("addproject", require("./routes/courses.js"));
-
 app.use("/courses", require("./routes/courses"));
+app.use("/projects", require("./routes/projects"));
 
 
 

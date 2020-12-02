@@ -19,6 +19,14 @@ router.get('/addcourse/:userID', (req, res) => {
 router.get("/professor", (req, res) => {
     res.render("professor");
 })
+
+router.get("/createcourse/:userID", (req, res) => {
+    console.log("GET /createcourse/" + req.params.userID);
+    res.render("/createcourse", {
+        userID: req.params.userID
+    })
+})
+
 router.get("/student", (req, res) => {
     res.render("student");
 })
