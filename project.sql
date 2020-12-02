@@ -22,19 +22,6 @@ role varchar(20) not NULL
 -- FOREIGN KEY (user_id) REFERENCES users(id)
 -- );
 
-
-CREATE TABLE projects(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-project_name VARCHAR(200) NOT NULL,
-project_detail VARCHAR(250),
-client_name VARCHAR(50) NOT NULL,
-client_contact VARCHAR(100),
-extra_details VARCHAR(255),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES users(id)
-FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-
 -- table for the course that professor created
 CREATE TABLE courses(
     id VARCHAR(20) PRIMARY KEY,
@@ -42,6 +29,25 @@ CREATE TABLE courses(
     course_description VARCHAR(100),
     professor VARCHAR(100)
 );
+
+CREATE TABLE projects(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+project_name VARCHAR(200) NOT NULL,
+project_detail VARCHAR(250),
+client_name VARCHAR(50) NOT NULL,
+client_contact VARCHAR(100),
+course_id VARCHAR(20),
+extra_details VARCHAR(255),
+user_id INT,
+<<<<<<< HEAD
+FOREIGN KEY (user_id) REFERENCES users(id),
+=======
+course_id VARCHAR(50),
+FOREIGN KEY (user_id) REFERENCES users(id)
+>>>>>>> ea46a325982d3589675fc61ab2accf3d0ea3319c
+FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+
 -- table to store the projects, students in that course
 CREATE TABLE courses_info(
     id VARCHAR(20),
@@ -53,4 +59,4 @@ CREATE TABLE courses_info(
     FOREIGN KEY (id) REFERENCES courses(id),
     FOREIGN KEY (student_id) REFERENCES users(id),
     FOREIGN KEY (projects_id) REFERENCES projects(id)
-)
+);

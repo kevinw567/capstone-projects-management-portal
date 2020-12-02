@@ -15,43 +15,6 @@ const db = mysql.createConnection({
 })
 
 exports.addcourse = (req, res) => {
-    // let course_id = 0;
-    // courseCode = req.body.course_code;
-    // // query the database for the course number to enroll in
-    // db.query("SELECT id FROM courses WHERE course_number = ?", [courseCode], (error, result) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-
-    //     course_id = result[0].id;
-    //     console.log(course_id);
-    //     // insert the course id and student id into the course info table
-    //     db.query("INSERT INTO courses_info SET ?", {student_id: req.params.userID, id: course_id }, (error, results) => {
-    //         if (error) {
-    //             console.log(error);
-    //             if (error.code === "ER_DUP_ENTRY") {
-    //                 res.render("addcourse", {
-    //                     message: "You are already enrolled in this course",
-    //                     userID: req.params.userID
-    //                 })
-    //             }
-
-    //             else {
-    //                 res.render("addcourse", {
-    //                     message: "An unexpected error occured",
-    //                     userID: req.params.userID
-    //                 })
-    //             }
-    //         }
-
-    //         else {
-    //             res.render("addcourse", {
-    //                 message: "Sucessfully Enrolled in Course",
-    //                 userID: req.params.userID
-    //             })
-    //         }
-    //     })
-    // })
     const course_code = req.body.coursecode;
     db.query("SELECT * FROM courses WHERE id=?", [course_code], (error, result) => {
         if(error) {
@@ -172,7 +135,7 @@ exports.viewcourses = (req, res) => {
         } else {
             db.query("SELECT * FROM courses", (error, results) => {
             if(error) {
-                console.log(result);
+                console.log(results);
                 res.render('admin-view-courses', {
                     message: "An error occured!"
                 })} else {

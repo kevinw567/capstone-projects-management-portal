@@ -28,7 +28,7 @@
                 <div class="proj-info">
                     <div class= "form-one-line-input">
                         <label for="">Project Name</label>
-                        <input type="text" class="proj-input" name="projectName">
+                        <input type="text" class="proj-input" name="projectName" required="required">
                     </div>
                     <div class="form-multi-line-input">
                         <label for="">Description</label>
@@ -36,15 +36,19 @@
                     </div>
                     <div class="form-one-line-input">
                         <label for="">Client Name</label>
-                        <input type="text" class="proj-input" name="clientName">
+                        <input type="text" class="proj-input" name="clientName" required="required">
                     </div>
                     <div class="form-one-line-input">
                         <label for="">Client Email</label>
-                        <input type="text" class="proj-input" name="clientEmail"> 
+                        <input type="text" class="proj-input" name="clientEmail" required="required"> 
                     </div>
                     <div class="form-multi-line-input">
                         <label for="">Extra Details</label>
                         <textarea class="proj-input" name="extraDetails"></textarea>
+                    </div>
+                    <div class="form-one-line-input">
+                        <label for="">Assign to</label>
+                        <input type="text" class="proj-input" name="courseID" placeholder="Enter course id" required="required">
                     </div>
                 </div>
                 <input type="submit" value="Add Project" class="add-proj-btn"></input>
