@@ -62,28 +62,23 @@ exports.viewprojects = (req, res) => {
 
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
-    const {projectName} = req.body;
-
-    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
-        if (error) {
-            console.log(error);
-            res.render("view-project", {
-                message: "An unexpected error occured"
-            })
-        } else {
-            db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
-            if(error) {
-                res.render('view-project', {
-                    message: "An error occured!"
-                })} else {
-                        req.results = results;
-                        console.log("req.results: " + req.results);
-                        console.log(results);
-                        res.render("view-project", {
-                        results: results
-                        })
-                }
-            })
+    const {projectName, projectDetail, clientName, clientContact, extraDetails} = req.body;
+    console.log("___Fields___\n" + projectName + "\n" + projectDetail + "\n" + clientName + "\n" + clientContact + "\n" + extraDetails + "\n");
+    db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
+    if(error) {
+        res.render('view-project', {
+            message: "An error occured!"
+        })} else {
+                req.results = results;
+                console.log("req.results: " + req.results);
+                console.log(results);
+                res.render("view-project", {
+                    project_name: results[0]['project_name'],
+                    project_detail: results[0]['project_detail'],
+                    client_name: results[0]['client_name'],
+                    client_contact: results[0]['client_contact'],
+                    extra_details: results[0]['extra_details']
+                })
         }
     })
 }

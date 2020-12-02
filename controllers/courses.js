@@ -172,7 +172,7 @@ exports.viewcourses = (req, res) => {
         } else {
             db.query("SELECT * FROM courses", (error, results) => {
             if(error) {
-                console.log(result);
+                console.log(results);
                 res.render('admin-view-courses', {
                     message: "An error occured!"
                 })} else {
