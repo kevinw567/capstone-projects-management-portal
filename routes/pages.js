@@ -48,6 +48,10 @@ router.get("/view-project", (req, res) => {
     res.render("view-project");
 });
 
+router.get("/admin-settings", (req, res) => {
+    res.render("admin-settings");
+});
+
 
 
 // export the router for other files to use
