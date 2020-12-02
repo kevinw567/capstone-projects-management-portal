@@ -28,15 +28,13 @@
                 <table class="course-table">
                     <tr>
                         <th>Project Name</th>
-                        <th>Description</th>
                         <th>Client Name</th>
-                        <th>Detail</th>
                     </tr>
                     {{#each results}}
                     <tr>
                         <td>
                             <form action="/courses/view-project" method="POST">
-                                <input type="submit" value="{{project_name}}">
+                                <input type="submit" value="{{project_name}}" class="submit-btn">
                                 <input type="hidden" name="projectName" value="{{project_name}}">
                                 <input type="hidden" name="projectDetail" value="{{project_detail}}">
                                 <input type="hidden" name="clientName" value="{{client_name}}">
@@ -44,12 +42,7 @@
                                 <input type="hidden" name="extraDetails" value="{{extra_details}}">
                             </form>
                         </td>
-                        <td>{{project_detail}}</td>
                         <td>{{client_name}}</td>
-                        <form action="/courses/view-project" method="POST">
-                            <input type="hidden" name="project_id" value={{id}}>
-                            <td><input type="submit" value="......." class="submit-btn"></td>
-                        </form>
                     </tr>
                     {{/each}}
                 </table>

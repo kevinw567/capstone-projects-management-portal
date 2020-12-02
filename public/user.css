@@ -293,5 +293,5 @@ select {
     border: none;
     background: none;
     cursor: pointer;
-    color: blue;
+    text-decoration: underline;
 }
