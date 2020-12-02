@@ -63,7 +63,7 @@ exports.addcourse = (req, res) => {
                 message: "No course found with the course code!"
             })
         } else {
-            db.query("SELECT * FROM courses_info WHERE student_id = ?", [req.session.userid], (error, result) => {
+            db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, course_code], (error, result) => {
                 // console.log(req.session.userid);
                 // console.log(result);
                 if (error) {
