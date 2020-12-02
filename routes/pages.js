@@ -32,9 +32,21 @@ router.get("/addcourse", (req, res) => {
 //     next();
 // })
 
-// router.get("/courses", (req, res) => {
-//     res.render("courses");
-// });
+router.get("/courses", (req, res) => {
+    res.render("courses");
+});
+
+router.get("/admin-view-courses", (req, res) => {
+    res.render("admin-view-courses");
+});
+
+router.get("/admin-view-projects", (req, res) => {
+    res.render("admin-view-projects");
+});
+
+router.get("/view-project", (req, res) => {
+    res.render("view-project");
+});
 
 
 

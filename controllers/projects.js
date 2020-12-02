@@ -34,44 +34,57 @@ exports.addproject = (req, res) => {
                 })}
             })};
 
-// get available projects for enrolled classes
-exports.getProjects = (req, res) => {
-    // query the database for userid
-    db.query("SELECT id FROM users WHERE email=?", [req.session.email], (error, result)=>{
+exports.viewprojects = (req, res) => {
+    let email = req.session.email;
+    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
-            res.render("projects", {
+            console.log(error);
+            res.render("admin-view-projects", {
                 message: "An unexpected error occured"
             })
-        }
-
-        else {
-            console.log(result);
-            db.query("SELECT id FROM courses_info WHERE student_id = ?", [result[0]["id"]], (error, results) => {
-                if (error) {
-                    res.render("projects", {
-                        message: "An unexpected error occured"
-                    })
-                }
-
-                else {
-                    console.log(results);
+        } else {
+            db.query("SELECT * FROM projects", (error, results) => {
+            if(error) {
+                res.render('admin-view-projects', {
+                    message: "An error occured!"
+                })} else {
+                        req.results = results;
+                        console.log("req.results: " + req.results);
+                        console.log(results);
+                        res.render("admin-view-projects", {
+                        results: results
+                        })
                 }
             })
         }
+    })
+};
 
-        db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
-            if (error) {
-                res.render("projects", {
-                    message: "An error occured"
-                })
-            }
+exports.viewsingleproject = (req, res) => {
+    let email = req.session.email;
+    const {projectName} = req.body;
 
-            else {
-                res.render("projects", {
-                    results: results
-                })
-            }
-        })
+    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.render("view-project", {
+                message: "An unexpected error occured"
+            })
+        } else {
+            db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
+            if(error) {
+                res.render('view-project', {
+                    message: "An error occured!"
+                })} else {
+                        req.results = results;
+                        console.log("req.results: " + req.results);
+                        console.log(results);
+                        res.render("view-project", {
+                        results: results
+                        })
+                }
+            })
+        }
     })
 }
 
