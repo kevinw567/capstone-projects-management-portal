@@ -47,25 +47,25 @@
             <br>
         
             <form action="/projects/submitprefs" method="POST">
-                <span>First Preference</span>
-                <select>
-                    <option value="pref1" disabled="true" selected="true" name="pref1"> -- Select One --</option>
+                <span> First Preference </span>
+                <select name="pref1">
+                    <option value="" disabled="true" selected="true"> -- Select One --</option>
                     {{#each results }}
-                        <option value=""> {{ project_name }} </option>
+                        <option value="{{ project_name }}"> {{ project_name }} </option>
                     {{/each }}
                 </select>
                 <span> Second Preference </span>
-                <select>
-                    <option value="pref2" disabled="true" selected="true" name="pref2"> -- Select One --</option>
+                <select name="pref2">
+                    <option value="" disabled="true" selected="true"> -- Select One --</option>
                     {{#each results }}
-                        <option value=""> {{ project_name }} </option>
+                        <option value="{{ project_name }}"> {{ project_name }} </option>
                     {{/each }}
                 </select>
                 <span> Third Preference </span>
-                <select>
-                    <option value="pref3" disabled="true" selected="true" name="pref3"> -- Select One --</option>
+                <select name="pref3">
+                    <option value="" disabled="true" selected="true"> -- Select One --</option>
                     {{#each results }}
-                        <option value=""> {{ project_name }} </option>
+                        <option value="{{ project_name }}"> {{ project_name }} </option>
                     {{/each }}
                 </select>
                 <br>
