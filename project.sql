@@ -31,6 +31,7 @@ client_name VARCHAR(50) NOT NULL,
 client_contact VARCHAR(100),
 extra_details VARCHAR(255),
 user_id INT,
+course_id VARCHAR(50),
 FOREIGN KEY (user_id) REFERENCES users(id)
 FOREIGN KEY (course_id) REFERENCES courses(id)
 );

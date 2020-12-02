@@ -30,12 +30,17 @@
                         <th>Project Name</th>
                         <th>Description</th>
                         <th>Client Name</th>
+                        <th>Detail</th>
                     </tr>
                     {{#each results}}
                     <tr>
-                        <td><a href="/courses/view-project">{{project_name}}</a></td>
+                        <td>{{project_name}}</td>
                         <td>{{project_detail}}</td>
                         <td>{{client_name}}</td>
+                        <form action="/courses/view-project" method="POST">
+                            <input type="hidden" name="project_id" value={{id}}>
+                            <td><input type="submit" value="......." class="submit-btn"></td>
+                        </form>
                     </tr>
                     {{/each}}
                 </table>
