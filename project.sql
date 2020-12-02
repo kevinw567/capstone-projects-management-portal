@@ -39,7 +39,12 @@ client_contact VARCHAR(100),
 course_id VARCHAR(20),
 extra_details VARCHAR(255),
 user_id INT,
+<<<<<<< HEAD
 FOREIGN KEY (user_id) REFERENCES users(id),
+=======
+course_id VARCHAR(50),
+FOREIGN KEY (user_id) REFERENCES users(id)
+>>>>>>> ea46a325982d3589675fc61ab2accf3d0ea3319c
 FOREIGN KEY (course_id) REFERENCES courses(id)
 );
 
