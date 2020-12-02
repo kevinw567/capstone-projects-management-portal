@@ -133,17 +133,48 @@ exports.getProjects = (req, res) => {
 
 exports.submitprefs = (req, res) => {
     const { pref1, pref2, pref3 } = req.body;
-    db.query("INSERT INTO courses_info SET ?", { proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3 }, (error, result) => {
+    // query the database for the course id
+    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
         if (error) {
             res.render("projects", {
-                message: "Unable to submit project preferences"
+                message: "An unexpected error occured"
             })
         }
 
         else {
-            res.render("projects", {
-                message: "Successfully submitted project preferences"
+            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3 }, (error, result) => {
+                if (error) {
+                    // if a bad null error is thrown, ask user to relogin
+                    if (error.code === "ER_BAD_NULL_ERROR") {
+                        res.render("projects", {
+                            message: "An error occured. Please relogin and try again."
+                        })
+                    }
+
+                    else {
+                        res.render("projects", {
+                            message: "Unable to submit project preferences"
+                        })
+                    }
+                }
+
+                else {
+                    res.render("projects", {
+                        message: "Successfully submitted project preferences"
+                    })
+                }
             })
         }
     })
+
+
+
+
+
+        
+
+
+
+
+
 }
