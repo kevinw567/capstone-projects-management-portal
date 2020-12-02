@@ -7,10 +7,17 @@ const projectController = require("../controllers/projects");
 
 const router = express.Router();
 
+/**
+ * GET the view available projects page
+ */
 router.get("/view", (req, res) => {
     projectController.getProjects(req, res);
 })
 
+/**
+ * POST the project preferences
+ */
+router.post("/submitprefs", projectController.submitprefs);
 
 // export the router for other files to use
 module.exports = router;

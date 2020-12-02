@@ -74,3 +74,12 @@ exports.getProjects = (req, res) => {
         })
     })
 }
+
+exports.submitprefs = (req, res) => {
+    console.log("Submitting preferences");
+    const { pref1, pref2, pref3 } = req.body;
+    console.log(pref1);
+    res.render("projects", {
+        message: "Successfully submitted project preferences"
+    })
+}

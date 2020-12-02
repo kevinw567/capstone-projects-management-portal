@@ -21,6 +21,9 @@
             </ul>
         </div>
         <div class="courses">
+            {{#if message }}
+                <h1> {{ message }} </h1>
+            {{/if }}
             <h2>Please read each project carefully and choose your first, second, and third option down below.</h2>
             <table class="course-table">
                 <tr>
@@ -41,33 +44,33 @@
                 {{/each}}
             </table>
             <br>
-            <span>Option 1</span>
-            <select>
-                <option value="">Project 1</option>
-                <option value="">Project 2</option>
-                <option value="">Project 3</option>
-                <option value="">Project 4</option>
-                <option value="">Project 5</option>
-                <option value="">Project 6</option>
-            </select>
-            <span>Option 2</span>
-            <select>
-                <option value="">Project 1</option>
-                <option value="">Project 2</option>
-                <option value="">Project 3</option>
-                <option value="">Project 4</option>
-                <option value="">Project 5</option>
-                <option value="">Project 6</option>
-            </select>
-            <span>Option 3</span>
-            <select>
-                <option value="">Project 1</option>
-                <option value="">Project 2</option>
-                <option value="">Project 3</option>
-                <option value="">Project 4</option>
-                <option value="">Project 5</option>
-                <option value="">Project 6</option>
-            </select>
+            <br>
+        
+            <form action="/projects/submitprefs" method="POST">
+                <span>First Preference</span>
+                <select>
+                    <option value="pref1" disabled="true" selected="true" name="pref1"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <span> Second Preference </span>
+                <select>
+                    <option value="pref2" disabled="true" selected="true" name="pref2"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <span> Third Preference </span>
+                <select>
+                    <option value="pref3" disabled="true" selected="true" name="pref3"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <br>
+                <button class="submit-prefs" type="submit"> Submit </button>
+            </form>
         </div>
     </div>
 </body>
