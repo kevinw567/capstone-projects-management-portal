@@ -16,23 +16,24 @@ exports.addproject = (req, res) => {
     const { projectName, projectDescription, clientName, clientEmail, extraDetails } = req.body;
 
     let email = req.session.email;
-    db.query("SELECT username FROM users WHERE email=?", [email], (error, result)=>{
-        if (error) {
-            res.render("addproject", {
-                message: "An error occured!"
+    console.log(req.session.userid);
+    // db.query("SELECT username FROM users WHERE email=?", [email], (error, result)=>{
+    //     if (error) {
+    //         res.render("addproject", {
+    //             message: "An error occured!"
+    //         })
+    //     } else {
+    db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
+        if(error) {
+            res.render('addproject', {
+                message: "An error occured. Please try again!"
             })
         } else {
-            db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
-                if(error) {
-                    res.render('addproject', {
-                        message: "An error occured. Please try again!"
-                    })
-                } else {
-                    res.render('addproject', {
-                        message: "Project Created!"
-                    })}
-                })}
-            })};
+            res.render('addproject', {
+                message: "Project Created!"
+            })}
+        })};
+            // })};
 
 exports.viewprojects = (req, res) => {
     let email = req.session.email;
@@ -81,6 +82,7 @@ exports.viewsingleproject = (req, res) => {
                 })
         }
     })
+    // res.render('view-project');
 }
 
 exports.submitprefs = (req, res) => {
