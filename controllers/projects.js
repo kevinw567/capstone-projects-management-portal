@@ -88,11 +88,65 @@ exports.viewsingleproject = (req, res) => {
     })
 }
 
+
+// get available projects for enrolled classes
+exports.getProjects = (req, res) => {
+    // query the database for userid
+    db.query("SELECT id FROM users WHERE email=?", [req.session.email], (error, result)=>{
+        if (error) {
+            res.render("projects", {
+                message: "An unexpected error occured"
+            })
+        }
+
+        else {
+            console.log(result);
+            db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
+                if (error) {
+                    res.render("projects", {
+                        message: "An unexpected error occured"
+                    })
+                }
+
+                else {
+                    console.log(results);
+                }
+            })
+        }
+
+        db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
+            if (error) {
+                res.render("projects", {
+                    message: "An error occured"
+                })
+            }
+
+            else {
+                res.render("projects", {
+                    results: results
+                })
+            }
+        })
+    })
+}
+
+
+
+
+
 exports.submitprefs = (req, res) => {
-    console.log("Submitting preferences");
     const { pref1, pref2, pref3 } = req.body;
-    console.log(pref1);
-    res.render("projects", {
-        message: "Successfully submitted project preferences"
+    db.query("INSERT INTO courses_info SET ?", { proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3 }, (error, result) => {
+        if (error) {
+            res.render("projects", {
+                message: "Unable to submit project preferences"
+            })
+        }
+
+        else {
+            res.render("projects", {
+                message: "Successfully submitted project preferences"
+            })
+        }
     })
 }

@@ -112,7 +112,7 @@ exports.getEnrolledCourses = (req, res) => {
         else if (results.length <= 0) {
             res.render("courses", {
                 userID: req.userID,
-                message: "You are not enrolled in any classes",
+                message: "You are not enrolled in any courses",
             })
         }
         
