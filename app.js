@@ -64,6 +64,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("addproject", require("./routes/courses.js"));
 app.use("/courses", require("./routes/courses"));
 app.use("/projects", require("./routes/projects"));
+app.use("/logout", require("./routes/auth"));
 
 
 
