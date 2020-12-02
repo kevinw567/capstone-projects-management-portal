@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/user.css">
-    <title>Student</title>
+    <title>Professor</title>
 </head>
 <body>
     <h1>Project Portal</h1>
@@ -15,8 +15,9 @@
             </svg>
             <ul class="nav-bar">
                 <li class="list-item"><a href="/courses/addcourse/{{userID}}">Add Course</a></li>
-                <li class="list-item"><a href="/courses/enrolled/{{userID}}">Enrolled Courses</a></li>
-                <li class="list-item"><a href="/projects/view">View Projects</a></li>
+                <li class="list-item"><a href="/courses/admin-view-courses">View Courses</a></li>
+                <li class="list-item"><a href="/courses/addproject">Add Projects</a></li>
+                <li class="list-item"><a href="/courses/admin-view-projects">View Projects</a></li>
                 <li class="list-item"><a href="/courses/setting">Settings</a></li>
             </ul>
         </div>
@@ -26,15 +27,15 @@
             {{else}}
                 <table class="course-table">
                     <tr>
-                        <th>Course</th>
-                        <th>Professor</th>
+                        <th>Project Name</th>
                         <th>Description</th>
+                        <th>Client Name</th>
                     </tr>
                     {{#each results}}
                     <tr>
-                        <td>{{course_number}}</td>
-                        <td>{{professor}}</td>
-                        <td>{{course_description}}</td>
+                        <td><a href="/courses/view-project">{{project_name}}</a></td>
+                        <td>{{project_detail}}</td>
+                        <td>{{client_name}}</td>
                     </tr>
                     {{/each}}
                 </table>

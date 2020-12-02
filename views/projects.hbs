@@ -3,42 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/style.css" rel="stylesheet">
+    <link href="/user.css" rel="stylesheet">
     <title>Project Portal</title>
 </head>
-<header>
-    Projects
-</header>
 <body>
-    <p>Please read each project carefully and choose your first, second, and third option down below.</p>
-    <iframe src="../Project Tests.pdf"></iframe>
-    <br>
-    <span>Option 1</span>
-    <select>
-        <option value="">Project 1</option>
-        <option value="">Project 2</option>
-        <option value="">Project 3</option>
-        <option value="">Project 4</option>
-        <option value="">Project 5</option>
-        <option value="">Project 6</option>
-    </select>
-    <span>Option 2</span>
-    <select>
-        <option value="">Project 1</option>
-        <option value="">Project 2</option>
-        <option value="">Project 3</option>
-        <option value="">Project 4</option>
-        <option value="">Project 5</option>
-        <option value="">Project 6</option>
-    </select>
-    <span>Option 3</span>
-    <select>
-        <option value="">Project 1</option>
-        <option value="">Project 2</option>
-        <option value="">Project 3</option>
-        <option value="">Project 4</option>
-        <option value="">Project 5</option>
-        <option value="">Project 6</option>
-    </select>
+    <h1>Project Portal</h1>
+    <div class="main">
+        <div class="nav">
+            <svg width="15em" height="10em" viewBox="0 0 16 16" class="bi-person" fill="currentColor" >
+            <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            </svg>
+            <ul class="nav-bar">
+                <li class="list-item"><a href="/courses/addcourse/{{userID}}">Add Course</a></li>
+                <li class="list-item"><a href="/courses/enrolled/{{userID}}">Enrolled Courses</a></li>
+                <li class="list-item"><a href="/projects/view">View Projects</a></li>
+                <li class="list-item"><a href="/courses/setting">Settings</a></li>
+            </ul>
+        </div>
+        <div class="courses">
+            {{#if message }}
+                <h1> {{ message }} </h1>
+            {{/if }}
+            <h2>Please read each project carefully and choose your first, second, and third option down below.</h2>
+            <table class="course-table">
+                <tr>
+                    <th>Project Name</th>
+                    <th>Client Name</th>
+                    <th>Client Contact Info</th>
+                    <th>Project Details</th>
+                    <th>Extra Details</th>
+                </tr>
+                {{#each results}}
+                <tr>
+                    <td> {{ project_name }} </td>
+                    <td> {{ client_name }} </td>
+                    <td> {{ client_contact }} </td>
+                    <td> {{ project_detail }} </td>
+                    <td> {{ extra_details }} </td>
+                </tr>
+                {{/each}}
+            </table>
+            <br>
+            <br>
+        
+            <form action="/projects/submitprefs" method="POST">
+                <span>First Preference</span>
+                <select>
+                    <option value="pref1" disabled="true" selected="true" name="pref1"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <span> Second Preference </span>
+                <select>
+                    <option value="pref2" disabled="true" selected="true" name="pref2"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <span> Third Preference </span>
+                <select>
+                    <option value="pref3" disabled="true" selected="true" name="pref3"> -- Select One --</option>
+                    {{#each results }}
+                        <option value=""> {{ project_name }} </option>
+                    {{/each }}
+                </select>
+                <br>
+                <button class="submit-prefs" type="submit"> Submit </button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

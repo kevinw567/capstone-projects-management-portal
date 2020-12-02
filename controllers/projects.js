@@ -33,3 +33,66 @@ exports.addproject = (req, res) => {
                     })}
                 })}
             })};
+
+exports.viewprojects = (req, res) => {
+    let email = req.session.email;
+    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.render("admin-view-projects", {
+                message: "An unexpected error occured"
+            })
+        } else {
+            db.query("SELECT * FROM projects", (error, results) => {
+            if(error) {
+                res.render('admin-view-projects', {
+                    message: "An error occured!"
+                })} else {
+                        req.results = results;
+                        console.log("req.results: " + req.results);
+                        console.log(results);
+                        res.render("admin-view-projects", {
+                        results: results
+                        })
+                }
+            })
+        }
+    })
+};
+
+exports.viewsingleproject = (req, res) => {
+    let email = req.session.email;
+    const {projectName} = req.body;
+
+    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.render("view-project", {
+                message: "An unexpected error occured"
+            })
+        } else {
+            db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
+            if(error) {
+                res.render('view-project', {
+                    message: "An error occured!"
+                })} else {
+                        req.results = results;
+                        console.log("req.results: " + req.results);
+                        console.log(results);
+                        res.render("view-project", {
+                        results: results
+                        })
+                }
+            })
+        }
+    })
+}
+
+exports.submitprefs = (req, res) => {
+    console.log("Submitting preferences");
+    const { pref1, pref2, pref3 } = req.body;
+    console.log(pref1);
+    res.render("projects", {
+        message: "Successfully submitted project preferences"
+    })
+}

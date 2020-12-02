@@ -68,7 +68,7 @@ exports.addcourse = (req, res) => {
                 // console.log(result);
                 if (error) {
                     res.render('addcourse', {
-                        message: "An error occured, Please try again!1"
+                        message: "An error occured, Please try again!"
                     })
                 } else if(result.length != 0) {
                     res.render('addcourse', {
@@ -118,6 +118,7 @@ exports.getEnrolledCourses = (req, res) => {
         
         // 
         else {
+            console.log("HERE");
             req.results = results;
             console.log("req.results: " + req.results);
             console.log(results);
@@ -159,3 +160,30 @@ exports.createcourse = (req, res) => {
                     })}
                 })}
             })};
+
+exports.viewcourses = (req, res) => {
+    let email = req.session.email;
+    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.render("admin-view-courses", {
+                message: "An unexpected error occured"
+            })
+        } else {
+            db.query("SELECT * FROM courses", (error, results) => {
+            if(error) {
+                console.log(result);
+                res.render('admin-view-courses', {
+                    message: "An error occured!"
+                })} else {
+                        req.results = results;
+                        console.log("req.results: " + req.results);
+                        console.log(results);
+                        res.render("admin-view-courses", {
+                        results: results
+                        })
+                }
+            })
+        }
+    })
+};
