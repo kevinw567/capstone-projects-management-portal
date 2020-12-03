@@ -4,15 +4,19 @@ html {
 }
 
 body {
+    font-family: open sans,helvetica neue,Helvetica,Tahoma,sans-serif;
     overflow: hidden;
     min-width: 660px;
+    background-color: #006094;
+    color: white;
 }
 
-h1 {
+h1 {   
     text-align: center;
-    background-color: rgb(0, 140, 255);
     color: white;
-    /* z-index: 100; */
+    padding: 20px;
+    font-size: 300%;
+    font-weight: 800;
 }
 
 .main {
@@ -20,9 +24,10 @@ h1 {
 }
 .nav {
     float: left;
-    height: 100vh;
+    height: 100%;
     width: 20%;
     border: 2px lightgray solid;
+    background-color: #014b74;
 }
 
 .bi-person {
@@ -39,8 +44,8 @@ h1 {
 .nav-bar {
     /* width: 20%; */
     /* float: left; */
-
-    height: 100%;
+    background-color: #006094;
+    height: 100vh;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -54,11 +59,12 @@ h1 {
 }
 a {
     text-decoration: none;
-    color: black;
+    color: white;
+    font-weight: 800;
 }
 
 .nav-bar :hover{
-    background-color: lightgray;
+    background-color: #585858;
 }
 .courses {
     float: left;
@@ -112,7 +118,7 @@ a {
     width: 70%;
     margin: auto;
     text-align: center;
-    background-color: yellow;
+    background-color: #014b74;
 }
 
 .create-course,
@@ -132,7 +138,6 @@ h2 {
 .course-info {
     float: left;
     text-align: left;
-    /* border: 5px black solid; */
     width: 50%;
     font-size: large;
     margin-left: 10%;
@@ -160,7 +165,7 @@ h2 {
 }
 
 .add-project {
-    border: 2px solid black;
+    border: 2px solid white;
     display: flex;
     flex-direction: column;
 }
@@ -234,11 +239,13 @@ text-align: left;
 border-bottom: 1px solid #ddd;
 }
 
-tr:hover {background-color:#f5f5f5;}
-
 tr:nth-child(even) {
-    background-color:#f2f2f2;
+    background-color:#014b74;
 }
+
+tr:hover {background-color:#585858;}
+
+
 
 .profile {
     background-color: white;
@@ -298,6 +305,8 @@ select {
     background: none;
     cursor: pointer;
     text-decoration: underline;
+    color: white;
+    font-weight: 500;
 }
 
 .header{
@@ -307,5 +316,5 @@ select {
     margin-top: 5%;
     width: 70%;
     margin: auto;
-    border-top: 5px lightblue solid;
+    border-top: 5px rgb(102, 102, 102) solid;
 }

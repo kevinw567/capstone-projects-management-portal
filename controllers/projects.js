@@ -216,3 +216,7 @@ exports.getStudentProjects = (req, res) => {
     })
     // res.render("student/student-project");
 }
+
+exports.deleteproject = (req, res) => {
+    alert("TEST");
+}
