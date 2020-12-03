@@ -24,8 +24,8 @@
             {{#if message }}
                 <h1> {{ message }} </h1>
             {{/if }}
-            <h2>Please read each project carefully and choose your first, second, and third option down below.</h2>
-            <table class="course-table">
+            <h2 class="header">Please read each project carefully and choose your first, second, and third option down below.</h2>
+            <table class="project-table">
                 <tr>
                     <th>Project Name</th>
                     <th>Client Name</th>
@@ -35,7 +35,15 @@
                 </tr>
                 {{#each results}}
                 <tr>
-                    <td> {{ project_name }} </td>
+                    <td> 
+                        <form action="/courses/view-project" method="POST">
+                            <input type="submit" value="{{project_name}}" class="submit-btn">
+                            <input type="hidden" name="projectName" value="{{project_name}}">
+                            <input type="hidden" name="projectDetail" value="{{project_detail}}">
+                            <input type="hidden" name="clientName" value="{{client_name}}">
+                            <input type="hidden" name="clientContact" value="{{client_contact}}">
+                        </form>
+                    </td>
                     <td> {{ client_name }} </td>
                     <td> {{ client_contact }} </td>
                     <td> {{ project_detail }} </td>

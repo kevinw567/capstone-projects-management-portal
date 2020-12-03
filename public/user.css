@@ -216,7 +216,7 @@ textarea {
 .course-table {
     width: 70%;
     margin: auto;
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 table {
@@ -294,4 +294,14 @@ select {
     background: none;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.header{
+    margin-top: 5%;
+}
+.project-table {
+    margin-top: 5%;
+    width: 70%;
+    margin: auto;
+    border-top: 5px lightblue solid;
 }

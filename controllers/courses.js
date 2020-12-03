@@ -18,11 +18,11 @@ exports.addcourse = (req, res) => {
     const course_code = req.body.coursecode;
     db.query("SELECT * FROM courses WHERE id=?", [course_code], (error, result) => {
         if(error) {
-            res.render('addcourse', {
+            res.render('student/addcourse', {
                 message: "An error occured, Please try again!"
             })
         } else if (result.length == 0) {
-            res.render('addcourse', {
+            res.render('student/addcourse', {
                 message: "No course found with the course code!"
             })
         } else {
@@ -30,22 +30,22 @@ exports.addcourse = (req, res) => {
                 // console.log(req.session.userid);
                 // console.log(result);
                 if (error) {
-                    res.render('addcourse', {
+                    res.render('student/addcourse', {
                         message: "An error occured, Please try again!"
                     })
                 } else if(result.length != 0) {
-                    res.render('addcourse', {
+                    res.render('student/addcourse', {
                         message: "You already enrolled this course!"
                     })
                 } else {
                     db.query("INSERT INTO courses_info SET ? ", {id:course_code, student_id: req.session.userid}, (error, result) => {
                         console.log(result);
                         if (error) {
-                            res.render('addcourse', {
+                            res.render('student/addcourse', {
                                 message: "An error occured, Please try again!2"
                             })
                         } else {
-                            res.render('addcourse', {
+                            res.render('student/addcourse', {
                                 message: "You have successfully enrolled!"
                             })
                         }
@@ -65,7 +65,7 @@ exports.getEnrolledCourses = (req, res) => {
     db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
-            res.render("courses", {
+            res.render("student/courses", {
                 userID: req.userID,
                 message: "An unexpected error occured"
             })
@@ -73,7 +73,7 @@ exports.getEnrolledCourses = (req, res) => {
         
         // enter if statement if the user is not enrolled in any courses
         else if (results.length <= 0) {
-            res.render("courses", {
+            res.render("student/courses", {
                 userID: req.userID,
                 message: "You are not enrolled in any courses",
             })
@@ -85,7 +85,7 @@ exports.getEnrolledCourses = (req, res) => {
             req.results = results;
             console.log("req.results: " + req.results);
             console.log(results);
-            res.render("courses", {
+            res.render("student/courses", {
                 userID: req.userID,
                 results: results
             })
@@ -108,17 +108,17 @@ exports.createcourse = (req, res) => {
     let email = req.session.email;
     db.query("SELECT username FROM users WHERE email=?", [email], (error, result)=>{
         if (error) {
-            res.render("createcourse", {
+            res.render("professor/createcourse", {
                 message: "An error occured!"
             })
         } else {
             db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username']}, (error, result) => {
                 if(error) {
-                    res.render('createcourse', {
+                    res.render('professor/createcourse', {
                         message: "An error occured. Please try again!"
                     })
                 } else {
-                    res.render('createcourse', {
+                    res.render('professor/createcourse', {
                         message: "Course created!"
                     })}
                 })}
@@ -129,20 +129,20 @@ exports.viewcourses = (req, res) => {
     db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
             console.log(error);
-            res.render("admin-view-courses", {
+            res.render("professor/admin-view-courses", {
                 message: "An unexpected error occured"
             })
         } else {
             db.query("SELECT * FROM courses", (error, results) => {
             if(error) {
                 console.log(results);
-                res.render('admin-view-courses', {
+                res.render('professor/admin-view-courses', {
                     message: "An error occured!"
                 })} else {
                         req.results = results;
                         console.log("req.results: " + req.results);
                         console.log(results);
-                        res.render("admin-view-courses", {
+                        res.render("professor/admin-view-courses", {
                         results: results
                         })
                 }
