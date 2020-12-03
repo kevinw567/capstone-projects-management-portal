@@ -8,7 +8,7 @@ const projectController = require("../controllers/projects");
 const router = express.Router();
 
 /**
- * GET the view available projects page
+ * GET the view projects page
  */
 router.get("/view", (req, res) => {
     projectController.getProjects(req, res);
