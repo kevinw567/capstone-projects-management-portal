@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 
 
 exports.addproject = (req, res) => {
-    const { projectName, projectDescription, clientName, clientEmail, extraDetails } = req.body;
+    const { projectName, projectDescription, clientName, clientEmail, extraDetails, courseID} = req.body;
 
     let email = req.session.email;
     console.log(req.session.userid);
@@ -23,13 +23,13 @@ exports.addproject = (req, res) => {
     //             message: "An error occured!"
     //         })
     //     } else {
-    db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
+    db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid, course_id:courseID }, (error, result) => {
         if(error) {
-            res.render('addproject', {
+            res.render('professor/addproject', {
                 message: "An error occured. Please try again!"
             })
         } else {
-            res.render('addproject', {
+            res.render('professor/addproject', {
                 message: "Project Created!"
             })}
         })};
@@ -40,19 +40,19 @@ exports.viewprojects = (req, res) => {
     db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
             console.log(error);
-            res.render("admin-view-projects", {
+            res.render("professor/admin-view-projects", {
                 message: "An unexpected error occured"
             })
         } else {
             db.query("SELECT * FROM projects", (error, results) => {
             if(error) {
-                res.render('admin-view-projects', {
+                res.render('professor/admin-view-projects', {
                     message: "An error occured!"
                 })} else {
                         req.results = results;
                         console.log("req.results: " + req.results);
                         console.log(results);
-                        res.render("admin-view-projects", {
+                        res.render("professor/admin-view-projects", {
                         results: results
                         })
                 }
@@ -67,13 +67,13 @@ exports.viewsingleproject = (req, res) => {
     console.log("___Fields___\n" + projectName + "\n" + projectDetail + "\n" + clientName + "\n" + clientContact + "\n" + extraDetails + "\n");
     db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
     if(error) {
-        res.render('view-project', {
+        res.render('professor/view-project', {
             message: "An error occured!"
         })} else {
                 req.results = results;
                 console.log("req.results: " + req.results);
                 console.log(results);
-                res.render("view-project", {
+                res.render("professor/view-project", {
                     project_name: results[0]['project_name'],
                     project_detail: results[0]['project_detail'],
                     client_name: results[0]['client_name'],
@@ -91,7 +91,7 @@ exports.getProjects = (req, res) => {
     
     db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
-            res.render("projects", {
+            res.render("student/projects", {
                 message: "An unexpected error occured"
             })
         }
@@ -99,8 +99,13 @@ exports.getProjects = (req, res) => {
         else {
             db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
                 if (error) {
+<<<<<<< HEAD
+                    res.render("student/projects", {
+                        message: "An unexpected error occured"
+=======
                     res.render("projects", {
                         message: "An error occured"
+>>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
                     })
                 }
 
@@ -111,6 +116,23 @@ exports.getProjects = (req, res) => {
                 }
             })
         }
+<<<<<<< HEAD
+
+        db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
+            if (error) {
+                res.render("student/projects", {
+                    message: "An error occured"
+                })
+            }
+
+            else {
+                res.render("student/projects", {
+                    results: results
+                })
+            }
+        })
+=======
+>>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
     })
 }
 
