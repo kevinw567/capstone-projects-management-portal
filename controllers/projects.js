@@ -151,7 +151,7 @@ exports.submitprefs = (req, res) => {
                 }
 
                 else {
-                    res.remder("200","projects", {
+                    res.render("projects", {
                         message: "Sucessfully submitted project preferences"
                     })
                 }
