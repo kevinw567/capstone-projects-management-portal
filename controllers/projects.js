@@ -78,7 +78,7 @@ exports.viewsingleproject = (req, res) => {
                                 console.log(results);
                                 res.render("professor/view-project", {
                                     project_name: results[0]['project_name'],
-                                    // course_number: result[0]['course_number'],
+                                    course_number: result[0]['course_number'],
                                     project_detail: results[0]['project_detail'],
                                     client_name: results[0]['client_name'],
                                     client_contact: results[0]['client_contact'],
@@ -95,7 +95,7 @@ exports.viewsingleproject = (req, res) => {
                                 console.log(results);
                                 res.render("student/view-project", {
                                     project_name: results[0]['project_name'],
-                                    // course_number: result[0]['course_number'],
+                                    course_number: result[0]['course_number'],
                                     project_detail: results[0]['project_detail'],
                                     client_name: results[0]['client_name'],
                                     client_contact: results[0]['client_contact'],
