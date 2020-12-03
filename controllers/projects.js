@@ -1,4 +1,3 @@
-const { profile_email } = require("./auth");
 const mysql = require("mysql");
 const e = require("express");
 
@@ -50,8 +49,6 @@ exports.viewprojects = (req, res) => {
                     message: "An error occured!"
                 })} else {
                         req.results = results;
-                        console.log("req.results: " + req.results);
-                        console.log(results);
                         res.render("professor/admin-view-projects", {
                         results: results
                         })
@@ -70,9 +67,7 @@ exports.viewsingleproject = (req, res) => {
         res.render('professor/view-project', {
             message: "An error occured!"
         })} else {
-                req.results = results;
-                console.log("req.results: " + req.results);
-                console.log(results);
+                if (req.session.role == "professor") {
                 res.render("professor/view-project", {
                     project_name: results[0]['project_name'],
                     project_detail: results[0]['project_detail'],
@@ -80,6 +75,15 @@ exports.viewsingleproject = (req, res) => {
                     client_contact: results[0]['client_contact'],
                     extra_details: results[0]['extra_details']
                 })
+            } else {
+                res.render("student/view-project", {
+                    project_name: results[0]['project_name'],
+                    project_detail: results[0]['project_detail'],
+                    client_name: results[0]['client_name'],
+                    client_contact: results[0]['client_contact'],
+                    extra_details: results[0]['extra_details']
+                })
+            }
         }
     })
     // res.render('view-project');
@@ -99,40 +103,32 @@ exports.getProjects = (req, res) => {
         else {
             db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
                 if (error) {
-<<<<<<< HEAD
                     res.render("student/projects", {
                         message: "An unexpected error occured"
-=======
-                    res.render("projects", {
-                        message: "An error occured"
->>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
                     })
                 }
 
                 else {
-                    res.render("projects", {
+                    res.render("student/projects", {
                         results: results
                     })
                 }
             })
         }
-<<<<<<< HEAD
 
-        db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
-            if (error) {
-                res.render("student/projects", {
-                    message: "An error occured"
-                })
-            }
+        // db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
+        //     if (error) {
+        //         res.render("student/projects", {
+        //             message: "An error occured"
+        //         })
+        //     }
 
-            else {
-                res.render("student/projects", {
-                    results: results
-                })
-            }
-        })
-=======
->>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
+        //     else {
+        //         res.render("student/projects", {
+        //             results: results
+        //         })
+        //     }
+        // })
     })
 }
 
@@ -142,7 +138,7 @@ exports.submitprefs = (req, res) => {
     // query the database for the course id
     db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
         if (error) {
-            res.render("projects", {
+            res.render("student/projects", {
                 message: "An unexpected error occured"
             })
         }
@@ -152,32 +148,53 @@ exports.submitprefs = (req, res) => {
                 if (error) {
                     // enter if statement if a bad null error is thrown, ask user to relogin
                     if (error.code === "ER_BAD_NULL_ERROR") {
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "An error occured. Please relogin and try again"
                         })
                     }
 
                     // enter else if statement if a duplicate primary key error is thrown
                     else if (error.code === "ER_DUP_ENTRY") {
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "You have already submitted your project preferences"
                         })
                     }
 
                     else {
                         console.log(error);
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "Unable to submit project preferences"
                         })
                     }
                 }
 
                 else {
-                    res.remder("200","projects", {
+                    res.render("student/projects", {
                         message: "Sucessfully submitted project preferences"
                     })
                 }
             })
         }
     })
+}
+
+
+exports.getStudentProjects = (req, res) => {
+
+    db.query("SELECT * FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results)=> {
+        if (error) {
+            res.render("student/student-project", {
+                message: "An error occured"
+            })
+        } else if(results.length == 0) {
+            res.render("student/student-project", {
+                message: "You have not choose any projects!"
+            })
+        } else {
+            res.render("student/student-project", {
+                results: results
+            })
+        }
+    })
+    // res.render("student/student-project");
 }

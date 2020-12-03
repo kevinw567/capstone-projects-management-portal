@@ -97,7 +97,7 @@ exports.login = (req, res) => {
                 // res.render("student", {
                 //     userID: req.params.userID
                 // });
-                res.redirect("/courses/student");
+                res.redirect("/student/main");
             } else {
                 req.session.email = email;
                 req.session.role = role;
@@ -107,7 +107,7 @@ exports.login = (req, res) => {
                 // res.render('professor', {
                 //     userID: req.params.userID
                 // });
-                res.redirect("/courses/professor");
+                res.redirect("/professor/main");
             } 
         }
     })

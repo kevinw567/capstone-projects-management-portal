@@ -19,9 +19,9 @@ router.get("/register", (req, res) => {
 //     res.render("home");
 // });
 
-router.get("/projects", (req, res) => {
-    res.render("projects");
-})
+// router.get("/projects", (req, res) => {
+//     res.render("student/projects");
+// })
 
 router.get("/addcourse", (req, res) => {
     res.render("addcourse");

@@ -1,7 +1,6 @@
 /**
  * This file contains the functions that will retrieve the user's course information from the database.
  */
-const { profile_email } = require("./auth");
 const mysql = require("mysql");
 const e = require("express");
 
