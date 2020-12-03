@@ -99,13 +99,8 @@ exports.getProjects = (req, res) => {
         else {
             db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
                 if (error) {
-<<<<<<< HEAD
-                    res.render("student/projects", {
-                        message: "An unexpected error occured"
-=======
                     res.render("projects", {
                         message: "An error occured"
->>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
                     })
                 }
 
@@ -116,7 +111,6 @@ exports.getProjects = (req, res) => {
                 }
             })
         }
-<<<<<<< HEAD
 
         db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
             if (error) {
@@ -131,8 +125,6 @@ exports.getProjects = (req, res) => {
                 })
             }
         })
-=======
->>>>>>> 4d60117fa4a37294275dd59d4b09605a980d8f4e
     })
 }
 
