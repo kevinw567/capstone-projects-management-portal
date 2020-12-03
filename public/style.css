@@ -17,30 +17,19 @@ html {
     /* border: 3px solid red; */
     height: 100vh;
     position: relative;
+    background-color: #006094;
 }
 
 body {
-    /* margin: 25%; */
-    /* width: 10%;
-    position: center; */
-    /* top: 40%;
-    left: 30%;
-    right: 30%; */
-    /* height: auto;
-    width: auto;
-    text-align: center; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* background-color: var(--umb-light-blue);
-    border: 5px solid var(--umb-light-blue); */
+    font-family: open sans,helvetica neue,Helvetica,Tahoma,sans-serif;
     border-radius: 15px; 
     max-width: 600px;
     margin: auto;
     border: 5px solid var(--umb-light-blue);
     text-align: center;
     margin-top: 200px;
-
-    /* width: auto; */
+    background-color: #006094;
+    color: white;
 }
 
 #login {
@@ -128,15 +117,11 @@ a {
     width: 70%;
     margin: auto;
     text-align: center;
-    background-color: yellow;
+    background-color: #014b74;
 }
 
-.add-project > input,
-.add-project > textarea {
-    text-align: left;
-}
-
-.add-project {
-    border: 3px solid green;
-    height: 200px;
+button {
+    font-weight: 500;
+    display: inline-block;
+    width: 500px;
 }
