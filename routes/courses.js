@@ -40,7 +40,7 @@ router.post("/addcourse", courseController.addcourse);
 
 router.get("/setting", (req, res) => {res.render("student/setting")});
 router.post("/setting", courseController.setting);
-router.get("/admin-setting", (req, res) => {res.render("professor/admin-setting")});
+router.get("/admin-settings", (req, res) => {res.render("professor/admin-settings")});
 
 router.get("/addproject", (req, res) => {res.render("professor/addproject")});
 router.post("/addproject", projectController.addproject);
