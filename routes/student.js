@@ -55,5 +55,6 @@ router.post("/view-project", projectController.viewsingleproject);
 
 router.get("/student-project", projectController.getStudentProjects);
 
+router.post("/submitprefs", projectController.submitprefs);
 // export the router for other files to use
 module.exports = router;
