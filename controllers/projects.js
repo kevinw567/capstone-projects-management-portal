@@ -13,7 +13,7 @@ const db = mysql.createConnection({
 
 
 exports.addproject = (req, res) => {
-    const { projectName, projectDescription, clientName, clientEmail, extraDetails } = req.body;
+    const { projectName, projectDescription, clientName, clientEmail, extraDetails, courseIdentification } = req.body;
 
     let email = req.session.email;
     console.log(req.session.userid);
@@ -23,7 +23,7 @@ exports.addproject = (req, res) => {
     //             message: "An error occured!"
     //         })
     //     } else {
-    db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
+    db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, course_id:courseIdentification , extra_details:extraDetails, user_id:req.session.userid }, (error, result) => {
         if(error) {
             res.render('addproject', {
                 message: "An error occured. Please try again!"
@@ -75,6 +75,7 @@ exports.viewsingleproject = (req, res) => {
                 console.log(results);
                 res.render("view-project", {
                     project_name: results[0]['project_name'],
+                    course_id: results[0]['course_id'],
                     project_detail: results[0]['project_detail'],
                     client_name: results[0]['client_name'],
                     client_contact: results[0]['client_contact'],
@@ -89,7 +90,7 @@ exports.viewsingleproject = (req, res) => {
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
     // query the database for userid
-    db.query("SELECT id FROM users WHERE email=?", [req.session.email], (error, result)=>{
+    db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) =>{
         if (error) {
             res.render("projects", {
                 message: "An unexpected error occured"
@@ -98,7 +99,7 @@ exports.getProjects = (req, res) => {
 
         else {
             console.log(result);
-            db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
+            db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
                 if (error) {
                     res.render("projects", {
                         message: "An unexpected error occured"
