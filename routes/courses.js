@@ -21,7 +21,6 @@ router.get("/professor", (req, res) => {
 })
 
 router.get("/createcourse/:userID", (req, res) => {
-    console.log("GET /createcourse/" + req.params.userID);
     res.render("/createcourse", {
         userID: req.params.userID
     })
@@ -40,7 +39,7 @@ router.post("/addcourse", courseController.addcourse);
 
 router.get("/setting", (req, res) => {res.render("student/setting")});
 router.post("/setting", courseController.setting);
-router.get("/admin-setting", (req, res) => {res.render("professor/admin-setting")});
+router.get("/admin-setting", (req, res) => {res.render("professor/admin-settings")});
 
 router.get("/addproject", (req, res) => {res.render("professor/addproject")});
 router.post("/addproject", projectController.addproject);

@@ -55,3 +55,10 @@ CREATE TABLE courses_info(
     FOREIGN KEY (student_id) REFERENCES users(id),
     FOREIGN KEY (projects_id) REFERENCES projects(id)
 );
+
+CREATE TABLE enrolled (
+    course_number INT,
+    student_id INT,
+    FOREIGN KEY (course_number) REFERENCES courses(course_number),
+    FOREIGN KEY (student_id) REFERENCES users(id)
+)
