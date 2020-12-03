@@ -55,7 +55,8 @@ db.connect((error) => {
 app.use(session({
     secret: "secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    maxAge: 24 * 60 * 60 * 1000
 }));
 
 // define routes to use
@@ -65,7 +66,6 @@ app.use("/auth", require("./routes/auth"));
 app.use("/student", require("./routes/student"));
 app.use("/professor", require("./routes/professor"));
 app.use("/logout", require("./routes/auth"));
-
 
 
 // tell express which port to listen to

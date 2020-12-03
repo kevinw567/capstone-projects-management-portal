@@ -56,37 +56,55 @@ exports.viewprojects = (req, res) => {
             })
         }
     })
+        
 };
 
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
-    const {projectName, projectDetail, clientName, clientContact, extraDetails} = req.body;
-    console.log("___Fields___\n" + projectName + "\n" + projectDetail + "\n" + clientName + "\n" + clientContact + "\n" + extraDetails + "\n");
+    const {projectName, courseIdentification} = req.body;
+    let course_num;
     db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
     if(error) {
         res.render('professor/view-project', {
             message: "An error occured!"
         })} else {
                 if (req.session.role == "professor") {
-                res.render("professor/view-project", {
-                    project_name: results[0]['project_name'],
-                    project_detail: results[0]['project_detail'],
-                    client_name: results[0]['client_name'],
-                    client_contact: results[0]['client_contact'],
-                    extra_details: results[0]['extra_details']
+                    db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
+                    if(error) {
+                        res.render('professor/view-project', {
+                            message: "An error occured!"
+                        })} else {
+                                req.results = results;
+                                console.log(results);
+                                res.render("professor/view-project", {
+                                    project_name: results[0]['project_name'],
+                                    // course_number: result[0]['course_number'],
+                                    project_detail: results[0]['project_detail'],
+                                    client_name: results[0]['client_name'],
+                                    client_contact: results[0]['client_contact'],
+                                    extra_details: results[0]['extra_details']
+                            })}
                 })
             } else {
-                res.render("student/view-project", {
-                    project_name: results[0]['project_name'],
-                    project_detail: results[0]['project_detail'],
-                    client_name: results[0]['client_name'],
-                    client_contact: results[0]['client_contact'],
-                    extra_details: results[0]['extra_details']
+                db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
+                    if(error) {
+                        res.render('student/view-project', {
+                            message: "An error occured!"
+                        })} else {
+                                req.results = results;
+                                console.log(results);
+                                res.render("student/view-project", {
+                                    project_name: results[0]['project_name'],
+                                    // course_number: result[0]['course_number'],
+                                    project_detail: results[0]['project_detail'],
+                                    client_name: results[0]['client_name'],
+                                    client_contact: results[0]['client_contact'],
+                                    extra_details: results[0]['extra_details']
+                            })}
                 })
             }
         }
     })
-    // res.render('view-project');
 }
 
 
