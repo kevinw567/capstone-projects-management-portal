@@ -15,10 +15,6 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
-// router.get("/login", (req, res) => {
-//     res.render("home");
-// });
-
 router.get("/projects", (req, res) => {
     res.render("projects");
 })
@@ -26,11 +22,6 @@ router.get("/projects", (req, res) => {
 router.get("/addcourse", (req, res) => {
     res.render("addcourse");
 });
-
-// router.get("/courses", (req, res, next) => {
-//     courseController.getEnrolledCourses();
-//     next();
-// })
 
 router.get("/courses", (req, res) => {
     res.render("courses");

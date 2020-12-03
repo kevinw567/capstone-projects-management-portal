@@ -16,7 +16,7 @@ const db = mysql.createConnection({
 
 exports.addcourse = (req, res) => {
     const course_code = req.body.coursecode;
-    db.query("SELECT * FROM courses WHERE id=?", [course_code], (error, result) => {
+    db.query("SELECT * FROM courses WHERE course_number = ?", [course_code], (error, result) => {
         if(error) {
             res.render('student/addcourse', {
                 message: "An error occured, Please try again!"
@@ -26,7 +26,7 @@ exports.addcourse = (req, res) => {
                 message: "No course found with the course code!"
             })
         } else {
-            db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, course_code], (error, result) => {
+            db.query("SELECT * FROM enrolled WHERE student_id = ? AND course_number = ?", [req.session.userid, course_code], (error, result) => {
                 // console.log(req.session.userid);
                 // console.log(result);
                 if (error) {
@@ -35,10 +35,10 @@ exports.addcourse = (req, res) => {
                     })
                 } else if(result.length != 0) {
                     res.render('student/addcourse', {
-                        message: "You already enrolled this course!"
+                        message: "You already enrolled in this course!"
                     })
                 } else {
-                    db.query("INSERT INTO courses_info SET ? ", {id:course_code, student_id: req.session.userid}, (error, result) => {
+                    db.query("INSERT INTO enrolled SET ? ", {course_number: course_code, student_id: req.session.userid}, (error, result) => {
                         console.log(result);
                         if (error) {
                             res.render('student/addcourse', {
@@ -62,7 +62,7 @@ exports.addcourse = (req, res) => {
 exports.getEnrolledCourses = (req, res) => {
     
     // query the database for all of the courses the user is enrolled in
-    db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
+    db.query("SELECT enrolled.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.course_number = enrolled.course_number AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
             res.render("student/courses", {

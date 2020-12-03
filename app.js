@@ -55,7 +55,8 @@ db.connect((error) => {
 app.use(session({
     secret: "secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    maxAge: 24 * 60 * 60 * 1000
 }));
 
 // define routes to use

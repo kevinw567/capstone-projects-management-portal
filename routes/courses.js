@@ -21,7 +21,6 @@ router.get("/professor", (req, res) => {
 })
 
 router.get("/createcourse/:userID", (req, res) => {
-    console.log("GET /createcourse/" + req.params.userID);
     res.render("/createcourse", {
         userID: req.params.userID
     })

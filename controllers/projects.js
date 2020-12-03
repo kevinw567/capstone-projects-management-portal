@@ -104,18 +104,32 @@ exports.getProjects = (req, res) => {
         else {
             db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
                 if (error) {
-                    res.render("projects", {
+                    res.render("student/projects", {
                         message: "An error occured"
                     })
                 }
 
                 else {
-                    res.render("projects", {
+                    res.render("student/projects", {
                         results: results
                     })
                 }
             })
         }
+
+        db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
+            if (error) {
+                res.render("student/projects", {
+                    message: "An error occured"
+                })
+            }
+
+            else {
+                res.render("student/projects", {
+                    results: results
+                })
+            }
+        })
     })
 }
 
@@ -135,28 +149,28 @@ exports.submitprefs = (req, res) => {
                 if (error) {
                     // enter if statement if a bad null error is thrown, ask user to relogin
                     if (error.code === "ER_BAD_NULL_ERROR") {
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "An error occured. Please relogin and try again"
                         })
                     }
 
                     // enter else if statement if a duplicate primary key error is thrown
                     else if (error.code === "ER_DUP_ENTRY") {
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "You have already submitted your project preferences"
                         })
                     }
 
                     else {
                         console.log(error);
-                        res.render("projects", {
+                        res.render("student/projects", {
                             message: "Unable to submit project preferences"
                         })
                     }
                 }
 
                 else {
-                    res.remder("200","projects", {
+                    res.render("student/projects", {
                         message: "Sucessfully submitted project preferences"
                     })
                 }
