@@ -37,7 +37,7 @@
                         <td>
                             <form action="/professor/view-project" method="POST">
                                 <input type="submit" value="{{project_name}}" class="submit-btn">
-                                <input type="hidden" name="courseIdentification" value="{{course_id}}">
+                                <input type="submit" name="courseIdentification" value="{{course_id}}">
                                 <input type="hidden" name="projectName" value="{{project_name}}">
                                 <input type="hidden" name="projectDetail" value="{{project_detail}}">
                                 <input type="hidden" name="clientName" value="{{client_name}}">
@@ -46,7 +46,7 @@
                             </form>
                         </td>
                         <td>{{client_name}}</td>
-                        <td>{{course_number}}</td>
+                        <td>{{course_number}}</td> 
                         <form action="/professor/deleteproject">
                             <td><input type="button" value="Delete" class='btn'></td>
                         </form>

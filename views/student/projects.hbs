@@ -39,12 +39,14 @@
                 <tr>
                     <td> 
                         <form action="/student/view-project" method="POST">
-                            <input type="submit" value="{{project_name}}" class="submit-btn">
-                            <input type="hidden" name="projectName" value="{{project_name}}">
-                            <input type="hidden" name="projectDetail" value="{{project_detail}}">
-                            <input type="hidden" name="clientName" value="{{client_name}}">
-                            <input type="hidden" name="clientContact" value="{{client_contact}}">
-                        </form>
+                                <input type="submit" value="{{project_name}}" class="submit-btn">
+                                <input type="submit" name="courseIdentification" value="{{course_id}}">
+                                <input type="hidden" name="projectName" value="{{project_name}}">
+                                <input type="hidden" name="projectDetail" value="{{project_detail}}">
+                                <input type="hidden" name="clientName" value="{{client_name}}">
+                                <input type="hidden" name="clientContact" value="{{client_contact}}">
+                                <input type="hidden" name="extraDetails" value="{{extra_details}}">
+                            </form>
                     </td>
                     <td> {{ client_name }} </td>
                     <td> {{ client_contact }} </td>

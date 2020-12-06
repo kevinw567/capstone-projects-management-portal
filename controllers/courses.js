@@ -101,7 +101,7 @@ exports.setting = (req, res) => {
 
 // Professor's page
 exports.createcourse = (req, res) => {
-    const { coursenumber, description } = req.body;
+    const { coursenumber, description, preferences } = req.body;
     // generate a random code for the course
     course_id = Math.random().toString(36).substring(2, 10);
     let email = req.session.email;
@@ -111,7 +111,7 @@ exports.createcourse = (req, res) => {
                 message: "An error occured!"
             })
         } else {
-            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username']}, (error, result) => {
+            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username'], project_choices:preferences}, (error, result) => {
                 if(error) {
                     res.render('professor/createcourse', {
                         message: "An error occured. Please try again!"
