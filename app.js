@@ -62,7 +62,6 @@ app.use(session({
 // define routes to use
 app.use("/", require("./routes/pages"));
 app.use("/auth", require("./routes/auth"));
-// app.use("addproject", require("./routes/courses.js"));
 app.use("/student", require("./routes/student"));
 app.use("/professor", require("./routes/professor"));
 app.use("/logout", require("./routes/auth"));
@@ -72,3 +71,27 @@ app.use("/logout", require("./routes/auth"));
 app.listen("3000", () => {
     console.log("Server started on port 3000");
 });
+
+/**
+ * handlebars helper function to mimic a for loop
+ */
+
+hbs.handlebars.registerHelper("for", function(n, block) {
+    var accum = "";
+    var i;
+    var data = {};
+    if (n) {
+        for (i = 0; i < n; i += 1) {
+            data.index = i;
+            accum += block.fn(this, {
+                data: data
+            })
+        }
+    }
+
+    else {
+        block = block.inverse(this);
+    }
+
+    return accum;
+})

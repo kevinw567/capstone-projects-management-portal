@@ -27,7 +27,8 @@ CREATE TABLE courses(
     id VARCHAR(20) PRIMARY KEY,
     course_number VARCHAR(20),
     course_description VARCHAR(100),
-    professor VARCHAR(100)
+    professor VARCHAR(100),
+    num_prefs INT
 );
 
 CREATE TABLE projects(
