@@ -61,7 +61,7 @@ exports.addcourse = (req, res) => {
 exports.getEnrolledCourses = (req, res) => {
     
     // query the database for all of the courses the user is enrolled in
-    db.query("SELECT course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
+    db.query("SELECT courses.course_number, course_description, professor FROM courses_info JOIN courses WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
             res.render("student/courses", {
@@ -101,7 +101,7 @@ exports.setting = (req, res) => {
 
 // Professor's page
 exports.createcourse = (req, res) => {
-    const { coursenumber, description } = req.body;
+    const { coursenumber, description, num_prefs } = req.body;
     // generate a random code for the course
     course_id = Math.random().toString(36).substring(2, 10);
     let email = req.session.email;
@@ -111,8 +111,9 @@ exports.createcourse = (req, res) => {
                 message: "An error occured!"
             })
         } else {
-            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username']}, (error, result) => {
+            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username'], num_prefs: num_prefs }, (error, result) => {
                 if(error) {
+                    console.log(error);
                     res.render('professor/createcourse', {
                         message: "An error occured. Please try again!"
                     })
