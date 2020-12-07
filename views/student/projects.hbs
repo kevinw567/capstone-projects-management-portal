@@ -34,6 +34,7 @@
                     <th>Client Contact Info</th>
                     <th>Project Details</th>
                     <th>Extra Details</th>
+                    <th>Course</th>
                 </tr>
                 {{#each results}}
                 <tr>
@@ -52,34 +53,24 @@
                     <td> {{ client_contact }} </td>
                     <td> {{ project_detail }} </td>
                     <td> {{ extra_details }} </td>
-                </tr>
+                    <td> {{ course_number }} </td>
+                </tr>   
                 {{/each}}
             </table>
             <br>
             <br>
         
+
             <form action="/student/submitprefs" method="POST">
-                <span> First Choice </span>
-                <select name="pref1">
-                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                    {{#each results }}
-                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                    {{/each }}
-                </select>
-                <span> Second Choice </span>
-                <select name="pref2">
-                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                    {{#each results }}
-                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                    {{/each }}
-                </select>
-                <span> Third Choice </span>
-                <select name="pref3">
-                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                    {{#each results }}
-                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                    {{/each }}
-                </select>
+                {{#for prefs }}
+                    <span> First Choice </span>
+                    <select name="pref1">
+                        <option value="" disabled="true" selected="true"> -- Select One --</option>
+                        {{#each results }}
+                            <option value="{{ project_name }}"> {{ project_name }} </option>
+                        {{/each }}
+                    </select>
+                {{/for }}
                 <br>
                 <button class="submit-prefs" type="submit"> Submit </button>
             </form>
