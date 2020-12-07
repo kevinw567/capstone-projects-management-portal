@@ -43,9 +43,9 @@ router.get("/view-project", (req, res) => {
     res.render("view-project");
 });
 
-router.get("/professor/admin-settings", (req, res) => {
-    res.render("professor/admin-settings");
-});
+// router.get("/professor/admin-settings", (req, res) => {
+//     res.render("professor/admin-settings");
+// });
 
 
 

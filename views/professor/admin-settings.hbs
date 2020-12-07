@@ -23,36 +23,39 @@
             </ul>
         </div>
         <div class="courses">
+            {{#if message}}
+            <p class="alert">{{message}}</p>
+            {{/if}}
             <h1>Your profile</h1>
             <form action="/professor/admin-settings" method="post" class="personal-profile">
                 <div class="user-info">
                     <label for="username" class="fname"><b>Username:</b></label>
                     <br>
-                    <input type="text" name="username" class="username">
+                    <input type="text" name="username" class="username" value='{{username}}' required='required'>
                 </div>
                 <div class="user-info">
                     <br>
                     <label for="email" class="fname"><b>Email:</b></label>
                     <br>
-                    <input type="email" name="email" class="username">
+                    <input type="email" name="email" class="username" value='{{email}}' required='required'>
                 </div>
                 <div class="user-info">
                     <br>
                     <label for="password" class="fname"><b>Password:</b></label>
                     <br>
-                    <input type="password" name="password" class="username">
+                    <input type="password" name="password" class="username" required="required">
                 </div>
                 <div class="user-info">
                     <br>
                     <label for="password" class="fname"><b>New Password:</b></label>
                     <br>
-                    <input type="password" name="password" class="username">
+                    <input type="password" name="new_password" class="username">
                 </div>
                 <div class="user-info">
                     <br>
                     <label for="password" class="fname"><b>Confirm Password:</b></label>
                     <br>
-                    <input type="password" name="password" class="username">
+                    <input type="password" name="confirm_password" class="username">
                 </div>
                 <div class="user-info">
                     <input type="submit" value="Update" class="btn-update">

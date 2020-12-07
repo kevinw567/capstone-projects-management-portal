@@ -3,6 +3,7 @@
  */
 const mysql = require("mysql");
 const e = require("express");
+const md5 = require("md5");
 
 const db = mysql.createConnection({
     // host IP address
@@ -95,7 +96,170 @@ exports.getEnrolledCourses = (req, res) => {
 }
 
 exports.setting = (req, res) => {
-    
+    db.query("SELECT * FROM users WHERE id = ?", [req.session.userid], (error, result) => {
+        if(error) {
+            if (req.session.role == 'student') {
+                res.render('student/setting', {
+                    message: "An unknown error occured!",
+                    username: result[0]['username'],
+                    email: result[0]['email']
+                })
+            } else {
+                res.render('professor/admin-settings', {
+                    message: "An unknown error occured!",
+                    username: result[0]['username'],
+                    email: result[0]['email']
+                })
+            }
+        } else {
+            if (req.session.role == 'student') {
+                console.log('stu-----');
+                res.render('student/setting', {
+                    username: result[0]['username'],
+                    email: result[0]['email']
+                })
+            } else {
+                console.log('------');
+                res.render('professor/admin-settings', {
+                    username: result[0]['username'],
+                    email: result[0]['email']
+                })
+            }
+        }
+    })
+}
+
+exports.updateSetting = (req, res) => {
+    const { username, email, password, new_password, confirm_password } = req.body;
+    console.log(username);
+    console.log(email);
+    console.log(new_password);
+    console.log(confirm_password);
+    console.log(req.session.role);
+    db.query("SELECT * FROM users WHERE id = ?", [req.session.userid], (error, result) => {
+        if (req.session.role == 'student') {
+            if(error) {
+                res.render('student/setting', {
+                    message: "An unknown error occured",
+                    username: username,
+                    email: email
+                })
+            } else if (md5(password) != result[0]['authentication']) {
+                res.render('student/setting', {
+                    message: "Wrong password",
+                    username: username,
+                    email: email
+                })
+            } else if (new_password != confirm_password) {
+                res.render('student/setting', {
+                    message: "New password does not match!",
+                    username: username,
+                    email: email
+                })
+            } else if (username == result[0]['username'] && email == result[0]['email'] && !new_password && !confirm_password ) {
+                res.render('student/setting', {
+                    message: "Nothing updated!",
+                    username: username,
+                    email: email
+                })
+            } else {
+                if (new_password) {
+                    db.query("UPDATE users SET ? WHERE id = ?", [{username:username, email:email, authentication:md5(new_password)}, req.session.userid], (error, result) => {
+                        if(error) {
+                            res.render('student/setting', {
+                                message: "An unknown error occured!",
+                                username: username,
+                                email: email
+                            })
+                        } else {
+                            res.render('student/setting', {
+                                message: "Updated",
+                                username: username,
+                                email: email
+                            })
+                        }
+                    })
+                } else {
+                    db.query("UPDATE users SET ? WHERE id = ?", [{username:username, email:email}, req.session.userid], (error, result) => {
+                        if(error) {
+                            res.render('student/setting', {
+                                message: "An unknown error occured!",
+                                username: username,
+                                email: email
+                            })
+                        } else {
+                            res.render('student/Setting', {
+                                message: "Updated",
+                                username: username,
+                                email: email
+                            })
+                        }
+                    })
+                }
+            }
+        } else if(req.session.role == 'professor') {
+            if(error) {
+                res.render('professor/admin-settings', {
+                    message: "An unknown error occured",
+                    username: username,
+                    email: email
+                })
+            } else if (md5(password) != result[0]['authentication']) {
+                res.render('professor/admin-settings', {
+                    message: "Wrong password",
+                    username: username,
+                    email: email
+                })
+            } else if (new_password != confirm_password) {
+                res.render('professor/admin-settings', {
+                    message: "New password does not match!",
+                    username: username,
+                    email: email
+                })
+            } else if (username == result[0]['username'] && email == result[0]['email'] && !new_password && !confirm_password ) {
+                res.render('professor/admin-settings', {
+                    message: "Nothing updated!",
+                    username: username,
+                    email: email
+                })
+            } else {
+                if (new_password) {
+                    db.query("UPDATE users SET ? WHERE id = ?", [{username:username, email:email, authentication:md5(new_password)}, req.session.userid], (error, result) => {
+                        if(error) {
+                            res.render('professor/admin-settings', {
+                                message: "An unknown error occured!",
+                                username: username,
+                                email: email
+                            })
+                        } else {
+                            res.render('professor/admin-settings', {
+                                message: "Updated",
+                                username: username,
+                                email: email
+                            })
+                        }
+                    })
+                } else {
+                    db.query("UPDATE users SET ? WHERE id = ?", [{username:username, email:email}, req.session.userid], (error, result) => {
+                        if(error) {
+                            res.render('professor/admin-settings', {
+                                message: "An unknown error occured!",
+                                username: username,
+                                email: email
+                            })
+                        } else {
+                            res.render('professor/admin-settings', {
+                                message: "Updated",
+                                username: username,
+                                email: email
+                            })
+                        }
+                    })
+                }
+            }
+
+        }
+    })
 }
 
 
