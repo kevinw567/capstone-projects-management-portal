@@ -124,7 +124,7 @@ exports.getProjects = (req, res) => {
         }
 
         else {
-            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id", (error, results) => {
+            db.query("SELECT project_choices, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id", (error, results) => {
                 if (error) {
                     res.render("student/projects", {
                         message: "An unexpected error occured"
@@ -132,9 +132,18 @@ exports.getProjects = (req, res) => {
                 }
 
                 else {
+                    var num_arr = [];
+                    for(var i = 1; i <= results[0].project_choices; i++) {
+                        var numbers = {number: i};
+                        num_arr.push(numbers);
+                    }
+                    results[0].list = num_arr;
+                    console.log(results[0]);
+                    // console.log(results);
                     res.render("student/projects", {
                         results: results,
-                        prefs: results[0].num_prefs
+                        num_arr: results[0].list,
+                        prefs: results[0].project_choices
                     })
                 }
             })

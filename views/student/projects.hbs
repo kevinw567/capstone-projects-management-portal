@@ -26,7 +26,7 @@
             {{#if message }}
                 <h1> {{ message }} </h1>
             {{/if }}
-            <h2 class="projects-page">Please read each project carefully and choose your first, second, and third option down below.</h2>
+            <h2 class="projects-page">Please read each project carefully and choose your top projects, the first being your most preferred and the last, your least preferred.</h2>
             <table class="course-table projects-page">
                 <tr>
                     <th>Project Name</th>
@@ -41,7 +41,7 @@
                     <td> 
                         <form action="/student/view-project" method="POST">
                                 <input type="submit" value="{{project_name}}" class="submit-btn">
-                                <input type="submit" name="courseIdentification" value="{{course_id}}">
+                                <input type="hidden" name="courseIdentification" value="{{course_id}}">
                                 <input type="hidden" name="projectName" value="{{project_name}}">
                                 <input type="hidden" name="projectDetail" value="{{project_detail}}">
                                 <input type="hidden" name="clientName" value="{{client_name}}">
@@ -61,18 +61,20 @@
             <br>
         
 
-            <form action="/student/submitprefs" method="POST">
-                {{#for prefs }}
-                    <span> First Choice </span>
-                    <select name="pref1">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/for }}
+            <form action="/student/submitprefs" method="POST" class="project-choices">
+                    {{#for prefs }}
+                        {{#each num_arr as | x |}}
+                        <span>Choice No.{{this.number}}</span>
+                        {{/each}}
+                        <select name="pref1">
+                            <option value="" disabled="true" selected> -- Select One --</option>
+                            {{#each results }}
+                                <option value="{{ project_name }}"> {{ project_name }} </option>
+                            {{/each }}
+                        </select>
+                    {{/for }}
                 <br>
-                <button class="submit-prefs" type="submit"> Submit </button>
+                <button class="submit-prefs" number="submit"> Submit </button>
             </form>
         </div>
     </div>

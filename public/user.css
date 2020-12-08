@@ -318,3 +318,10 @@ select {
     margin: auto;
     border-top: 5px rgb(102, 102, 102) solid;
 }
+
+.project-choices {
+    margin-left: 40%;
+    border: 2px solid black;
+    width: 15%;
+    height: 50%;
+}
