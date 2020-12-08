@@ -25,7 +25,7 @@
         <div class="courses">
             {{#if message }}
                 <h1> {{ message }} </h1>
-            {{/if }}
+            {{else}}
             <h2 class="projects-page">Please read each project carefully and choose your first, second, and third option down below.</h2>
             <table class="course-table projects-page">
                 <tr>
@@ -108,6 +108,7 @@
                 <br>
                 <button class="submit-prefs" type="submit"> Submit </button>
             </form>
+            {{/if}}
         </div>
     </div>
 </body>
