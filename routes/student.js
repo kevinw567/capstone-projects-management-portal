@@ -58,3 +58,8 @@ router.get("/student-project", projectController.getStudentProjects);
 router.post("/submitprefs", projectController.submitprefs);
 // export the router for other files to use
 module.exports = router;
+
+router.post("/projects-by-course", projectController.getProjects);
+router.get("/projects-by-course", (req, res) => {
+    res.render("student/projects-by-course")
+})

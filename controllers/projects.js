@@ -43,7 +43,8 @@ exports.viewprojects = (req, res) => {
                 message: "An unexpected error occured"
             })
         } else {
-            db.query("SELECT * FROM projects", (error, results) => {
+            db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id", (error, results) => {
+            console.log(results);
             if(error) {
                 res.render('professor/admin-view-projects', {
                     message: "An error occured!"
@@ -61,56 +62,79 @@ exports.viewprojects = (req, res) => {
 
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
-    const {projectName, courseIdentification} = req.body;
-    db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
-        console.log("FIRST QUERY: " + courseIdentification);
-        if(error) {
-            res.render('professor/view-project', {
-                message: "An error occured!"
-            })
-        } else {
-            if (req.session.role == "professor") {
-                db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
-                    if(error) {
-                        res.render('professor/view-project', {
-                            message: "An error occured!"
-                        })} else {
-                                req.results = results;
-                                console.log("PROFESSOR COURSE ID: " + courseIdentification);
-                                res.render("professor/view-project", {
-                                    project_name: results[0]['project_name'],
-                                    course_number: result[0]['course_number'],
-                                    project_detail: results[0]['project_detail'],
-                                    client_name: results[0]['client_name'],
-                                    client_contact: results[0]['client_contact'],
-                                    extra_details: results[0]['extra_details']
-                            })}
-                })
-            } 
-            else {
-                db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
-                    if(error) {
-                        res.render('student/view-project', {
-                            message: "An error occured!"
-                        })
-                    } 
-                    else {
-                        req.results = results;
-                        console.log("STUDENT COURSE ID: " + courseIdentification); 
-                        res.render("student/view-project", {
-                            project_name: results[0]['project_name'],
-                            // course_number: result[0]['course_number'],
-                            project_detail: results[0]['project_detail'],
-                            client_name: results[0]['client_name'],
-                            client_contact: results[0]['client_contact'],
-                            extra_details: results[0]['extra_details']
-                        })
-                    }
-                })
-        }
-            }
-    })
+    const { projectName, projectDetail, clientName, clientContact, extraDetails, courseNumber, professor } = req.body;
+
+    console.log(req.body);
+    console.log(req.session);
+    if (req.session.role == 'student') {
+        res.render('student/view-project', {
+            project_name: projectName,
+            project_detail: projectDetail,
+            course_number: courseNumber,
+            client_name: clientName,
+            client_contact: clientContact,
+            extra_details: extraDetails
+        })
+    } else {
+        res.render('professor/view-project', {
+            project_name: projectName,
+            project_detail: projectDetail,
+            course_number: courseNumber,
+            client_name: clientName,
+            client_contact: clientContact,
+            extra_details: extraDetails
+        })
+    }
 }
+    // db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
+    //     console.log("FIRST QUERY: " + courseIdentification);
+    //     if(error) {
+    //         res.render('professor/view-project', {
+    //             message: "An error occured!"
+    //         })
+    //     } else {
+    //         if (req.session.role == "professor") {
+    //             db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
+    //                 if(error) {
+    //                     res.render('professor/view-project', {
+    //                         message: "An error occured!"
+    //                     })} else {
+    //                             req.results = results;
+    //                             console.log("PROFESSOR COURSE ID: " + courseIdentification);
+    //                             res.render("professor/view-project", {
+    //                                 project_name: results[0]['project_name'],
+    //                                 course_number: result[0]['course_number'],
+    //                                 project_detail: results[0]['project_detail'],
+    //                                 client_name: results[0]['client_name'],
+    //                                 client_contact: results[0]['client_contact'],
+    //                                 extra_details: results[0]['extra_details']
+    //                         })}
+    //             })
+    //         } 
+    //         else {
+    //             db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
+    //                 if(error) {
+    //                     res.render('student/view-project', {
+    //                         message: "An error occured!"
+    //                     })
+    //                 } 
+    //                 else {
+    //                     req.results = results;
+    //                     console.log("STUDENT COURSE ID: " + courseIdentification); 
+    //                     res.render("student/view-project", {
+    //                         project_name: results[0]['project_name'],
+    //                         // course_number: result[0]['course_number'],
+    //                         project_detail: results[0]['project_detail'],
+    //                         client_name: results[0]['client_name'],
+    //                         client_contact: results[0]['client_contact'],
+    //                         extra_details: results[0]['extra_details']
+    //                     })
+    //                 }
+    //             })
+    //     }
+    //         }
+    // })
+
 
 
 // get available projects for enrolled classes
@@ -128,6 +152,10 @@ exports.getProjects = (req, res) => {
                 if (error) {
                     res.render("student/projects", {
                         message: "An unexpected error occured"
+                    })
+                } else if (results.length == 0) {
+                    res.render("student/projects", {
+                        message: "No projects posted"
                     })
                 }
 
@@ -149,38 +177,15 @@ exports.getProjects = (req, res) => {
             })
         }
 
-        // db.query("SELECT project_name, project_detail, client_name, client_contact, extra_details FROM projects", (error, results) => {
-        //     if (error) {
-        //         res.render("student/projects", {
-        //             message: "An error occured"
-        //         })
-        //     }
-
-        //     else {
-        //         res.render("student/projects", {
-        //             results: results
-        //         })
-        //     }
-        // })
     })
 }
 
 // submit project preferences to database
 exports.submitprefs = (req, res) => {
-    let choices;
-    db.query("SELECT project_choices FROM courses JOIN courses_info WHERE courses.id = courses_info.id AND courses_info.student_id = ?", [req.session.userid], (error, results) => {
-        if (error) {
-            res.render("student/project", {
-                message: "An error occured!"
-            });
-        } else {
-            choices = results[0].project_choices;  
-        }
-    });
-    const { pref1, pref2, pref3 } = req.body;
-    console.log(pref1[0]);
+    const { pref1, pref2, pref3, pref4, pref5 } = req.body;
+    console.log(pref1);
     // query the database for the course id
-    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1[0]], (error, results) => {
+    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
         if (error) {
             res.render("student/projects", {
                 message: "An unexpected error occured"
@@ -188,10 +193,11 @@ exports.submitprefs = (req, res) => {
         }
 
         else {
-            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1, proj_preference2, proj_preference3, project_preference4, project_preference5 }, (error, result) => {
+            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3, proj_preference4: pref4, proj_preference5: pref5 }, (error, result) => {
                 if (error) {
                     // enter if statement if a bad null error is thrown, ask user to relogin
                     if (error.code === "ER_BAD_NULL_ERROR") {
+                        console.log(error);
                         res.render("student/projects", {
                             message: "An error occured. Please relogin and try again"
                         })
