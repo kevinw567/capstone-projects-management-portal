@@ -26,7 +26,7 @@ role varchar(20) not NULL
 CREATE TABLE courses(
     id VARCHAR(20) PRIMARY KEY,
     course_number VARCHAR(20),
-    course_description VARCHAR(100),
+    course_description VARCHAR(2100),
     professor VARCHAR(100),
     num_prefs INT
 );
@@ -34,11 +34,11 @@ CREATE TABLE courses(
 CREATE TABLE projects(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 project_name VARCHAR(200) NOT NULL,
-project_detail VARCHAR(250),
+project_detail VARCHAR(2100),
 client_name VARCHAR(50) NOT NULL,
 client_contact VARCHAR(100),
 course_id VARCHAR(20),
-extra_details VARCHAR(255),
+extra_details VARCHAR(2100),
 user_id INT,
 FOREIGN KEY (user_id) REFERENCES users(id),
 FOREIGN KEY (course_id) REFERENCES courses(id)

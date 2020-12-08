@@ -82,7 +82,6 @@ exports.getEnrolledCourses = (req, res) => {
         
         // 
         else {
-            console.log("HERE");
             req.results = results;
             console.log("req.results: " + req.results);
             console.log(results);

@@ -32,8 +32,6 @@
                     <th>Project Name</th>
                     <th>Client Name</th>
                     <th>Client Contact Info</th>
-                    <th>Project Details</th>
-                    <th>Extra Details</th>
                     <th>Course</th>
                 </tr>
                 {{#each results}}
@@ -41,7 +39,7 @@
                     <td> 
                         <form action="/student/view-project" method="POST">
                                 <input type="submit" value="{{project_name}}" class="submit-btn">
-                                <input type="hidden" name="courseIdentification" value="{{course_id}}">
+                                <input type="hidden" name="courseNumber" value="{{course_number}}">
                                 <input type="hidden" name="projectName" value="{{project_name}}">
                                 <input type="hidden" name="projectDetail" value="{{project_detail}}">
                                 <input type="hidden" name="clientName" value="{{client_name}}">
@@ -51,8 +49,6 @@
                     </td>
                     <td> {{ client_name }} </td>
                     <td> {{ client_contact }} </td>
-                    <td> {{ project_detail }} </td>
-                    <td> {{ extra_details }} </td>
                     <td> {{ course_number }} </td>
                 </tr>   
                 {{/each}}
@@ -108,7 +104,6 @@
                 <br>
                 <button class="submit-prefs" number="submit"> Submit </button>
             </form>
-            {{/if}}
         </div>
     </div>
 </body>

@@ -325,3 +325,10 @@ select {
     width: 15%;
     height: 50%;
 }
+
+.project-details {
+    position: relative;
+    left: 25%;
+    width: 45%;
+    text-align: left;
+}
