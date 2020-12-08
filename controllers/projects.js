@@ -116,7 +116,7 @@ exports.viewsingleproject = (req, res) => {
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
     
-    db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
+    db.query("SELECT course_number FROM enrolled WHERE student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             res.render("student/projects", {
                 message: "An unexpected error occured"
@@ -124,7 +124,7 @@ exports.getProjects = (req, res) => {
         }
 
         else {
-            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id", (error, results) => {
+            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id WHERE courses.id = ?", [results[0].course_number], (error, results) => {
                 if (error) {
                     res.render("student/projects", {
                         message: "An unexpected error occured"
