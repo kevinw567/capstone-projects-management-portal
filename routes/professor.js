@@ -34,7 +34,8 @@ router.post("/addproject", projectController.addproject);
 router.get("/admin-view-courses", courseController.viewcourses);
 router.get("/admin-view-projects", projectController.viewprojects);
 router.post("/view-project", projectController.viewsingleproject);
-router.get("/admin-settings", (req, res) => {res.render("professor/admin-settings")});
+router.get("/admin-settings", courseController.setting);
+router.post('/admin-settings', courseController.updateSetting);
 router.get("/deleteproject", projectController.deleteproject);
 
 // export the router for other files to use

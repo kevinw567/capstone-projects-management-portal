@@ -38,8 +38,8 @@ router.get("/addcourse", (req, res) => {
 })
 router.post("/addcourse", courseController.addcourse);
 
-router.get("/setting", (req, res) => {res.render("student/setting")});
-router.post("/setting", courseController.setting);
+router.get("/setting", courseController.setting);
+router.post("/setting", courseController.updateSetting);
 // router.get("/admin-setting", (req, res) => {res.render("professor/admin-setting")});
 
 // router.get("/addproject", (req, res) => {res.render("professor/addproject")});

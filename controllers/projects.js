@@ -62,20 +62,21 @@ exports.viewprojects = (req, res) => {
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
     const {projectName, courseIdentification} = req.body;
-    let course_num;
     db.query("SELECT * FROM projects WHERE project_name = ?", [projectName], (error, results) => {
-    if(error) {
-        res.render('professor/view-project', {
-            message: "An error occured!"
-        })} else {
-                if (req.session.role == "professor") {
-                    db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
+        console.log("FIRST QUERY: " + courseIdentification);
+        if(error) {
+            res.render('professor/view-project', {
+                message: "An error occured!"
+            })
+        } else {
+            if (req.session.role == "professor") {
+                db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
                     if(error) {
                         res.render('professor/view-project', {
                             message: "An error occured!"
                         })} else {
                                 req.results = results;
-                                console.log(results);
+                                console.log("PROFESSOR COURSE ID: " + courseIdentification);
                                 res.render("professor/view-project", {
                                     project_name: results[0]['project_name'],
                                     course_number: result[0]['course_number'],
@@ -85,25 +86,29 @@ exports.viewsingleproject = (req, res) => {
                                     extra_details: results[0]['extra_details']
                             })}
                 })
-            } else {
+            } 
+            else {
                 db.query("SELECT course_number FROM courses WHERE id = ?", [courseIdentification], (error, result) => {
                     if(error) {
                         res.render('student/view-project', {
                             message: "An error occured!"
-                        })} else {
-                                req.results = results;
-                                console.log(results);
-                                res.render("student/view-project", {
-                                    project_name: results[0]['project_name'],
-                                    course_number: result[0]['course_number'],
-                                    project_detail: results[0]['project_detail'],
-                                    client_name: results[0]['client_name'],
-                                    client_contact: results[0]['client_contact'],
-                                    extra_details: results[0]['extra_details']
-                            })}
+                        })
+                    } 
+                    else {
+                        req.results = results;
+                        console.log("STUDENT COURSE ID: " + courseIdentification); 
+                        res.render("student/view-project", {
+                            project_name: results[0]['project_name'],
+                            // course_number: result[0]['course_number'],
+                            project_detail: results[0]['project_detail'],
+                            client_name: results[0]['client_name'],
+                            client_contact: results[0]['client_contact'],
+                            extra_details: results[0]['extra_details']
+                        })
+                    }
                 })
-            }
         }
+            }
     })
 }
 
