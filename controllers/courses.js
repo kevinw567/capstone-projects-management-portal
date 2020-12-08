@@ -22,24 +22,25 @@ exports.addcourse = (req, res) => {
             })
         } else if (result.length == 0) {
             res.render('student/addcourse', {
-                message: "No course found with the course code!"
+                message: "No course found with that course code!"
             })
         } else {
-            db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, course_code], (error, result) => {
-                // console.log(req.session.userid);
-                // console.log(result);
-                if (error) {
-                    res.render('student/addcourse', {
-                        message: "An error occured, Please try again!"
-                    })
-                } else if(result.length != 0) {
-                    res.render('student/addcourse', {
-                        message: "You already enrolled this course!"
-                    })
-                } else {
-                    db.query("INSERT INTO courses_info SET ? ", {id:course_code, student_id: req.session.userid}, (error, result) => {
+            // db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, course_code], (error, result) => {
+            //     // console.log(req.session.userid);
+            //     // console.log(result);
+            //     if (error) {
+            //         res.render('student/addcourse', {
+            //             message: "An error occured, Please try again!"
+            //         })
+            //     } else if(result.length != 0) {
+            //         res.render('student/addcourse', {
+            //             message: "You already enrolled this course!"
+            //         })
+            //     } else {
+                    db.query("INSERT INTO enrolled SET ? ", {course_number:course_code, student_id: req.session.userid}, (error, result) => {
                         console.log(result);
                         if (error) {
+                            console.log(error)
                             res.render('student/addcourse', {
                                 message: "An error occured, Please try again!2"
                             })
@@ -53,8 +54,8 @@ exports.addcourse = (req, res) => {
             })
             
         }
-    })
-}
+    // })
+// }
 
 
 
@@ -150,3 +151,85 @@ exports.viewcourses = (req, res) => {
         }
     })
 };
+
+/**
+ * query the database for the available projects for a specified course
+ *  
+ */
+exports.projects_by_course = (req, res) => {
+    const course = req.body.course;
+
+
+    db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
+        if (error) {
+            res.render("student/projects", {
+                message: "An unexpected error occured"
+            })
+        }
+
+        else {
+            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id", (error, results) => {
+                if (error) {
+                    res.render("student/projects", {
+                        message: "An unexpected error occured"
+                    })
+                }
+
+                else {
+                    res.render("student/projects", {
+                        results: results,
+                        prefs: results[0].num_prefs
+                    })
+                }
+            })
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // db.query("SELECT id FROM courses WHERE course_number = ?", [course], (error, results) => {
+    //     if (error) {
+    //         console.log(error);
+    //         res.render("student/projects-by-course", {
+    //             message: "An unexpected error occured"
+    //         })
+    //     }
+
+    //     else {
+    //         db.query("SELECT * FROM projects WHERE course_id = ?", [results[0].id], (error, result) => {
+    //             if (error) {
+    //                 console.log(error);
+    //                 res.render("student/projects-by-course", {
+    //                     message: "An unexpected error occured"
+    //                 })
+    //             }
+
+    //             else {
+    //                 res.render("student/projects-by-course", {
+    //                     results: result
+    //                 })
+    //             }
+    //         })
+    //     }
+    // }) 
+}

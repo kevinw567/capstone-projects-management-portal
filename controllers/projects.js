@@ -153,10 +153,10 @@ exports.getProjects = (req, res) => {
 
 // submit project preferences to database
 exports.submitprefs = (req, res) => {
-    const { pref1, pref2, pref3 } = req.body;
-    console.log(pref1[0]);
+    const { pref1, pref2, pref3, pref4, pref5 } = req.body;
+    console.log(pref1);
     // query the database for the course id
-    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1[0]], (error, results) => {
+    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
         if (error) {
             res.render("student/projects", {
                 message: "An unexpected error occured"
@@ -164,10 +164,11 @@ exports.submitprefs = (req, res) => {
         }
 
         else {
-            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1, proj_preference2, proj_preference3, project_preference4, project_preference5 }, (error, result) => {
+            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3, proj_preference4: pref4, proj_preference5: pref5 }, (error, result) => {
                 if (error) {
                     // enter if statement if a bad null error is thrown, ask user to relogin
                     if (error.code === "ER_BAD_NULL_ERROR") {
+                        console.log(error);
                         res.render("student/projects", {
                             message: "An error occured. Please relogin and try again"
                         })

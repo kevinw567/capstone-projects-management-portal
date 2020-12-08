@@ -95,3 +95,14 @@ hbs.handlebars.registerHelper("for", function(n, block) {
 
     return accum;
 })
+
+/**
+ * handlebars greater than or equal to helper function
+ */
+hbs.handlebars.registerHelper("lessEqual", function(num1, num2, block) {
+    if (num1 <= num2) {
+        return block.fn(this);
+    }
+
+    return block.inverse(this);
+})
