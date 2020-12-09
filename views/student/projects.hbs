@@ -22,18 +22,16 @@
                 <li class="list-item"><a href="/auth/logout">Logout</a></li>
             </ul>
         </div>
-        <div class="courses">
+        <div class="courses view-projects">
             {{#if message }}
                 <h1> {{ message }} </h1>
-            {{else}}
-            <h2 class="projects-page">Please read each project carefully and choose your first, second, and third option down below.</h2>
+            {{/if }}
+            <h2 class="projects-page">Please read each project carefully and choose your top projects, the first being your most preferred and the last, your least preferred.</h2>
             <table class="course-table projects-page">
                 <tr>
                     <th>Project Name</th>
                     <th>Client Name</th>
                     <th>Client Contact Info</th>
-                    <th>Project Details</th>
-                    <th>Extra Details</th>
                     <th>Course</th>
                 </tr>
                 {{#each results}}
@@ -41,7 +39,7 @@
                     <td> 
                         <form action="/student/view-project" method="POST">
                                 <input type="submit" value="{{project_name}}" class="submit-btn">
-                                <input type="submit" name="courseIdentification" value="{{course_id}}">
+                                <input type="hidden" name="courseNumber" value="{{course_number}}">
                                 <input type="hidden" name="projectName" value="{{project_name}}">
                                 <input type="hidden" name="projectDetail" value="{{project_detail}}">
                                 <input type="hidden" name="clientName" value="{{client_name}}">
@@ -51,64 +49,75 @@
                     </td>
                     <td> {{ client_name }} </td>
                     <td> {{ client_contact }} </td>
-                    <td> {{ project_detail }} </td>
-                    <td> {{ extra_details }} </td>
                     <td> {{ course_number }} </td>
                 </tr>   
                 {{/each}}
             </table>
             <br>
             <br>
-            <form action="/student/submitprefs" method="POST">
-                {{#lessEqual 1 prefs }}
-                    <span> First Choice </span>
-                    <select name="pref1">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/lessEqual }}
-                {{#lessEqual 2 prefs  }}
-                    <span> Second Choice </span>
-                    <select name="pref2">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/lessEqual }}
-                {{#lessEqual 3 prefs  }}
-                    <span> Third Choice </span>
-                    <select name="pref3">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/lessEqual }}
-                {{#lessEqual 4 prefs }}
-                    <span> Fourth Choice </span>
-                    <select name="pref4">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/lessEqual }}
-                {{#lessEqual 5 prefs }}
-                    <span> Fifth Choice </span>
-                    <select name="pref5">
-                        <option value="" disabled="true" selected="true"> -- Select One --</option>
-                        {{#each results }}
-                            <option value="{{ project_name }}"> {{ project_name }} </option>
-                        {{/each }}
-                    </select>
-                {{/lessEqual }}
-                <br>
-                <button class="submit-prefs" type="submit"> Submit </button>
-            </form>
-            {{/if}}
+            <div class="choices-container">
+                <form action="/student/submitprefs" method="POST">
+                <div class="project-choices">
+                        {{#lessEqual 1 prefs }}
+                            <div class="choice-and-list">
+                                <span> First </span>
+                                <select name="pref1">
+                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
+                                    {{#each results }}
+                                        <option value="{{ project_name }}"> {{ project_name }} </option>
+                                    {{/each }}
+                                </select>
+                            </div>
+                        {{/lessEqual }}
+                        {{#lessEqual 2 prefs  }}
+                            <div class="choice-and-list">
+                                <span> Second </span>
+                                <select name="pref2">
+                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
+                                    {{#each results }}
+                                        <option value="{{ project_name }}"> {{ project_name }} </option>
+                                    {{/each }}
+                                </select>
+                            </div>
+                        {{/lessEqual }}
+                        {{#lessEqual 3 prefs  }}
+                            <div class="choice-and-list">
+                                <span> Third </span>
+                                <select name="pref3">
+                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
+                                    {{#each results }}
+                                        <option value="{{ project_name }}"> {{ project_name }} </option>
+                                    {{/each }}
+                                </select>
+                            </div>
+                        {{/lessEqual }}
+                        {{#lessEqual 4 prefs }}
+                            <div class="choice-and-list">
+                                <span> Fourth </span>
+                                <select name="pref4">
+                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
+                                    {{#each results }}
+                                        <option value="{{ project_name }}"> {{ project_name }} </option>
+                                    {{/each }}
+                                </select>
+                            </div>
+                        {{/lessEqual }}
+                        {{#lessEqual 5 prefs }}
+                            <div class="choice-and-list">
+                                <span> Fifth </span>
+                                <select name="pref5">
+                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
+                                    {{#each results }}
+                                        <option value="{{ project_name }}"> {{ project_name }} </option>
+                                    {{/each }}
+                                </select>
+                            </div>
+                        {{/lessEqual }}
+                        <br>
+                    </div>
+                    <button class="submit-prefs" number="submit"> Submit </button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

@@ -26,42 +26,26 @@ exports.addcourse = (req, res) => {
                 message: "No course found with that course code!"
             })
         } else {
-            // db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, course_code], (error, result) => {
-            //     // console.log(req.session.userid);
-            //     // console.log(result);
-            //     if (error) {
-            //         res.render('student/addcourse', {
-            //             message: "An error occured, Please try again!"
-            //         })
-            //     } else if(result.length != 0) {
-            //         res.render('student/addcourse', {
-            //             message: "You already enrolled this course!"
-            //         })
-            //     } else {
-                    db.query("INSERT INTO enrolled SET ? ", {course_number:course_code, student_id: req.session.userid}, (error, result) => {
-                        console.log(result);
-                        if (error) {
-                            console.log(error)
-                            res.render('student/addcourse', {
-                                message: "An error occured, Please try again!2"
-                            })
-                        } else {
-                            res.render('student/addcourse', {
-                                message: "You have successfully enrolled!"
-                            })
-                        }
-                    })
-                }
-            })
-            
-        }
-    // })
-// }
+                db.query("INSERT INTO enrolled SET ? ", {course_number:course_code, student_id: req.session.userid}, (error, result) => {
+                    console.log(result);
+                    if (error) {
+                        console.log(error)
+                        res.render('student/addcourse', {
+                            message: "An error occured, Please try again!2"
+                        })
+                    } else {
+                        res.render('student/addcourse', {
+                            message: "You have successfully enrolled!"
+                        })
+                    }
+                })
+            }
+        })   
+    }
 
 
 
 exports.getEnrolledCourses = (req, res) => {
-    
     // query the database for all of the courses the user is enrolled in
     db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_number AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
@@ -80,9 +64,7 @@ exports.getEnrolledCourses = (req, res) => {
             })
         }
         
-        // 
         else {
-            console.log("HERE");
             req.results = results;
             console.log("req.results: " + req.results);
             console.log(results);
@@ -92,8 +74,6 @@ exports.getEnrolledCourses = (req, res) => {
             })
         }
     })
-
-
 }
 
 exports.setting = (req, res) => {

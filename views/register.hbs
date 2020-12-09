@@ -11,37 +11,25 @@
     <h2>UMass Boston - Computer Science Dept.</h2>
 </header>
 <body>
-    {{!-- added action and method properties, these specify where to submit the form information --}}
     {{#if message }}
         <p class="alert"> {{ message }} </p>
     {{/if }}
     <form id="login" action="/auth/register" method="POST">
-        {{!-- added input fields for first and last names --}}
         <div class="un">
             <label for="fname" class="uname">Your Name:</label>
             <input type="text" class="uname" id="fname" required="required" name="username">
         </div>
-        {{!-- <div class="un"> --}}
-            {{!-- <label for="lname" class="uname">Last Name:</label> --}}
-            {{!-- added name property --}}
-            {{!-- <input type="text" class="uname" id="lname" required="required" name="lname"> --}}
-        {{!-- </div> --}}
         <span id="error-password" style="display: none;"><br></span>
         <div class="email">
             <label for="email" class="user-email">Email:</label>
-            {{!-- added name property --}}
             <input type="email" name="email" id="user-email" required="required" >
-      
         </div>
-        
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
-            {{!-- added name property --}}
             <input type="password" class="pword" id="password" required="required" name="password">
         </div>
         <div class="confirm">    
             <label for="confirm-password" class="pword">Confirm: </label>
-            {{!-- added name property --}}
             <input type="password" id="confirm-password" required="required" name="confirmPassword">
         </div>
         <div class="role">
@@ -57,13 +45,6 @@
 			<a href="/">Have an account?</a>
 			<button class="login" type="submit">Register</button>
 		</div>
-        <!-- <button class="register" type="submit">Register</button> -->
-        {{!-- <script src="register.js"></script> --}}
     </form>
-
-    {{!-- {{#if message }}
-        <h4 class="alert"> {{ message }} </h4>
-    {{/if }} --}}
-    {{!-- <script src="register.js"></script> --}}
 </body>
 </html>

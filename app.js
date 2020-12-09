@@ -3,7 +3,6 @@ const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 const path = require("path");
-// const projectController = require("./controllers/projects");
 
 // add session to track user's info
 const session = require("express-session");
@@ -56,7 +55,9 @@ app.use(session({
     secret: "secret",
     resave: true,
     saveUninitialized: true,
-    maxAge: 24 * 60 * 60 * 1000
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000
+    }
 }));
 
 // define routes to use

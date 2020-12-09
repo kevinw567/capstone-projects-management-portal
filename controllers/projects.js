@@ -10,18 +10,10 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 })
 
-
 exports.addproject = (req, res) => {
     const { projectName, projectDescription, clientName, clientEmail, extraDetails, courseID} = req.body;
 
     let email = req.session.email;
-    console.log(req.session.userid);
-    // db.query("SELECT username FROM users WHERE email=?", [email], (error, result)=>{
-    //     if (error) {
-    //         res.render("addproject", {
-    //             message: "An error occured!"
-    //         })
-    //     } else {
     db.query("INSERT INTO projects SET ?", { project_name:projectName, project_detail: projectDescription, client_name: clientName, client_contact:clientEmail, extra_details:extraDetails, user_id:req.session.userid, course_id:courseID }, (error, result) => {
         if(error) {
             res.render('professor/addproject', {
@@ -32,7 +24,6 @@ exports.addproject = (req, res) => {
                 message: "Project Created!"
             })}
         })};
-            // })};
 
 exports.viewprojects = (req, res) => {
     // let email = req.session.email;
@@ -125,8 +116,8 @@ exports.viewsingleproject = (req, res) => {
 
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
-    
-    db.query("SELECT id FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results) => {
+    // query the database for the enrolled course's course_number
+    db.query("SELECT course_number FROM enrolled WHERE student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             res.render("student/projects", {
                 message: "An unexpected error occured"
@@ -134,7 +125,7 @@ exports.getProjects = (req, res) => {
         }
 
         else {
-            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id", (error, results) => {
+            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id WHERE courses.id = ?", [results[0].course_number], (error, results) => {
                 if (error) {
                     res.render("student/projects", {
                         message: "An unexpected error occured"
@@ -160,7 +151,6 @@ exports.getProjects = (req, res) => {
 // submit project preferences to database
 exports.submitprefs = (req, res) => {
     const { pref1, pref2, pref3, pref4, pref5 } = req.body;
-    console.log(pref1);
     // query the database for the course id
     db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
         if (error) {
@@ -207,7 +197,6 @@ exports.submitprefs = (req, res) => {
 
 
 exports.getStudentProjects = (req, res) => {
-
     db.query("SELECT * FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results)=> {
         if (error) {
             res.render("student/student-project", {
@@ -223,5 +212,4 @@ exports.getStudentProjects = (req, res) => {
             })
         }
     })
-    // res.render("student/student-project");
 }

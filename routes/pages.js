@@ -15,14 +15,6 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
-// router.get("/login", (req, res) => {
-//     res.render("home");
-// });
-
-// router.get("/projects", (req, res) => {
-//     res.render("student/projects");
-// })
-
 router.get("/addcourse", (req, res) => {
     res.render("addcourse");
 });
@@ -42,11 +34,6 @@ router.get("/admin-view-projects", (req, res) => {
 router.get("/view-project", (req, res) => {
     res.render("view-project");
 });
-
-// router.get("/professor/admin-settings", (req, res) => {
-//     res.render("professor/admin-settings");
-// });
-
 
 
 // export the router for other files to use

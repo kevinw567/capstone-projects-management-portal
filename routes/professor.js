@@ -9,13 +9,6 @@ const courseController = require("../controllers/courses");
 const router = express.Router();
 
 /**
- * GET the view projects page
- */
-// router.get("/projects", (req, res) => {
-//     projectController.getProjects(req, res);
-// })
-
-/**
  * POST the project preferences
  */
 router.post("/submitprefs", projectController.submitprefs);
