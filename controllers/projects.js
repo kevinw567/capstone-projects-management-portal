@@ -163,7 +163,7 @@ exports.getProjects = (req, res) => {
                 else {
                     res.render("student/projects", {
                         results: results,
-                        prefs: results[0].project_choices
+                        prefs: results[0].num_prefs
                     })
                 }
             })
