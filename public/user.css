@@ -15,16 +15,18 @@ h1 {
     text-align: center;
     color: white;
     padding: 20px;
-    font-size: 300%;
+    padding-top: 0;
+    /* font-size: 300%; */
     font-weight: 800;
 }
 
 .main {
     padding: 20px;
+    height: 100%;
 }
 .nav {
     float: left;
-    height: 100%;
+    /* height: 100%; */
     width: 20%;
     border: 2px lightgray solid;
     background-color: #014b74;
@@ -45,7 +47,7 @@ h1 {
     /* width: 20%; */
     /* float: left; */
     background-color: #006094;
-    height: 100vh;
+    height: 76vh;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -130,7 +132,7 @@ a {
 }
 
 h2 {
-    margin-top: 15%;
+    margin-top: 10%;
 }
 
 
@@ -162,6 +164,21 @@ h2 {
     float: right;
 }
 
+.select-btn {
+    float: right;
+    margin-right: 15%;
+    font-size: 20px;
+    height: 30px;
+}
+.opt {
+    width: 55%;
+    color: black;
+}
+.select-pro {
+    width: 30%;
+    margin-left: 20%;
+    height: 30px;
+}
 .proj-info {
     width: 70%;
     margin: auto;
@@ -205,16 +222,47 @@ h2 {
     background-color: lightyellow;
 }
 
+.project-detail {
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    padding-bottom: 15px;
+    font-size: 20px;
+
+}
+
+.project-info {
+    width: 65%;
+    margin: auto;
+    float: right;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+}
+#project_detail {
+    max-width: 65%;
+    min-width: 65%;
+    color: white;
+    background-color: transparent;
+}
+.update {
+    margin-right:25%;
+    width: 20%;
+    float: right;
+    margin-top: 15px;
+}
+/* .add-project {
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+} */
 /* 
 .add-proj-h2 {
     margin-top: 5%;
 }
 
-.add-project {
-    border: 2px solid white;
-    display: flex;
-    flex-direction: column;
-}
 
 .proj-info {
     display: flex;
@@ -339,18 +387,38 @@ br {
 
 span {
     font-size: 25px;
-    padding-right: 15px;
-    padding-left: 15px;
+    /* padding-right: 15px; */
+    /* padding-left: 15px; */
+}
+
+.choice-and-list {
+    margin: auto;
+    width: 40%;
+    margin-left: 15%;
+    /* float: left; */
+    text-align: left;
 }
 
 select {
     font-size: 20px;
 }
-
+.choices-container {
+}
+.project-choices {
+    width: 100%;
+}
+.choices {
+    margin: auto;
+    width: 100%;
+    margin-left: 25%;
+    /* text-align: right; */
+}
 .submit-prefs {
-    position: relative;
+    /* position: relative; */
     top: 20px;
     font-size: 25px;
+    float: right;
+    margin-right: 20%;
 }
 
 .submit-btn {

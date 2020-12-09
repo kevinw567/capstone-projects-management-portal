@@ -47,7 +47,7 @@ router.get("/projects", projectController.getProjects);
 router.post("/view-project", projectController.viewsingleproject);
 
 router.get("/student-project", projectController.getStudentProjects);
-
+router.post("/select-project", projectController.select_project);
 router.post("/submitprefs", projectController.submitprefs);
 
 

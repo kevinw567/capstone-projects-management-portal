@@ -87,10 +87,9 @@ exports.deleteproject = (req, res) => {
 }
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
-    const { projectName, projectDetail, clientName, clientContact, extraDetails, courseNumber, professor } = req.body;
+    const { projectName, projectDetail, clientName, clientContact, extraDetails, courseNumber, professor, project_id, courseID } = req.body;
 
     console.log(req.body);
-    console.log(req.session);
     if (req.session.role == 'student') {
         res.render('student/view-project', {
             project_name: projectName,
@@ -98,7 +97,8 @@ exports.viewsingleproject = (req, res) => {
             course_number: courseNumber,
             client_name: clientName,
             client_contact: clientContact,
-            extra_details: extraDetails
+            extra_details: extraDetails,
+            // project_id: project_id
         })
     } else {
         res.render('professor/view-project', {
@@ -107,44 +107,116 @@ exports.viewsingleproject = (req, res) => {
             course_number: courseNumber,
             client_name: clientName,
             client_contact: clientContact,
-            extra_details: extraDetails
+            extra_details: extraDetails,
+            project_id: project_id,
+            courseID: courseID,
         })
     }
 }
 
+//update a project's info
+exports.updateProject = (req, res) => {
+    console.log(req.body);
+    const { client_name, client_contact, project_detail, project_id } = req.body;
+    db.query("UPDATE projects SET ? WHERE project_id = ?", [{client_name:client_name, client_contact:client_contact, project_detail:project_detail}, project_id], (error, result) => {
+        if(error) {
+            res.render('professor/view-project', {
+                message: "An error occured!"
+            })
+        } else {
+            res.render('professor/view-project', {
+                message: "Project updated!",
+                client_name:client_name,
+                client_contact:client_contact,
+                project_detail: project_detail,
+                project_id: project_id
+            })
+        }
+    })
+
+}
 
 
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
+
+    db.query("SELECT * FROM projects, enrolled, courses WHERE enrolled.student_id = ? AND projects.course_id = enrolled.course_id AND courses.id=projects.course_id ORDER BY courses.id", [req.session.userid], (error, result) => {
+        console.log(result);
+        if(error) {
+            res.render("student/projects", {
+                message: "An error occured!"
+            })
+        } else if (result.length == 0) {
+            res.render("student/projects", {
+                message: "No project posted"
+            })
+        }
+        else {
+            let courses = [];
+            let s = new Set();
+            for (let i = 0; i < result.length; i++) {
+                let c_id = result[i]['course_id'];
+                let c_number = result[i]['course_number'];
+                if(!s.has(c_id)) {
+                    s.add(c_id);
+                    courses.push({course_id: c_id, course_number:c_number})
+                }
+            }
+            res.render("student/projects", {
+                results: result,
+                courses: courses
+            })
+        }
+    })
     // query the database for the enrolled course's course_number
-    db.query("SELECT course_number FROM enrolled WHERE student_id = ?", [req.session.userid], (error, results) => {
+    // db.query("SELECT course_number FROM enrolled WHERE student_id = ?", [req.session.userid], (error, results) => {
+    //     if (error) {
+    //         res.render("student/projects", {
+    //             message: "An unexpected error occured"
+    //         })
+    //     } else if (results.length == 0){
+    //         res.render("student/projects", {
+    //             message: "Please enroll a course before viewing projects!"
+    //         })
+    //     }
+
+    //     else {
+    //         db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id WHERE courses.id = ?", [results[0].course_number], (error, results) => {
+    //             if (error) {
+    //                 res.render("student/projects", {
+    //                     message: "An unexpected error occured"
+    //                 })
+    //             } else if (results.length == 0) {
+    //                 res.render("student/projects", {
+    //                     message: "No projects posted"
+    //                 })
+    //             }
+
+    //             else {
+    //                 res.render("student/projects", {
+    //                     results: results,
+    //                     prefs: results[0].num_prefs
+    //                 })
+    //             }
+    //         })
+    //     }
+    // })
+}
+
+exports.select_project = (req, res) => {
+    console.log(req.body);
+    const {course_id} = req.body;
+    db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[course_id], (error, result) => {
+        console.log(result);
         if (error) {
             res.render("student/projects", {
-                message: "An unexpected error occured"
+                message: "An error occured!"
             })
-        }
-
-        else {
-            db.query("SELECT num_prefs, course_number, project_name, project_detail, client_name, client_contact, extra_details FROM projects JOIN courses ON course_id = courses.id WHERE courses.id = ?", [results[0].course_number], (error, results) => {
-                if (error) {
-                    res.render("student/projects", {
-                        message: "An unexpected error occured"
-                    })
-                } else if (results.length == 0) {
-                    res.render("student/projects", {
-                        message: "No projects posted"
-                    })
-                }
-
-                else {
-                    res.render("student/projects", {
-                        results: results,
-                        prefs: results[0].num_prefs
-                    })
-                }
-            })
-        }
-
+        } else{
+                res.render("student/select-project", {
+                    results: result,
+                    prefs: result[0].num_prefs
+                });}
     })
 }
 
