@@ -318,3 +318,73 @@ select {
     margin: auto;
     border-top: 5px rgb(102, 102, 102) solid;
 }
+
+
+.delete {
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 70%;
+    color: black;
+    display:none;
+}
+
+.delete.active {
+    transform: translate(-50%, -50%);
+    display: initial;
+}
+.delete-header {
+    padding: 10px 15px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.delete-header .delete-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.delete-header .close-button {
+    cursor: pointer;
+    border:none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.choose {
+    padding: 10px 15px;
+}
+
+.choose-btn {
+    width: 80px;
+    cursor: pointer;
+}
+
+.choose-btn:hover {
+    background-color: lightblue;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+}
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}

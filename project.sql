@@ -28,20 +28,21 @@ CREATE TABLE courses(
     course_number VARCHAR(20),
     course_description VARCHAR(100),
     professor VARCHAR(100),
+    user_id INT,
     num_prefs INT
 );
 
 CREATE TABLE projects(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+project_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 project_name VARCHAR(200) NOT NULL,
 project_detail VARCHAR(250),
 client_name VARCHAR(50) NOT NULL,
 client_contact VARCHAR(100),
 course_id VARCHAR(20),
 extra_details VARCHAR(255),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES users(id),
-FOREIGN KEY (course_id) REFERENCES courses(id)
+user_id INT
+-- FOREIGN KEY (user_id) REFERENCES users(id),
+-- FOREIGN KEY (course_id) REFERENCES courses(id)
 );
 
 -- table to store the projects, students in that course
@@ -51,10 +52,10 @@ CREATE TABLE courses_info(
     projects_id INT,
     proj_preference1 VARCHAR(50),
     proj_preference2 VARCHAR(50),
-    proj_preference3 VARCHAR(50),
-    FOREIGN KEY (id) REFERENCES courses(id),
-    FOREIGN KEY (student_id) REFERENCES users(id),
-    FOREIGN KEY (projects_id) REFERENCES projects(id)
+    proj_preference3 VARCHAR(50)
+    -- FOREIGN KEY (id) REFERENCES courses(id),
+    -- FOREIGN KEY (student_id) REFERENCES users(id),
+    -- FOREIGN KEY (projects_id) REFERENCES projects(project_id)
 );
 
 CREATE TABLE enrolled (
