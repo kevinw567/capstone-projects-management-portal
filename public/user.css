@@ -121,8 +121,7 @@ a {
     background-color: #014b74;
 }
 
-.create-course,
-.add-project {
+.create-course {
     width: 50%;
     margin: auto;
     margin-top: 5%;
@@ -156,10 +155,57 @@ h2 {
 }
 
 .btn {
-    width: 80%;
+    width: 25%;
     margin-top: 10px;
+    height: 30px;
+    margin-right: 10%;
+    float: right;
 }
 
+.proj-info {
+    width: 70%;
+    margin: auto;
+
+}
+.form-one-line-input {
+    width: 100%;
+    /* background-color: black; */
+}
+.pname {
+    float: left;
+    font-size: 20px;
+}
+
+.add-project-info {
+    width: 100%;
+    /* float: left; */
+    border: none;
+    height: 30px;
+    text-align: center;
+    border-width: 0;
+    background-color: transparent;
+    border-bottom: 2px solid lightgray;
+    color: white;
+    font-size: 20px;
+    margin:auto;
+    max-width: 100%;
+}
+.add-project-info:focus{
+    outline: none;
+}
+
+.add-proj-btn {
+    margin-top:15px;
+    height: 30px;
+    width: 25%;
+    float:right;
+    cursor: pointer;
+}
+.add-proj-btn:hover {
+    background-color: lightyellow;
+}
+
+/* 
 .add-proj-h2 {
     margin-top: 5%;
 }
@@ -177,18 +223,19 @@ h2 {
     align-items: flex-start;
     height: 100%;
     width: 50%;
-    margin-left: 22%;
-    text-align: right;
-}
+    margin: auto;
+    /* text-align: center; */
 
-.form-one-line-input,
+
+/* .form-one-line-input,
 .form-multi-line-input {
     width: 100%;
 }
 
 .form-one-line-input > label,
 .form-multi-line-input > label {
-    position: relative;
+    float: left;
+    margin-bottom: 5px;
 }
 
 .form-one-line-input > input,
@@ -212,12 +259,8 @@ textarea {
 
 .form-multi-line-input {
     margin: 0px;
-}
+} */ 
 
-.add-proj-btn {
-    width: 25%;
-    margin: 1% 0% 2% 40%;
-}
 .course-table {
     width: 70%;
     margin: auto;
@@ -266,6 +309,7 @@ tr:hover {background-color:#585858;}
     float: left;
     font-size: 20px;
     margin-bottom: 5px;
+    padding-top: 15px;
 }
 
 br {
@@ -276,6 +320,15 @@ br {
     height: 30px;
     float: left;
     text-align: center;
+    border: none;
+    border-width: 0;
+    background-color: transparent;
+    border-bottom: 2px solid lightgray;
+    color: white;
+    font-size: 20px;
+}
+.username:focus {
+    outline: none;
 }
 
 .btn-update {
