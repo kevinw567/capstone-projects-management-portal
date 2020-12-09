@@ -40,26 +40,16 @@ router.post("/addcourse", courseController.addcourse);
 
 router.get("/setting", courseController.setting);
 router.post("/setting", courseController.updateSetting);
-// router.get("/admin-setting", (req, res) => {res.render("professor/admin-setting")});
-
-// router.get("/addproject", (req, res) => {res.render("professor/addproject")});
-// router.post("/addproject", projectController.addproject);
 
 router.get("/courses", (req, res) => {res.render("student/courses")});
 
-// router.get("/admin-view-courses", courseController.viewcourses);
-// router.get("/admin-view-projects", projectController.viewprojects);
-// router.post("/view-project", projectController.viewsingleproject);
 router.get("/projects", projectController.getProjects);
 router.post("/view-project", projectController.viewsingleproject);
 
 router.get("/student-project", projectController.getStudentProjects);
 
 router.post("/submitprefs", projectController.submitprefs);
+
+
 // export the router for other files to use
 module.exports = router;
-
-router.post("/projects-by-course", projectController.getProjects);
-router.get("/projects-by-course", (req, res) => {
-    res.render("student/projects-by-course")
-})

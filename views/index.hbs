@@ -15,27 +15,18 @@
         <p class="alert"> {{ message }} </p>
     {{/if }}
     <form id="login" action="/auth/login" method="POST">
-
         <div class="email">
             <label for="email" class="user-email">Email:</label>
-            {{!-- added name property --}}
             <input type="email" name="email" id="user-email" required="required" >
-      
         </div>
         <div class="pw">
             <label for="pass" class="pword"> Password:</label>
-            {{!-- added name property --}}
             <input type="password" class="pword" id="password" required="required" name="password">
         </div>
-
 		<div id="submit">
 			<a href="/register">Create account</a>
 			<button class="login" type="submit">Log In</button>
 		</div>    
     </form>
-    {{!-- {{#if message }}
-        <h4 class="alert"> {{ message }} </h4>
-    {{/if }} --}}
-    {{!-- <script src="admin-class.js"></script> --}}
 </body>
 </html>

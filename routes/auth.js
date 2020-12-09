@@ -21,9 +21,7 @@ router.post("/login", authController.login);
  * Logout of account by erasing session variables
  */
 router.get("/logout", (req, res) => {
-    req.session.userid = undefined;
-    req.session.email = undefined;
-    req.session.role = undefined;
+    req.session.destroy();
     res.redirect("/");
 })
 
