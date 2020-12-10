@@ -441,3 +441,9 @@ select {
     opacity: 1;
     pointer-events: all;
 }
+
+.project-details{
+    position: relative;
+    left: 10%;
+    width: 75%;
+}

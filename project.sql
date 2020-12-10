@@ -39,7 +39,7 @@ project_detail VARCHAR(2100),
 client_name VARCHAR(50) NOT NULL,
 client_contact VARCHAR(100),
 course_id VARCHAR(20),
-extra_details VARCHAR(255),
+extra_details VARCHAR(2100),
 user_id INT
 -- FOREIGN KEY (user_id) REFERENCES users(id),
 -- FOREIGN KEY (course_id) REFERENCES courses(id)
@@ -52,7 +52,9 @@ CREATE TABLE courses_info(
     projects_id INT,
     proj_preference1 VARCHAR(50),
     proj_preference2 VARCHAR(50),
-    proj_preference3 VARCHAR(50)
+    proj_preference3 VARCHAR(50),
+    proj_preference4 VARCHAR(50),
+    proj_preference5 VARCHAR(50)
     -- FOREIGN KEY (id) REFERENCES courses(id),
     -- FOREIGN KEY (student_id) REFERENCES users(id),
     -- FOREIGN KEY (projects_id) REFERENCES projects(project_id)

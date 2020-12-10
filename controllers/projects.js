@@ -89,8 +89,6 @@ exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
     const { projectName, projectDetail, clientName, clientContact, extraDetails, courseNumber, professor } = req.body;
 
-    console.log(req.body);
-    console.log(req.session);
     if (req.session.role == 'student') {
         res.render('student/view-project', {
             project_name: projectName,
