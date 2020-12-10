@@ -61,7 +61,7 @@ CREATE TABLE courses_info(
 );
 
 CREATE TABLE enrolled (
-    course_number VARCHAR(20),
+    course_id VARCHAR(20),
     student_id INT,
     -- FOREIGN KEY (course_number) REFERENCES courses(course_number),
     FOREIGN KEY (student_id) REFERENCES users(id)

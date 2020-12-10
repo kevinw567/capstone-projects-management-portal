@@ -55,24 +55,25 @@
             </table>
             <br>
             <br>
-            {{!-- <div class="choices-container">
+            <div class="choices-container">
                 <form action="/student/submitprefs" method="POST">
                 <div class="project-choices">
                         {{#lessEqual 1 prefs }}
                             <div class="choice-and-list">
-                                <span> First </span>
-                                <select name="pref1">
+                                <span> First Preference</span>
+                                <select class="choices" name="pref1">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
                                     {{/each }}
                                 </select>
                             </div>
+                            <br>
                         {{/lessEqual }}
                         {{#lessEqual 2 prefs  }}
                             <div class="choice-and-list">
-                                <span> Second </span>
-                                <select name="pref2">
+                                <span> Second Preference</span>
+                                <select class="choices" name="pref2">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -80,10 +81,11 @@
                                 </select>
                             </div>
                         {{/lessEqual }}
+                        <br>
                         {{#lessEqual 3 prefs  }}
                             <div class="choice-and-list">
-                                <span> Third </span>
-                                <select name="pref3">
+                                <span> Third Preference</span>
+                                <select class="choices" name="pref3">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -91,10 +93,11 @@
                                 </select>
                             </div>
                         {{/lessEqual }}
+                        <br>
                         {{#lessEqual 4 prefs }}
                             <div class="choice-and-list">
-                                <span> Fourth </span>
-                                <select name="pref4">
+                                <span> Fourth Preference</span>
+                                <select class="choices" name="pref4">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -102,10 +105,11 @@
                                 </select>
                             </div>
                         {{/lessEqual }}
+                        <br>
                         {{#lessEqual 5 prefs }}
                             <div class="choice-and-list">
-                                <span> Fifth </span>
-                                <select name="pref5">
+                                <span> Fifth Preference</span>
+                                <select class="choices" name="pref5">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -116,8 +120,8 @@
                         <br>
                     </div>
                     <button class="submit-prefs" number="submit"> Submit </button>
-                </form> --}}
-            <div class="user-info">
+                </form>
+            {{!-- <div class="user-info">
                 <form action="select-project" method="POST">
                 <select name="course_id" class="select-pro">
                     {{#each courses}}
@@ -126,7 +130,7 @@
                 </select>
                 <button class="select-btn">Select your project</button>
                 </form>
-            </div>
+            </div> --}}
             </div>
             {{/if}}
         </div>

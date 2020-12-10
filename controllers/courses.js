@@ -26,7 +26,7 @@ exports.addcourse = (req, res) => {
                 message: "No course found with that course code!"
             })
         } else {
-                db.query("INSERT INTO enrolled SET ? ", {course_number:course_code, student_id: req.session.userid}, (error, result) => {
+                db.query("INSERT INTO enrolled SET ? ", {course_id:course_code, student_id: req.session.userid}, (error, result) => {
                     console.log(result);
                     if (error) {
                         console.log(error)
@@ -47,7 +47,7 @@ exports.addcourse = (req, res) => {
 
 exports.getEnrolledCourses = (req, res) => {
     // query the database for all of the courses the user is enrolled in
-    db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_number AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
+    db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_id AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
             res.render("student/courses", {

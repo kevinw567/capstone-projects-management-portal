@@ -29,6 +29,7 @@ router.post("/admin-view-courses", courseController.deletecourses);
 router.get("/admin-view-projects", projectController.viewprojects);
 router.post('/admin-view-projects', projectController.deleteproject);
 router.post("/view-project", projectController.viewsingleproject);
+router.post("/update", projectController.updateProject);
 router.get("/admin-settings", courseController.setting);
 router.post('/admin-settings', courseController.updateSetting);
 
