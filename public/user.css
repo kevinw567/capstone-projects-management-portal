@@ -22,7 +22,6 @@ h1 {
 
 .main {
     padding: 20px;
-    height: 100%;
 }
 .nav {
     float: left;
@@ -126,9 +125,9 @@ a {
 .create-course {
     width: 50%;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 15%;
     height: 50%;
-    border: 2px lightgray solid;
+    /* border: 2px lightgray solid; */
 }
 
 h2 {
@@ -145,10 +144,28 @@ h2 {
     margin-top: 10px;
 }
 
+.course-des {
+    width: 80%;
+    max-width: 80%;
+    min-width: 80%;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    border-bottom: 1px gray solid;
+    font-size: large;
+}
 .course-number {
     width: 80%;
     margin-top: 5px;
     height: 25px;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    border-bottom: 1px gray solid;
+    color: white;
+}
+.course-number, .course-des:focus {
+    outline: none;
 }
 
 #description {
@@ -206,6 +223,7 @@ h2 {
     font-size: 20px;
     margin:auto;
     max-width: 100%;
+    min-width: 100%;
 }
 .add-project-info:focus{
     outline: none;
