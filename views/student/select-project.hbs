@@ -25,7 +25,8 @@
         <div class="courses">
             {{#if message }}
                 <p class="alert"> {{ message }} </p>
-            {{else }}
+            {{!-- {{else }} --}}
+            {{/if}}
             {{!-- <h2 class="projects-page">Please read each project carefully and choose your top projects, the first being your most preferred and the last, your least preferred.</h2> --}}
             <table class="course-table">
                 <tr>
@@ -57,11 +58,13 @@
             <br>
             <div class="choices-container">
                 <form action="/student/submitprefs" method="POST">
+                <input type="hidden" name="num_prefs" value={{num_prefs}}>
+                <input type="hidden" name="id" value={{id}}>
                 <div class="project-choices">
                         {{#lessEqual 1 prefs }}
                             <div class="choice-and-list">
                                 <span> First Preference</span>
-                                <select class="choices" name="pref1">
+                                <select class="choices" name="pref1" required="required">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -73,7 +76,7 @@
                         {{#lessEqual 2 prefs  }}
                             <div class="choice-and-list">
                                 <span> Second Preference</span>
-                                <select class="choices" name="pref2">
+                                <select class="choices" name="pref2" required="required">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -85,7 +88,7 @@
                         {{#lessEqual 3 prefs  }}
                             <div class="choice-and-list">
                                 <span> Third Preference</span>
-                                <select class="choices" name="pref3">
+                                <select class="choices" name="pref3" required="required">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -97,7 +100,7 @@
                         {{#lessEqual 4 prefs }}
                             <div class="choice-and-list">
                                 <span> Fourth Preference</span>
-                                <select class="choices" name="pref4">
+                                <select class="choices" name="pref4" required="required">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -109,7 +112,7 @@
                         {{#lessEqual 5 prefs }}
                             <div class="choice-and-list">
                                 <span> Fifth Preference</span>
-                                <select class="choices" name="pref5">
+                                <select class="choices" name="pref5" required="required">
                                     <option value="" disabled="true" selected="true"> -- Select One --</option>
                                     {{#each results }}
                                         <option value="{{ project_name }}"> {{ project_name }} </option>
@@ -132,7 +135,7 @@
                 </form>
             </div> --}}
             </div>
-            {{/if}}
+            {{!-- {{/if}} --}}
         </div>
     </div>
 </body>

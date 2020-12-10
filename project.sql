@@ -49,12 +49,12 @@ user_id INT
 CREATE TABLE courses_info(
     id VARCHAR(20),
     student_id INT,
-    projects_id INT,
-    proj_preference1 VARCHAR(50),
-    proj_preference2 VARCHAR(50),
-    proj_preference3 VARCHAR(50),
-    proj_preference4 VARCHAR(50),
-    proj_preference5 VARCHAR(50)
+    -- projects_id INT,
+    proj_preference1 VARCHAR(100),
+    proj_preference2 VARCHAR(100),
+    proj_preference3 VARCHAR(100),
+    proj_preference4 VARCHAR(100),
+    proj_preference5 VARCHAR(100)
     -- FOREIGN KEY (id) REFERENCES courses(id),
     -- FOREIGN KEY (student_id) REFERENCES users(id),
     -- FOREIGN KEY (projects_id) REFERENCES projects(project_id)

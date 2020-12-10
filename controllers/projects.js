@@ -214,61 +214,168 @@ exports.select_project = (req, res) => {
         } else{
                 res.render("student/select-project", {
                     results: result,
-                    prefs: result[0].num_prefs
+                    prefs: result[0].num_prefs,
+                    id: result[0].id,
+                    num_prefs: result[0].num_prefs
                 });}
     })
 }
 
 // submit project preferences to database
 exports.submitprefs = (req, res) => {
-    const { pref1, pref2, pref3, pref4, pref5 } = req.body;
-    // query the database for the course id
-    db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
+    // const { pref1, pref2, pref3, pref4, pref5 } = req.body;
+    const {id} = req.body;
+    console.log(req.body, "--------------------");
+    db.query("SELECT * FROM courses_info WHERE student_id = ? AND id = ?", [req.session.userid, id], (error, result) => {
         if (error) {
-            res.render("student/projects", {
-                message: "An unexpected error occured"
+            res.render("student/select-project", {
+                message: "An error occured"
             })
-        }
-
-        else {
-            db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3, proj_preference4: pref4, proj_preference5: pref5 }, (error, result) => {
+        } else if(result.length > 0) {
+            db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[id], (error, result) => {
                 if (error) {
-                    // enter if statement if a bad null error is thrown, ask user to relogin
-                    if (error.code === "ER_BAD_NULL_ERROR") {
-                        console.log(error);
-                        res.render("student/projects", {
-                            message: "An error occured. Please relogin and try again"
-                        })
-                    }
-
-                    // enter else if statement if a duplicate primary key error is thrown
-                    else if (error.code === "ER_DUP_ENTRY") {
-                        res.render("student/projects", {
-                            message: "You have already submitted your project preferences"
-                        })
-                    }
-
-                    else {
-                        console.log(error);
-                        res.render("student/projects", {
-                            message: "Unable to submit project preferences"
-                        })
-                    }
-                }
-
-                else {
                     res.render("student/projects", {
-                        message: "Sucessfully submitted project preferences"
+                        message: "An error occured!"
                     })
-                }
+                } else{
+                    res.render("student/select-project", {
+                        results: result,
+                        prefs: result[0].num_prefs,
+                        id: result[0].id,
+                        num_prefs: result[0].num_prefs,
+                        message: "You already submitted preference for this course"
+                });}
             })
+        } else {
+            const {num_prefs} = req.body;
+            if(num_prefs == 3) {
+                const {pref1, pref2, pref3, id} = req.body;
+                db.query("INSERT INTO courses_info SET ? ", {id:id, student_id:req.session.userid, proj_preference1:pref1, proj_preference2:pref2, proj_preference3: pref3}, (error, result) => {
+                    if (error) {
+                        res.render("student/select-project", {
+                            message: "An error occured"
+                        })
+                    } else {
+                        // res.render("student/projects");
+                        // this.getProjects(req, res);
+                        db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[id], (error, result) => {
+                            if (error) {
+                                res.render("student/projects", {
+                                    message: "An error occured!"
+                                })
+                            } else{
+                                res.render("student/select-project", {
+                                    results: result,
+                                    prefs: result[0].num_prefs,
+                                    id: result[0].id,
+                                    num_prefs: result[0].num_prefs,
+                                    message: "Preference submitted!"
+                            });}
+                    })
+                }})
+            } else if (num_prefs == 4) {
+                const {pref1, pref2, pref3, pref4, id} = req.body;
+                db.query("INSERT INTO courses_info SET ? ", {id:id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2:pref2, proj_preference3: pref3, proj_preference4: pref4}, (error, result) => {
+                    if (error) {
+                        res.render("student/select-project", {
+                            message: "An error occured"
+                        })
+                    } else {
+                        // res.render("student/projects");
+                        // this.getProjects(req, res, {message: "Preference submitted!"});
+                        db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[id], (error, result) => {
+                            if (error) {
+                                res.render("student/projects", {
+                                    message: "An error occured!"
+                                })
+                            } else{
+                                res.render("student/select-project", {
+                                    results: result,
+                                    prefs: result[0].num_prefs,
+                                    id: result[0].id,
+                                    num_prefs: result[0].num_prefs,
+                                    message: "Preference submitted!"
+                            });}
+                        })
+                    }
+                })
+            } else if (num_prefs == 5) {
+                const {pref1, pref2, pref3, pref4, pref5, id} = req.body;
+                db.query("INSERT INTO courses_info SET ? ", {id:id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3, proj_preference4: pref4, proj_preference5: pref5}, (error, result) => {
+                    if (error) {
+                        res.render("student/select-project", {
+                            message: "An error occured"
+                        })
+                    } else {
+                        // res.render("student/projects");
+                        // this.getProjects(req, res);
+                        db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[id], (error, result) => {
+                            if (error) {
+                                res.render("student/projects", {
+                                    message: "An error occured!"
+                                })
+                            } else{
+                                res.render("student/select-project", {
+                                    results: result,
+                                    prefs: result[0].num_prefs,
+                                    id: result[0].id,
+                                    num_prefs: result[0].num_prefs,
+                                    message: "Preference submitted!"
+                            });}
+                        })
+                    }
+                })
+            }
         }
     })
+    // query the database for the course id
+    // db.query("SELECT course_id FROM projects WHERE project_name = ?", [pref1], (error, results) => {
+    //     if (error) {
+    //         res.render("student/projects", {
+    //             message: "An unexpected error occured"
+    //         })
+    //     }
+
+    //     else {
+    //         db.query("INSERT INTO courses_info SET ?", { id: results[0].course_id, student_id: req.session.userid, proj_preference1: pref1, proj_preference2: pref2, proj_preference3: pref3, proj_preference4: pref4, proj_preference5: pref5 }, (error, result) => {
+    //             if (error) {
+    //                 // enter if statement if a bad null error is thrown, ask user to relogin
+    //                 if (error.code === "ER_BAD_NULL_ERROR") {
+    //                     console.log(error);
+    //                     res.render("student/projects", {
+    //                         message: "An error occured. Please relogin and try again"
+    //                     })
+    //                 }
+
+    //                 // enter else if statement if a duplicate primary key error is thrown
+    //                 else if (error.code === "ER_DUP_ENTRY") {
+    //                     res.render("student/projects", {
+    //                         message: "You have already submitted your project preferences"
+    //                     })
+    //                 }
+
+    //                 else {
+    //                     console.log(error);
+    //                     res.render("student/projects", {
+    //                         message: "Unable to submit project preferences"
+    //                     })
+    //                 }
+    //             }
+
+    //             else {
+    //                 res.render("student/projects", {
+    //                     message: "Sucessfully submitted project preferences"
+    //                 })
+    //             }
+    //         })
+    //     }
+    // })
 }
 
 
 exports.getStudentProjects = (req, res) => {
-    db.query("SELECT * FROM courses_info WHERE student_id = ?", [req.session.userid], (error, results)=> {
+    db.query("SELECT * FROM courses_info, courses WHERE student_id = ? AND courses_info.id=courses.id", [req.session.userid], (error, results)=> {
+        console.log(results);
         if (error) {
             res.render("student/student-project", {
                 message: "An error occured"

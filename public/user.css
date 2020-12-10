@@ -69,11 +69,11 @@ a {
 }
 .courses {
     float: left;
-    border-top: 2px lightgray solid;
-    border-bottom: 2px lightgray solid;
-    border-right: 2px lightgray solid;
+    /* border-top: 2px lightgray solid; */
+    /* border-bottom: 2px lightgray solid; */
+    /* border-right: 2px lightgray solid; */
     width: 79%;
-    height: 100vh;
+    /* height: 100vh; */
     text-align: center;
 }
 
@@ -122,12 +122,17 @@ a {
     background-color: #014b74;
 }
 
+#course {
+    border: 2px gray solid;
+    height: 50%;
+}
 .create-course {
     width: 50%;
     margin: auto;
     margin-top: 15%;
     height: 50%;
     /* border: 2px lightgray solid; */
+    /* height: 50%; */
 }
 
 h2 {
@@ -249,6 +254,9 @@ h2 {
 
 }
 
+#btn {
+    margin-bottom: 10%;
+}
 .project-info {
     width: 65%;
     margin: auto;
@@ -330,7 +338,7 @@ textarea {
 .course-table {
     width: 70%;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .projects-page {
