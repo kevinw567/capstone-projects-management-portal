@@ -8,30 +8,10 @@ const projectController = require("../controllers/projects");
 
 const router = express.Router();
 
-// router.get('/addcourse/:userID', (req, res) => {
-//     res.render("addcourse", {
-//         userID: req.params.userID
-//     });
-// })
-/**
- * POST the course the user wants to register for
- */
-// router.get("/professor", (req, res) => {
-//     res.render("professor/professor");
-// })
-
-// router.get("/createcourse/:userID", (req, res) => {
-//     console.log("GET /createcourse/" + req.params.userID);
-//     res.render("/createcourse", {
-//         userID: req.params.userID
-//     })
-// })
-
 router.get("/main", (req, res) => {
     res.render("student/student");
 })
-// router.get("/createcourse", (req, res) => {res.render("professor/createcourse")});
-// router.post("/createcourse", courseController.createcourse);
+
 router.get("/enrolled", courseController.getEnrolledCourses);
 router.get("/addcourse", (req, res) => {
     res.render("student/addcourse");

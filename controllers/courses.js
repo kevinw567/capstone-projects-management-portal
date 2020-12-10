@@ -270,27 +270,6 @@ exports.createcourse = (req, res) => {
             })};
 
 exports.viewcourses = (req, res) => {
-    // let email = req.session.email;
-    // // console.log(req.body);
-    // console.log("---------");
-    // db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
-    //     if (error) {
-    //         res.render("professor/admin-view-courses", {
-    //             message: "An unexpected error occured"
-    //         })
-    //     } else {
-    //         db.query("SELECT * FROM courses WHERE user_id = ?",[req.session.userid], (error, results) => {
-    //         if(error) {
-    //             res.render('professor/admin-view-courses', {
-    //                 message: "An error occured!"
-    //             })} else {
-    //                     res.render("professor/admin-view-courses", {
-    //                     results: results
-    //                     })
-    //             }
-    //         })
-    //     }
-    // })
     db.query("SELECT * FROM courses WHERE user_id = ?", [req.session.userid], (error, result) => {
         if (error) {
             console.log(error);

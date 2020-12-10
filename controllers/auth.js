@@ -91,12 +91,6 @@ exports.login = (req, res) => {
                 req.session.role = role;
                 req.session.userid = results[0]['id'];
                 req.params.userID = results[0].id;
-                // console.log(req.params);
-                // console.log("Logged in as student User ID: " + req.params.userID);
-                
-                // res.render("student", {
-                //     userID: req.params.userID
-                // });
                 res.redirect("/student/main");
             } else {
                 req.session.email = email;
