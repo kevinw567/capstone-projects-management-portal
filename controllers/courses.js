@@ -293,6 +293,7 @@ exports.viewcourses = (req, res) => {
     // })
     db.query("SELECT * FROM courses WHERE user_id = ?", [req.session.userid], (error, result) => {
         if (error) {
+            console.log(error);
             res.render("professor/admin-view-courses", {
                 message: "An error occured!"
             })
