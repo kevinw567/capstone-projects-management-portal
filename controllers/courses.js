@@ -309,3 +309,57 @@ exports.deletecourses = (req, res) => {
         }
     })
 }
+
+exports.getcourses = (req, res) => {
+    db.query("SELECT * FROM courses", (error, result) => {
+        if (error) {
+            res.render("professor/select-course", {
+                message: "An error occured!"
+            })
+        } else {
+            let courses = [];
+            let s = new Set();
+            for (let i = 0; i < result.length; i++) {
+                let c_id = result[i]['id'];
+                let c_number = result[i]['course_number'];
+                if(!s.has(c_id)) {
+                    s.add(c_id);
+                    courses.push({course_id: c_id, course_number:c_number})
+                }
+            }
+            res.render("professor/select-course", {
+                courses: courses
+            })
+        }
+    })
+}
+
+exports.selectcourse = (req, res) => {
+    const {course_id} = req.body;
+    db.query("SELECT * FROM courses", (error, result) => {
+        if (error) {
+            res.render("professor/assign-projects", {
+                message: "An error occured!"
+            })
+        } else{
+            db.query("SELECT * FROM courses_info WHERE id=?", [course_id], (error, results) => {
+                if (error) {
+                    res.render("professor/assign-projects", {
+                    message: "An error occured!"
+                    })
+                } else {
+                    var names = new Array();
+                    for(var i = 0; i < results.length; i++) {
+                        db.query("SELECT username FROM users WHERE id=?", [results[i]['student_id']], (error, res) => {
+                            names.push(res[0]['username']);
+                            // console.log(names);
+                        })
+                    }
+                    res.render("professor/assign-projects", {
+                        results: results
+                    });
+                }
+            })
+            }
+    })
+}

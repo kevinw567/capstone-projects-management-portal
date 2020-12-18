@@ -111,7 +111,6 @@ exports.updateProject = (req, res) => {
 
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
-
     db.query("SELECT * FROM projects, enrolled, courses WHERE enrolled.student_id = ? AND projects.course_id = enrolled.course_id AND courses.id=projects.course_id ORDER BY courses.id", [req.session.userid], (error, result) => {
         console.log(result);
         if(error) {
@@ -143,6 +142,7 @@ exports.getProjects = (req, res) => {
 }
 
 exports.select_project = (req, res) => {
+    console.log("HEY HEY HEY HEY!!\n");
     console.log(req.body);
     const {course_id} = req.body;
     db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[course_id], (error, result) => {
@@ -281,4 +281,9 @@ exports.getStudentProjects = (req, res) => {
             })
         }
     })
+}
+
+
+exports.assignProjects = (req, res) => {
+    // db.query("SELECT * FROM users, enrolled WHERE users.role=student AND enrolled.course_id =?")
 }
