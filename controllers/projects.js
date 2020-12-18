@@ -323,9 +323,19 @@ exports.assignProjects = (req, res) => {
                                     for(var i = 0; i < proj.length; i++) {
                                         capacities[proj[i]['project_name']] = proj.length;
                                     }
-                                    res.render("professor/assign-projects", {
-                                        results: results,
-                                        name: name
+                                    db.query("SELECT COUNT(*) FROM users where role=\"student\"", (error, num_students) => {
+                                        if (error) {
+                                            res.render("professor/assign-projects", {
+                                                message: "An error occured!"
+                                            })
+                                        } else {
+                                            console.log(num_students);
+                                            
+                                            res.render("professor/assign-projects", {
+                                                results: results,
+                                                name: name
+                                            })
+                                        }
                                     })
                                 }
                             })
