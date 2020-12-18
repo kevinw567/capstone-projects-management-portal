@@ -285,5 +285,55 @@ exports.getStudentProjects = (req, res) => {
 
 
 exports.assignProjects = (req, res) => {
-    // db.query("SELECT * FROM users, enrolled WHERE users.role=student AND enrolled.course_id =?")
+    const {course_id} = req.body;
+    db.query("SELECT * FROM courses", (error, result) => {
+        if (error) {
+            res.render("professor/assign-projects", {
+                message: "An error occured!"
+            })
+        } else{
+            db.query("SELECT * FROM courses_info WHERE id=?", [course_id], (error, results) => {
+                if (error) {
+                    res.render("professor/assign-projects", {
+                    message: "An error occured!"
+                    })
+                } else {
+                    db.query("SELECT username FROM users JOIN courses_info ON users.id=courses_info.student_id WHERE courses_info.id=?", [course_id], (error, name) => {
+                        if (error) {
+                            res.render("professor/assign-projects", {
+                                message: "An error occured!"
+                            })
+                        } else {
+                            
+                            // Get names of students and store into results object
+                            for(var i = 0; i < results.length; i++) {
+                                results[i]['name'] = name[i]['username'];
+                            }
+                            // Algorithm Begin
+                            db.query("SELECT project_name FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
+                                if (error) {
+                                    res.render("professor/assign-projects", {
+                                    message: "An error occured!"
+                                })
+                                } 
+                                else {
+
+                                    //Storing capacities of members per project
+                                    const capacities = {};
+                                    for(var i = 0; i < proj.length; i++) {
+                                        capacities[proj[i]['project_name']] = proj.length;
+                                    }
+                                    res.render("professor/assign-projects", {
+                                        results: results,
+                                        name: name
+                                    })
+                                }
+                            })
+                            // Algorithm End
+                        }
+                    })
+                }
+            })
+            }
+    })
 }

@@ -333,33 +333,3 @@ exports.getcourses = (req, res) => {
         }
     })
 }
-
-exports.selectcourse = (req, res) => {
-    const {course_id} = req.body;
-    db.query("SELECT * FROM courses", (error, result) => {
-        if (error) {
-            res.render("professor/assign-projects", {
-                message: "An error occured!"
-            })
-        } else{
-            db.query("SELECT * FROM courses_info WHERE id=?", [course_id], (error, results) => {
-                if (error) {
-                    res.render("professor/assign-projects", {
-                    message: "An error occured!"
-                    })
-                } else {
-                    var names = new Array();
-                    for(var i = 0; i < results.length; i++) {
-                        db.query("SELECT username FROM users WHERE id=?", [results[i]['student_id']], (error, res) => {
-                            names.push(res[0]['username']);
-                            // console.log(names);
-                        })
-                    }
-                    res.render("professor/assign-projects", {
-                        results: results
-                    });
-                }
-            })
-            }
-    })
-}
