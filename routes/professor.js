@@ -1,5 +1,5 @@
 /**
- * This file contains the route for selecting project preferences
+ * This file contains the function calls for professor view
  */
 // import modules
 const express = require("express");
@@ -25,11 +25,17 @@ router.get("/admin-setting", (req, res) => {res.render("professor/admin-setting"
 router.get("/addproject", (req, res) => {res.render("professor/addproject")});
 router.post("/addproject", projectController.addproject);
 router.get("/admin-view-courses", courseController.viewcourses);
+router.post("/admin-view-courses", courseController.deletecourses);
 router.get("/admin-view-projects", projectController.viewprojects);
+router.post('/admin-view-projects', projectController.deleteproject);
 router.post("/view-project", projectController.viewsingleproject);
+router.post("/update", projectController.updateProject);
 router.get("/admin-settings", courseController.setting);
 router.post('/admin-settings', courseController.updateSetting);
-router.get("/deleteproject", projectController.deleteproject);
+
+router.get("/select-course", courseController.getcourses);
+router.get("/assign-projects", (req, res) => {res.render("professor/assign-projects")});
+router.post("/select-course", projectController.assignProjects);
 
 // export the router for other files to use
 module.exports = router;

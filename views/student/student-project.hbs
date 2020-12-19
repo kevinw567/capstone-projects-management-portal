@@ -23,7 +23,31 @@
             </ul> 
         </div>
         <div class="courses">
-            <h1>Your Projects</h1>
+            {{#if message}}
+            <p class="alert">{{message}}</p>
+            {{else}}
+                <h1>Your Projects</h1>
+                <table class="course-table">
+                    <tr>
+                        <th>Courses</th>
+                        <th>First Preference</th>
+                        <th>Second Preference</th>
+                        <th>Third Preference</th>
+                        <th>Fourth Preference</th>
+                        <th>Fifth Preference</th>
+                    </tr>
+                    {{#each results}}
+                        <tr>
+                            <td>{{course_number}}</td>
+                            <td>{{proj_preference1}}</td>
+                            <td>{{proj_preference2}}</td>
+                            <td>{{proj_preference3}}</td>
+                            <td>{{proj_preference4}}</td>
+                            <td>{{proj_preference5}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            {{/if}}
         </div>
     </div>
 </body>

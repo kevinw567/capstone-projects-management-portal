@@ -22,12 +22,12 @@
                 <li class="list-item"><a href="/auth/logout">Logout</a></li>
             </ul>
         </div>
-        <div class="courses view-projects">
+        <div class="courses">
             {{#if message }}
-                <h1> {{ message }} </h1>
-            {{/if }}
-            <h2 class="projects-page">Please read each project carefully and choose your top projects, the first being your most preferred and the last, your least preferred.</h2>
-            <table class="course-table projects-page">
+                <p class="alert"> {{ message }} </p>
+            {{else }}
+            {{!-- <h2 class="projects-page">Please read each project carefully and choose your top projects, the first being your most preferred and the last, your least preferred.</h2> --}}
+            <table class="course-table">
                 <tr>
                     <th>Project Name</th>
                     <th>Client Name</th>
@@ -55,69 +55,18 @@
             </table>
             <br>
             <br>
-            <div class="choices-container">
-                <form action="/student/submitprefs" method="POST">
-                <div class="project-choices">
-                        {{#lessEqual 1 prefs }}
-                            <div class="choice-and-list">
-                                <span> First </span>
-                                <select name="pref1">
-                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                                    {{#each results }}
-                                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                                    {{/each }}
-                                </select>
-                            </div>
-                        {{/lessEqual }}
-                        {{#lessEqual 2 prefs  }}
-                            <div class="choice-and-list">
-                                <span> Second </span>
-                                <select name="pref2">
-                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                                    {{#each results }}
-                                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                                    {{/each }}
-                                </select>
-                            </div>
-                        {{/lessEqual }}
-                        {{#lessEqual 3 prefs  }}
-                            <div class="choice-and-list">
-                                <span> Third </span>
-                                <select name="pref3">
-                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                                    {{#each results }}
-                                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                                    {{/each }}
-                                </select>
-                            </div>
-                        {{/lessEqual }}
-                        {{#lessEqual 4 prefs }}
-                            <div class="choice-and-list">
-                                <span> Fourth </span>
-                                <select name="pref4">
-                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                                    {{#each results }}
-                                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                                    {{/each }}
-                                </select>
-                            </div>
-                        {{/lessEqual }}
-                        {{#lessEqual 5 prefs }}
-                            <div class="choice-and-list">
-                                <span> Fifth </span>
-                                <select name="pref5">
-                                    <option value="" disabled="true" selected="true"> -- Select One --</option>
-                                    {{#each results }}
-                                        <option value="{{ project_name }}"> {{ project_name }} </option>
-                                    {{/each }}
-                                </select>
-                            </div>
-                        {{/lessEqual }}
-                        <br>
-                    </div>
-                    <button class="submit-prefs" number="submit"> Submit </button>
+            <div class="user-info" id="btn">
+                <form action="select-project" method="POST">
+                <select name="course_id" class="select-pro">
+                    {{#each courses}}
+                        <option value={{this.course_id}} class="opt">{{this.course_number}}</option>
+                    {{/each}}
+                </select>
+                <button class="select-btn">Select your project</button>
                 </form>
             </div>
+            </div>
+            {{/if}}
         </div>
     </div>
 </body>

@@ -26,7 +26,7 @@ exports.addcourse = (req, res) => {
                 message: "No course found with that course code!"
             })
         } else {
-                db.query("INSERT INTO enrolled SET ? ", {course_number:course_code, student_id: req.session.userid}, (error, result) => {
+                db.query("INSERT INTO enrolled SET ? ", {course_id:course_code, student_id: req.session.userid}, (error, result) => {
                     console.log(result);
                     if (error) {
                         console.log(error)
@@ -47,7 +47,7 @@ exports.addcourse = (req, res) => {
 
 exports.getEnrolledCourses = (req, res) => {
     // query the database for all of the courses the user is enrolled in
-    db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_number AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
+    db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_id AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
             console.log(error);
             res.render("student/courses", {
@@ -256,7 +256,7 @@ exports.createcourse = (req, res) => {
                 message: "An error occured!"
             })
         } else {
-            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username'], num_prefs: num_prefs }, (error, result) => {
+            db.query("INSERT INTO courses SET ?", { id:course_id, course_number:coursenumber, course_description:description, professor: result[0]['username'], user_id:req.session.userid, num_prefs: num_prefs }, (error, result) => {
                 if(error) {
                     console.log(error);
                     res.render('professor/createcourse', {
@@ -270,28 +270,66 @@ exports.createcourse = (req, res) => {
             })};
 
 exports.viewcourses = (req, res) => {
-    let email = req.session.email;
-    db.query("SELECT username FROM users WHERE email = ?", [email], (error, results) => {
+    db.query("SELECT * FROM courses WHERE user_id = ?", [req.session.userid], (error, result) => {
         if (error) {
             console.log(error);
             res.render("professor/admin-view-courses", {
-                message: "An unexpected error occured"
+                message: "An error occured!"
+            })
+        } else if (result.length == 0) {
+            res.render("professor/admin-view-courses", {
+                message: "No courses found!"
             })
         } else {
-            db.query("SELECT * FROM courses", (error, results) => {
-            if(error) {
-                console.log(results);
-                res.render('professor/admin-view-courses', {
-                    message: "An error occured!"
-                })} else {
-                        req.results = results;
-                        console.log("req.results: " + req.results);
-                        console.log(results);
-                        res.render("professor/admin-view-courses", {
-                        results: results
-                        })
-                }
+            res.render("professor/admin-view-courses", {
+                results: result
             })
         }
     })
 };
+
+exports.deletecourses = (req, res) => {
+    const { course_id } = req.body;
+    console.log(course_id, "--------1");
+    db.query("DELETE FROM courses WHERE id = ?", [course_id],(error, result) => {
+        if(error) {
+            res.render("professor/admin-view-courses", {
+                message: "An error occured!"
+            })
+        } else {
+            db.query("DELETE FROM projects WHERE course_id = ?", [course_id], (error, result) => {
+                if (error) {
+                    res.render("professor/admin-view-courses", {
+                        message: "An error occured!"
+                    })
+                } else {
+                    this.viewcourses(req, res);
+                }
+            })
+        }
+    })
+}
+
+exports.getcourses = (req, res) => {
+    db.query("SELECT * FROM courses", (error, result) => {
+        if (error) {
+            res.render("professor/select-course", {
+                message: "An error occured!"
+            })
+        } else {
+            let courses = [];
+            let s = new Set();
+            for (let i = 0; i < result.length; i++) {
+                let c_id = result[i]['id'];
+                let c_number = result[i]['course_number'];
+                if(!s.has(c_id)) {
+                    s.add(c_id);
+                    courses.push({course_id: c_id, course_number:c_number})
+                }
+            }
+            res.render("professor/select-course", {
+                courses: courses
+            })
+        }
+    })
+}

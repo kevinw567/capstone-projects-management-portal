@@ -23,24 +23,31 @@
             </ul> 
         </div>
         <div class="courses">
-            <div>
-                <h2>{{project_name}}</h2>
-                <h3>CS{{course_number}}</h3>
+            {{#if message}}
+            <p class="alert">{{message}}</p>
+            {{/if}}
+            <form action="update" method="POST">
+               
+            <input type="hidden" name="project_id" value="{{project_id}}">
+            <h2>{{project_name}}</h2>
+            <div class="project-detail">
+                <label for="">Client Name:</label>
+                <p class="project-info">{{client_name}}</p>
+                {{!-- <input type="text" name="client_name" value={{client_name}} class="project-info"> --}}
             </div>
-            <hr>
-            <div>
-                <p class="project-details">{{project_detail}}</p>
+            <div class="project-detail">
+                <label for="">Client Contact:</label>
+                <p class="project-info">{{client_contact}}</p>
+                {{!-- <input type="text" name="client_contact" class="project-info"value={{client_contact}}> --}}
             </div>
-            <hr>
-            <div>
-                <h3>{{client_name}}</h3>
-                <br>
-                <h3>Email: {{client_contact}}</h3>
+            <div class="project-detail">
+                <label for="">Project Description: </label>
+                <p class="project-info">{{project_detail}}</p>
+                {{!-- {{!-- <textarea name="project_detail" id="project_detail" class="project-info" rows="7">{{project_detail}}</textarea> --}} 
             </div>
-            <div>
-                <p>{{extra_details}}</p>
+            <div class="user-info">
             </div>
-
+            </form>
         </div>
     </div>
 </body>
