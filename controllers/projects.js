@@ -112,7 +112,12 @@ exports.getProjects = (req, res) => {
     })
 }
 
-// submit project preferences to database
+/**
+ * Submit students' project preference to the database
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.submitprefs = (req, res) => {
     const { pref1, pref2, pref3, pref4, pref5 } = req.body;
     // query the database for the course id
