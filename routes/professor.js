@@ -1,5 +1,5 @@
 /**
- * This file contains the route for selecting project preferences
+ * This file contains the function calls for professor view
  */
 // import modules
 const express = require("express");
