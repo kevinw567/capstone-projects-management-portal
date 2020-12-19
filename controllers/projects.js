@@ -323,14 +323,35 @@ exports.assignProjects = (req, res) => {
                                     for(var i = 0; i < proj.length; i++) {
                                         capacities[proj[i]['project_name']] = proj.length;
                                     }
-                                    db.query("SELECT COUNT(*) FROM users where role=\"student\"", (error, num_students) => {
+                                    db.query("SELECT num_prefs FROM courses where id=?",[course_id], (error, num_prefs) => {
                                         if (error) {
                                             res.render("professor/assign-projects", {
                                                 message: "An error occured!"
                                             })
                                         } else {
-                                            console.log(num_students);
-                                            
+                                            const prefs = {}
+                                            num_prefs = num_prefs[0]['num_prefs'];
+                                            // Storing class' preference in one object. Each property is a student. 
+                                            // Each student has an array of his/her project preferences
+                                            for(var i = 0; i < results.length; i++) {
+                                                prefs[results[i]['name']] = [];
+                                                for(var j = 1; j <= num_prefs; j++) {
+                                                    switch(j) {
+                                                        case 1: prefs[results[i]['name']].push(results[i]['proj_preference1']);
+                                                            break;
+                                                        case 2: prefs[results[i]['name']].push(results[i]['proj_preference2']);
+                                                            break;
+                                                        case 3: prefs[results[i]['name']].push(results[i]['proj_preference3']);
+                                                            break;
+                                                        case 4: prefs[results[i]['name']].push(results[i]['proj_preference4']);
+                                                            break;
+                                                        case 5: prefs[results[i]['name']].push(results[i]['proj_preference5']);
+                                                            break;
+                                                    }
+                                                }
+                                            }
+                                            console.log(prefs);
+
                                             res.render("professor/assign-projects", {
                                                 results: results,
                                                 name: name
