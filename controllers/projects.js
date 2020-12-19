@@ -34,7 +34,7 @@ exports.viewprojects = (req, res) => {
             })
         } else if (result.length == 0) {
             res.render("professor/admin-view-projects", {
-                message: "No project found"
+                message: "No projects found"
             })
         } else {
             res.render("professor/admin-view-projects", {
@@ -273,7 +273,7 @@ exports.getStudentProjects = (req, res) => {
             })
         } else if(results.length == 0) {
             res.render("student/student-project", {
-                message: "You have not choose any projects!"
+                message: "You have not chosen any projects!"
             })
         } else {
             res.render("student/student-project", {
