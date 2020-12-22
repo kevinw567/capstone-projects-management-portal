@@ -6,8 +6,7 @@ import json
 G=nx.DiGraph()
 
 prefs = json.loads(sys.argv[1])
-
-capacities={' Build a modern Mindmap interface and improve your':6,'Build an interactive hiring process with natural l':6,'Routable AI Project':6,'A Portal for Managing Students Capstone Projects':6,'Financial Planning and Management Web Application':5,'Real-time Real Estate Investment Analysis':6}
+capacities = json.loads(sys.argv[2])
 
 num_persons=len(prefs)
 G.add_node('dest',demand=num_persons)

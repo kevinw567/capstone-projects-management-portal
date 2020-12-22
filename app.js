@@ -3,6 +3,7 @@ const express = require("express");
 const mysql = require("mysql");
 const dotenv = require("dotenv");
 const path = require("path");
+const {spawn} = require("child_process");
 
 // add session to track user's info
 const session = require("express-session");
@@ -50,6 +51,7 @@ db.connect((error) => {
         console.log("MySQL Connected ...");
     }
 })
+
 
 app.use(session({
     secret: "secret",
