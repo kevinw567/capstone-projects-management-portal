@@ -321,7 +321,7 @@ exports.assignProjects = (req, res) => {
                                 results[i]['name'] = name[i]['username'];
                             }
                             // Algorithm Begin
-                            db.query("SELECT project_name FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
+                            db.query("SELECT project_name, capacity FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
                                 if (error) {
                                     res.render("professor/assign-projects", {
                                     message: "An error occured!"
@@ -332,8 +332,11 @@ exports.assignProjects = (req, res) => {
                                     //Storing capacities of members per project
                                     const capacities = {};
                                     for(var i = 0; i < proj.length; i++) {
-                                        capacities[proj[i]['project_name']] = proj.length;
+                                        capacities[proj[i]['project_name']] = proj[i]['capacity'];   
                                     }
+                                    
+                                    console.log(capacities)
+
                                     db.query("SELECT num_prefs FROM courses where id=?",[course_id], (error, num_prefs) => {
                                         if (error) {
                                             res.render("professor/assign-projects", {
@@ -364,8 +367,9 @@ exports.assignProjects = (req, res) => {
                                             
                                             // convert prefs to JSON to pass to python script
                                             var asJSON = JSON.stringify(prefs);
+                                            var capacitiesAsJSON = JSON.stringify(capacities);
                                             // create a child process that calls the python script and passes student preferences to it
-                                            const python = spawn("python", ["algorithm.py", asJSON]);
+                                            const python = spawn("python", ["algorithm.py", asJSON, capacitiesAsJSON]);
                                             // run the python script and return the output in the variable data
                                             python.stdout.on("data", (data) => {
                                                 // make the output readable 
