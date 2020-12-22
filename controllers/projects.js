@@ -334,8 +334,6 @@ exports.assignProjects = (req, res) => {
                                     for(var i = 0; i < proj.length; i++) {
                                         capacities[proj[i]['project_name']] = proj[i]['capacity'];   
                                     }
-                                    
-                                    console.log(capacities)
 
                                     db.query("SELECT num_prefs FROM courses where id=?",[course_id], (error, num_prefs) => {
                                         if (error) {
