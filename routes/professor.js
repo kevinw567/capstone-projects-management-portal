@@ -35,6 +35,7 @@ router.post('/admin-settings', courseController.updateSetting);
 
 router.get("/select-course", courseController.getcourses);
 router.get("/assign-projects", (req, res) => {res.render("professor/assign-projects")});
+// router.post("/assign-projects", projectController.assignProjects);
 router.post("/select-course", projectController.assignProjects);
 
 // export the router for other files to use

@@ -297,6 +297,8 @@ exports.getStudentProjects = (req, res) => {
  */
 exports.assignProjects = (req, res) => {
     const {course_id} = req.body;
+    console.log(req.body);
+    res.render("professor/assign-projects");
     db.query("SELECT * FROM courses", (error, result) => {
         if (error) {
             res.render("professor/assign-projects", {
@@ -310,6 +312,7 @@ exports.assignProjects = (req, res) => {
                     })
                 } else {
                     db.query("SELECT username FROM users JOIN courses_info ON users.id=courses_info.student_id WHERE courses_info.id=?", [course_id], (error, name) => {
+                        console.log(name);
                         if (error) {
                             res.render("professor/assign-projects", {
                                 message: "An error occured!"
@@ -320,6 +323,7 @@ exports.assignProjects = (req, res) => {
                             for(var i = 0; i < results.length; i++) {
                                 results[i]['name'] = name[i]['username'];
                             }
+                            console.log(results);
                             // Algorithm Begin
                             db.query("SELECT project_name FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
                                 if (error) {
@@ -334,6 +338,7 @@ exports.assignProjects = (req, res) => {
                                     for(var i = 0; i < proj.length; i++) {
                                         capacities[proj[i]['project_name']] = proj.length;
                                     }
+                                    console.log(capacities);
                                     db.query("SELECT num_prefs FROM courses where id=?",[course_id], (error, num_prefs) => {
                                         if (error) {
                                             res.render("professor/assign-projects", {
@@ -364,6 +369,7 @@ exports.assignProjects = (req, res) => {
                                             
                                             // convert prefs to JSON to pass to python script
                                             var asJSON = JSON.stringify(prefs);
+                                            console.log(asJSON);
                                             // create a child process that calls the python script and passes student preferences to it
                                             const python = spawn("python", ["algorithm.py", asJSON]);
                                             // run the python script and return the output in the variable data
@@ -371,6 +377,7 @@ exports.assignProjects = (req, res) => {
                                                 // make the output readable 
                                                 dataToSend = data.toString();
                                                 dataToSend = dataToSend.split("\n");
+                                                console.log(data);
                                                 res.render("professor/assign-projects", {
                                                     results: results,
                                                     name: name,

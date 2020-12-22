@@ -13,7 +13,7 @@ username VARCHAR(100) NOT NULL,
 -- extra_details VARCHAR(100),
 email VARCHAR(100) NOT NULL,
 authentication VARCHAR(100) NOT NULL,
-role varchar(20) not NULL 
+role varchar(20) NOT NULL 
 );
 
 -- CREATE TABLE roles(
@@ -55,7 +55,7 @@ CREATE TABLE courses_info(
     proj_preference2 VARCHAR(100),
     proj_preference3 VARCHAR(100),
     proj_preference4 VARCHAR(100),
-    proj_preference5 VARCHAR(100),
+    proj_preference5 VARCHAR(100)
     -- FOREIGN KEY (id) REFERENCES courses(id),
     -- FOREIGN KEY (student_id) REFERENCES users(id),
     -- FOREIGN KEY (projects_id) REFERENCES projects(project_id)
