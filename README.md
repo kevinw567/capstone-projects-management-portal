@@ -19,7 +19,7 @@ At this point, the application is ready to be run.  Open the software folder in 
 **Code Structure**
 
 Brief description of the code each folder contains:
-controllers: These files are responsible for actions that interact with the database.
-public: These are the two .css files that stylize the entire interface.
-routes: These .js files contain the function calls for all actions on the website.
-views: These .hbs files (essentially .html files) are the structure for each page on the website.
+- controllers: These files are responsible for actions that interact with the database.
+- public: These are the two .css files that stylize the entire interface.
+- routes: These .js files contain the function calls for all actions on the website.
+- views: These .hbs files (essentially .html files) are the structure for each page on the website.
