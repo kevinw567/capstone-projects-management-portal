@@ -541,3 +541,7 @@ select {
     left: 10%;
     width: 75%;
 }
+
+.assign-groups {
+    font-size: 25px
+}

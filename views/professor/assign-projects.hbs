@@ -25,32 +25,10 @@
         </div>
     </div>
     <div class="courses">
-        <h2>Assign Projects</h2>
-        <table>
-            <tr>
-                <th>Student</th>
-                <th>1st Pick</th>
-                <th>2nd Pick</th>
-                <th>3rd Pick</th>
-                <th>Decision</th>
-            </tr>
-            <tr>
-                <td>{{user}}</td>
-                <td>{{first_pick}}</td>
-                <td>{{second_pick}}</td>
-                <td>{{third_pick}}</td>
-                <td>{{decision}}</td>
-            </tr>
-            {{#each results as | student |}}
-            <tr>
-                <td>{{name}}</td>
-                <td>{{student.proj_preference1}}</td>
-                <td>{{student.proj_preference2}}</td>
-                <td>{{student.proj_preference3}}</td>
-                <td>{{student.proj_preference4}}</td>
-                <td>{{student.proj_preference5}}</td>
-            </tr>
-            {{/each}}
-        </table>
+        <h2>Assigned Projects</h2>
+        {{#each groups }}
+            <label class="assign-groups"> {{ this }} </label>
+            <br>
+        {{/each }}
     </div>
     </body>

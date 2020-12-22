@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const e = require("express");
+const {spawn} = require("child_process");
 
 const db = mysql.createConnection({
     // host IP address
@@ -288,7 +289,12 @@ exports.getStudentProjects = (req, res) => {
     })
 }
 
-
+/**
+ * Using the provided algorithm, assign projects to students based on project preferences
+ * 
+ * @param {} req 
+ * @param {*} res 
+ */
 exports.assignProjects = (req, res) => {
     const {course_id} = req.body;
     db.query("SELECT * FROM courses", (error, result) => {
@@ -334,7 +340,7 @@ exports.assignProjects = (req, res) => {
                                                 message: "An error occured!"
                                             })
                                         } else {
-                                            const prefs = {}
+                                            var prefs = {}
                                             num_prefs = num_prefs[0]['num_prefs'];
                                             // Storing class' preference in one object. Each property is a student. 
                                             // Each student has an array of his/her project preferences
@@ -355,11 +361,26 @@ exports.assignProjects = (req, res) => {
                                                     }
                                                 }
                                             }
-                                            console.log(prefs);
-
-                                            res.render("professor/assign-projects", {
-                                                results: results,
-                                                name: name
+                                            
+                                            // convert prefs to JSON to pass to python script
+                                            var asJSON = JSON.stringify(prefs);
+                                            // create a child process that calls the python script and passes student preferences to it
+                                            const python = spawn("python", ["algorithm.py", asJSON]);
+                                            // run the python script and return the output in the variable data
+                                            python.stdout.on("data", (data) => {
+                                                // make the output readable 
+                                                dataToSend = data.toString();
+                                                dataToSend = dataToSend.split("\n");
+                                                res.render("professor/assign-projects", {
+                                                    results: results,
+                                                    name: name,
+                                                    groups: dataToSend
+                                                })
+                                            })
+                                            
+                                            // close python child process
+                                            python.on("close", (code) => {
+                                                console.log(code);
                                             })
                                         }
                                     })
