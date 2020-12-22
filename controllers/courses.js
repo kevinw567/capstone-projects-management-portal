@@ -14,6 +14,7 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 })
 
+// Student add a course
 exports.addcourse = (req, res) => {
     const course_code = req.body.coursecode;
     db.query("SELECT * FROM courses WHERE id=?", [course_code], (error, result) => {
@@ -27,7 +28,6 @@ exports.addcourse = (req, res) => {
             })
         } else {
                 db.query("INSERT INTO enrolled SET ? ", {course_id:course_code, student_id: req.session.userid}, (error, result) => {
-                    console.log(result);
                     if (error) {
                         console.log(error)
                         res.render('student/addcourse', {
@@ -44,18 +44,16 @@ exports.addcourse = (req, res) => {
     }
 
 
-
+// Get all courses that student enrolled and display them
 exports.getEnrolledCourses = (req, res) => {
     // query the database for all of the courses the user is enrolled in
     db.query("SELECT courses.course_number, course_description, professor FROM enrolled JOIN courses WHERE courses.id = enrolled.course_id AND enrolled.student_id = ?", [req.session.userid], (error, results) => {
         if (error) {
-            console.log(error);
             res.render("student/courses", {
                 userID: req.userID,
                 message: "An unexpected error occured"
             })
         }
-        
         // enter if statement if the user is not enrolled in any courses
         else if (results.length <= 0) {
             res.render("student/courses", {
@@ -63,11 +61,8 @@ exports.getEnrolledCourses = (req, res) => {
                 message: "You are not enrolled in any courses",
             })
         }
-        
         else {
             req.results = results;
-            console.log("req.results: " + req.results);
-            console.log(results);
             res.render("student/courses", {
                 userID: req.userID,
                 results: results
@@ -76,6 +71,7 @@ exports.getEnrolledCourses = (req, res) => {
     })
 }
 
+// View profile
 exports.setting = (req, res) => {
     db.query("SELECT * FROM users WHERE id = ?", [req.session.userid], (error, result) => {
         if(error) {
@@ -94,13 +90,11 @@ exports.setting = (req, res) => {
             }
         } else {
             if (req.session.role == 'student') {
-                console.log('stu-----');
                 res.render('student/setting', {
                     username: result[0]['username'],
                     email: result[0]['email']
                 })
             } else {
-                console.log('------');
                 res.render('professor/admin-settings', {
                     username: result[0]['username'],
                     email: result[0]['email']
@@ -110,14 +104,11 @@ exports.setting = (req, res) => {
     })
 }
 
+// Allow user to update their profile
 exports.updateSetting = (req, res) => {
     const { username, email, password, new_password, confirm_password } = req.body;
-    console.log(username);
-    console.log(email);
-    console.log(new_password);
-    console.log(confirm_password);
-    console.log(req.session.role);
     db.query("SELECT * FROM users WHERE id = ?", [req.session.userid], (error, result) => {
+        // Determine whether the user is student or professor
         if (req.session.role == 'student') {
             if(error) {
                 res.render('student/setting', {
@@ -244,7 +235,7 @@ exports.updateSetting = (req, res) => {
 }
 
 
-// Professor's page
+// Professor's page, create a course
 exports.createcourse = (req, res) => {
     const { coursenumber, description, num_prefs } = req.body;
     // generate a random code for the course
@@ -268,11 +259,10 @@ exports.createcourse = (req, res) => {
                     })}
                 })}
             })};
-
+// View all courses that professor created
 exports.viewcourses = (req, res) => {
     db.query("SELECT * FROM courses WHERE user_id = ?", [req.session.userid], (error, result) => {
         if (error) {
-            console.log(error);
             res.render("professor/admin-view-courses", {
                 message: "An error occured!"
             })
@@ -287,10 +277,9 @@ exports.viewcourses = (req, res) => {
         }
     })
 };
-
+// Allow professor to delete a course
 exports.deletecourses = (req, res) => {
     const { course_id } = req.body;
-    console.log(course_id, "--------1");
     db.query("DELETE FROM courses WHERE id = ?", [course_id],(error, result) => {
         if(error) {
             res.render("professor/admin-view-courses", {
@@ -309,7 +298,7 @@ exports.deletecourses = (req, res) => {
         }
     })
 }
-
+// Select course and assign project
 exports.getcourses = (req, res) => {
     db.query("SELECT * FROM courses", (error, result) => {
         if (error) {

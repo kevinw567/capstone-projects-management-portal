@@ -16,7 +16,6 @@ const db = mysql.createConnection({
 
 // register a new user
 exports.register = (req, res) => {
-    console.log(req.body);
     let e = false;
     // get information from HTML form
     const { username, password, confirmPassword, email, role } = req.body;    
@@ -32,17 +31,13 @@ exports.register = (req, res) => {
     else{
         db.query("SELECT email FROM users WHERE email = ?", [email], (error, results) => {
         if (error) {
-            console.log(error);
             res.render('register', {
                 message: "An error occured"
             });
             e = true;
         }
-
-
         // if the email is already registered send a message and go back to register page
         else if (results.length > 0) {
-            console.log(results);
             res.render('register', {
                 message: "That email is already registered"
             });
@@ -53,12 +48,10 @@ exports.register = (req, res) => {
         if (e === false) {
             db.query("INSERT INTO users SET ?", { username:username, email: email, authentication: md5(password), role:role }, (error, results) => {
                 if (error) {
-                    console.log(error);
                     res.render('register', { 
                         message: "An error occured"
                     })
                 }
-    
                 else {
                     res.render('index', {
                         message: "Account registered"
@@ -74,9 +67,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     const { email, password } = req.body;
     db.query("SELECT role, id FROM users WHERE email = ? AND authentication = ?", [email, md5(password)], (error, results) => {
-        console.log(results);
         if (error) {
-            console.log(error);
             res.render('index', {
                 message: "Could not log in, try again"
             })
@@ -97,10 +88,6 @@ exports.login = (req, res) => {
                 req.session.role = role;
                 req.session.userid = results[0]['id'];
                 req.params.userID = results[0].id;
-
-                // res.render('professor', {
-                //     userID: req.params.userID
-                // });
                 res.redirect("/professor/main");
             } 
         }

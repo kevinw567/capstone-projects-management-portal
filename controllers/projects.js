@@ -3,6 +3,7 @@ const e = require("express");
 const {spawn} = require("child_process");
 const { type } = require("os");
 
+// connect to database
 const db = mysql.createConnection({
     // host IP address
     host: process.env.HOST,
@@ -12,6 +13,8 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 })
 
+
+// To add a project into database
 exports.addproject = (req, res) => {
     const { projectName, projectDescription, clientName, clientEmail, extraDetails, courseID} = req.body;
 
@@ -24,11 +27,12 @@ exports.addproject = (req, res) => {
         } else {
             res.render('professor/addproject', {
                 message: "Project Created!"
-            })}
-        })};
+        })}
+    })
+};
 
+// Get all projects from database and display them   
 exports.viewprojects = (req, res) => {
-    console.log(req.body);
     db.query("SELECT * FROM projects, courses WHERE courses.user_id = projects.user_id AND projects.course_id = courses.id AND courses.user_id=?", [req.session.userid], (error, result) => {
         if(error) {
             res.render("professor/admin-view-projects", {
@@ -46,10 +50,9 @@ exports.viewprojects = (req, res) => {
     })
 };
 
+// Delete a project
 exports.deleteproject = (req, res) => {
     const { project_id } = req.body;
-    console.log(project_id);
-    console.log(req.body);
     db.query("DELETE FROM projects WHERE project_id = ?", [project_id], (error, result)=> {
         if(error) {
             res.render("professor/admin-view-projects", {
@@ -60,6 +63,8 @@ exports.deleteproject = (req, res) => {
         }
     })
 }
+
+// View the detail of the project 
 exports.viewsingleproject = (req, res) => {
     let email = req.session.email;
     const { projectName, projectDetail, clientName, clientContact, extraDetails, courseNumber, professor, project_id, courseID } = req.body;
@@ -90,7 +95,6 @@ exports.viewsingleproject = (req, res) => {
 
 //update a project's info
 exports.updateProject = (req, res) => {
-    console.log(req.body);
     const { client_name, client_contact, project_detail, project_id } = req.body;
     db.query("UPDATE projects SET ? WHERE project_id = ?", [{client_name:client_name, client_contact:client_contact, project_detail:project_detail}, project_id], (error, result) => {
         if(error) {
@@ -114,7 +118,6 @@ exports.updateProject = (req, res) => {
 // get available projects for enrolled classes
 exports.getProjects = (req, res) => {
     db.query("SELECT * FROM projects, enrolled, courses WHERE enrolled.student_id = ? AND projects.course_id = enrolled.course_id AND courses.id=projects.course_id ORDER BY courses.id", [req.session.userid], (error, result) => {
-        console.log(result);
         if(error) {
             res.render("student/projects", {
                 message: "An error occured!"
@@ -143,12 +146,10 @@ exports.getProjects = (req, res) => {
     })
 }
 
+// Display the projects in the course that student selected
 exports.select_project = (req, res) => {
-    console.log("HEY HEY HEY HEY!!\n");
-    console.log(req.body);
     const {course_id} = req.body;
     db.query("SELECT * FROM projects, courses WHERE projects.course_id=courses.id AND projects.course_id=?",[course_id], (error, result) => {
-        console.log(result);
         if (error) {
             res.render("student/projects", {
                 message: "An error occured!"
@@ -270,10 +271,9 @@ exports.submitprefs = (req, res) => {
     })
 }
 
-
+// get all projects in the courses that student enrolled
 exports.getStudentProjects = (req, res) => {
     db.query("SELECT * FROM courses_info, courses WHERE student_id = ? AND courses_info.id=courses.id", [req.session.userid], (error, results)=> {
-        console.log(results);
         if (error) {
             res.render("student/student-project", {
                 message: "An error occured"
@@ -373,30 +373,17 @@ exports.assignProjects = (req, res) => {
                                             python.stdout.on("data", (data) => {
                                                 // make the output readable 
                                                 dataToSend = data.toString();
-                                                // dataToSend = dataToSend.split("\n");
-                                                // dataToSend = dataToSend.replace("{");
-                                                // dataToSend = dataToSend.replace("}");
-                                                // console.log(dataToSend);
-                                                // dataToSend = dataToSend.split(",");
+                                                // parse the data from python file and make it readable
                                                 dataToSend = JSON.parse(dataToSend);
                                                 let p_group = [];
-                                                console.log(dataToSend);
                                                 for(let i in dataToSend){
-                                                    // console.log(i);
-                                                    // project_group['project'] = i;
-                                                    // project_group['group'] = dataToSend[i];
-                                                    // console.log(project_group);
-                                                    // p_group.push(project_group);
-                                                    // console.log("---------------");
-                                                    // console.log(p_group);
+                                                    // convert the data into array of objects
                                                     p_group.push({
                                                         "project": i,
                                                         "group" : dataToSend[i]
                                                     })
                                                 }
-                                                console.log(p_group);
-                                                // console.log(dataToSend);
-                                                
+                                                // pass data into page
                                                 res.render("professor/assign-projects", {
                                                     results: results,
                                                     name: name,
