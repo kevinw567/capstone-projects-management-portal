@@ -18,17 +18,36 @@
                 <li class="list-item"><a href="/professor/admin-view-courses">View Courses</a></li>
                 <li class="list-item"><a href="/professor/addproject">Add Projects</a></li>
                 <li class="list-item"><a href="/professor/admin-view-projects">View Projects</a></li>
-                <li class="list-item"><a href="/professor/select-course">Assign Projects</a></li>
+                <li class="list-item"><a href="/professor/select-project">Assign Projects</a></li>
                 <li class="list-item"><a href="/professor/admin-settings">Settings</a></li>
                 <li class="list-item"><a href="/auth/logout">Logout</a></li>
             </ul>
         </div>
     <div class="courses">
+        {{#if message }}
+                <p class="alert">{{ message }}</p>
+        {{else}}
         <h2>Assigned Projects</h2>
+        <table class="course-table">
+            <tr>
+                <th>Project</th>
+                <th>Students</th>
+            </tr>
         {{#each groups }}
-            <label class="assign-groups"> {{ this }} </label>
+            <tr>
+                {{!-- <label class="assign-groups"> {{ project }} </label> --}}
+                {{!-- <label class="assign-groups"> {{ group }} </label> --}}
+                <td>{{ project }}</td>
+                <td>
+                    {{#each group  }}
+                    {{ this }}
+                    {{/each}}
+                </td>
+            </tr>
             <br>
         {{/each }}
+        </table>
+        {{/if}}
     </div>
     </div>
     </body>

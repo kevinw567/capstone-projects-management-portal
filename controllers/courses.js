@@ -313,7 +313,7 @@ exports.deletecourses = (req, res) => {
 exports.getcourses = (req, res) => {
     db.query("SELECT * FROM courses", (error, result) => {
         if (error) {
-            res.render("professor/select-course", {
+            res.render("professor/select-project", {
                 message: "An error occured!"
             })
         } else {
@@ -327,7 +327,7 @@ exports.getcourses = (req, res) => {
                     courses.push({course_id: c_id, course_number:c_number})
                 }
             }
-            res.render("professor/select-course", {
+            res.render("professor/select-project", {
                 courses: courses
             })
         }

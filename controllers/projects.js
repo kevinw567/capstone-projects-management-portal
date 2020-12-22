@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const e = require("express");
 const {spawn} = require("child_process");
+const { type } = require("os");
 
 const db = mysql.createConnection({
     // host IP address
@@ -297,8 +298,6 @@ exports.getStudentProjects = (req, res) => {
  */
 exports.assignProjects = (req, res) => {
     const {course_id} = req.body;
-    console.log(req.body);
-    res.render("professor/assign-projects");
     db.query("SELECT * FROM courses", (error, result) => {
         if (error) {
             res.render("professor/assign-projects", {
@@ -312,7 +311,6 @@ exports.assignProjects = (req, res) => {
                     })
                 } else {
                     db.query("SELECT username FROM users JOIN courses_info ON users.id=courses_info.student_id WHERE courses_info.id=?", [course_id], (error, name) => {
-                        console.log(name);
                         if (error) {
                             res.render("professor/assign-projects", {
                                 message: "An error occured!"
@@ -323,9 +321,8 @@ exports.assignProjects = (req, res) => {
                             for(var i = 0; i < results.length; i++) {
                                 results[i]['name'] = name[i]['username'];
                             }
-                            console.log(results);
                             // Algorithm Begin
-                            db.query("SELECT project_name FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
+                            db.query("SELECT project_name, capacity FROM projects WHERE projects.course_id=?",[course_id], (error, proj) => {
                                 if (error) {
                                     res.render("professor/assign-projects", {
                                     message: "An error occured!"
@@ -336,9 +333,8 @@ exports.assignProjects = (req, res) => {
                                     //Storing capacities of members per project
                                     const capacities = {};
                                     for(var i = 0; i < proj.length; i++) {
-                                        capacities[proj[i]['project_name']] = proj.length;
+                                        capacities[proj[i]['project_name']] = proj[i]['capacity'];   
                                     }
-                                    console.log(capacities);
                                     db.query("SELECT num_prefs FROM courses where id=?",[course_id], (error, num_prefs) => {
                                         if (error) {
                                             res.render("professor/assign-projects", {
@@ -369,22 +365,44 @@ exports.assignProjects = (req, res) => {
                                             
                                             // convert prefs to JSON to pass to python script
                                             var asJSON = JSON.stringify(prefs);
-                                            console.log(asJSON);
+                                            var capacitiesAsJSON = JSON.stringify(capacities);
+                                            
                                             // create a child process that calls the python script and passes student preferences to it
-                                            const python = spawn("python", ["algorithm.py", asJSON]);
+                                            const python = spawn("python", ["algorithm.py", asJSON, capacitiesAsJSON]);
                                             // run the python script and return the output in the variable data
                                             python.stdout.on("data", (data) => {
                                                 // make the output readable 
                                                 dataToSend = data.toString();
-                                                dataToSend = dataToSend.split("\n");
-                                                console.log(data);
+                                                // dataToSend = dataToSend.split("\n");
+                                                // dataToSend = dataToSend.replace("{");
+                                                // dataToSend = dataToSend.replace("}");
+                                                // console.log(dataToSend);
+                                                // dataToSend = dataToSend.split(",");
+                                                dataToSend = JSON.parse(dataToSend);
+                                                let p_group = [];
+                                                console.log(dataToSend);
+                                                for(let i in dataToSend){
+                                                    // console.log(i);
+                                                    // project_group['project'] = i;
+                                                    // project_group['group'] = dataToSend[i];
+                                                    // console.log(project_group);
+                                                    // p_group.push(project_group);
+                                                    // console.log("---------------");
+                                                    // console.log(p_group);
+                                                    p_group.push({
+                                                        "project": i,
+                                                        "group" : dataToSend[i]
+                                                    })
+                                                }
+                                                console.log(p_group);
+                                                // console.log(dataToSend);
+                                                
                                                 res.render("professor/assign-projects", {
                                                     results: results,
                                                     name: name,
-                                                    groups: dataToSend
+                                                    groups: p_group
                                                 })
                                             })
-                                            
                                             // close python child process
                                             python.on("close", (code) => {
                                                 console.log(code);

@@ -11,6 +11,7 @@ capacities = json.loads(sys.argv[2])
 num_persons=len(prefs)
 G.add_node('dest',demand=num_persons)
 A=[]
+result = dict()
 for person,projectlist in prefs.items():
     G.add_node(person,demand=-1)
     for i,project in enumerate(projectlist):
@@ -33,4 +34,10 @@ flowdict = nx.min_cost_flow(G)
 for person, projectlist in prefs.items():
     for project,flow in flowdict[person].items():
         if flow:
-            print (person,'joins',project)
+            # print (person,'joins',project)
+            if project in result:
+                result[project].append(person)
+            else:
+                result[project] = [person]
+result = json.dumps(result)
+print(result)

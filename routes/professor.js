@@ -33,10 +33,10 @@ router.post("/update", projectController.updateProject);
 router.get("/admin-settings", courseController.setting);
 router.post('/admin-settings', courseController.updateSetting);
 
-router.get("/select-course", courseController.getcourses);
+router.get("/select-project", courseController.getcourses);
 router.get("/assign-projects", (req, res) => {res.render("professor/assign-projects")});
 // router.post("/assign-projects", projectController.assignProjects);
-router.post("/select-course", projectController.assignProjects);
+router.post("/select-project", projectController.assignProjects);
 
 // export the router for other files to use
 module.exports = router;
