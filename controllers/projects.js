@@ -343,8 +343,10 @@ exports.assignProjects = (req, res) => {
                                         } else {
                                             var prefs = {}
                                             num_prefs = num_prefs[0]['num_prefs'];
-                                            // Storing class' preference in one object. Each property is a student. 
-                                            // Each student has an array of his/her project preferences
+                                            /**
+                                             * Storing class' preference in one object. Each property is a student. 
+                                             *  Each student has an array of his/her project preferences
+                                             */
                                             for(var i = 0; i < results.length; i++) {
                                                 prefs[results[i]['name']] = [];
                                                 for(var j = 1; j <= num_prefs; j++) {
