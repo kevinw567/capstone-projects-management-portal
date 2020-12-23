@@ -3,11 +3,15 @@
  */
 
 const mysql = require("mysql");
+/**
+ * encrypt using md5  
+ */
 const md5 = require("md5");
 
 const db = mysql.createConnection({
     // host IP address
     host: process.env.HOST,
+    //login info
     user: process.env.USER,
     password: process.env.PASSWORD,
     // database name
@@ -67,15 +71,16 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     const { email, password } = req.body;
     db.query("SELECT role, id FROM users WHERE email = ? AND authentication = ?", [email, md5(password)], (error, results) => {
+        //if an error occur then display could not log in message
         if (error) {
             res.render('index', {
                 message: "Could not log in, try again"
             })
-        } else if (results.length === 0) {
+        } else if (results.length === 0) { //invalid credential 
             res.render('index', {
                 message: "Wrong email or password"
             })
-        } else {
+        } else { //login success
             let role = results[0]['role'];
             if (role === 'student'){
                 req.session.email = email;
