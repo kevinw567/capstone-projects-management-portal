@@ -11,6 +11,7 @@
     box-sizing: border-box;
 }
 
+//html page tag
 html {
     /* background-color: var(--umb-blue); */
     background-color: white;
@@ -35,10 +36,6 @@ body {
 #login {
     display: flex;
     flex-direction: column;
-    /* width: 45vw;
-    position: fixed;
-    left: 28%;
-    flex-flow: column wrap; */
 }
 
 .un, .pw, .student-id, .confirm, .email {
